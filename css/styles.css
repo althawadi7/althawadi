@@ -405,3 +405,51 @@ button, input, textarea { font-family: inherit; }
   .lg\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .lg\:columns-3 { columns: 3; }
 }
+
+/* Content blocks */
+.notice-box {
+  border: 1px solid color-mix(in oklch, var(--accent) 35%, var(--border));
+  border-right: 4px solid var(--accent);
+  background: color-mix(in oklch, var(--card) 70%, var(--background));
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+}
+
+.notice-box--warning {
+  border-right-color: oklch(0.55 0.12 45);
+  background: color-mix(in oklch, var(--accent) 8%, var(--background));
+}
+
+.ref-section-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--foreground);
+  margin: 2.5rem 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.ref-section-title:first-child { margin-top: 0; }
+
+.content-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+}
+
+.content-list li {
+  position: relative;
+  padding-right: 1.25rem;
+  margin-bottom: 0.75rem;
+  color: var(--muted-foreground);
+  line-height: 1.85;
+}
+
+.content-list li::before {
+  content: "◆";
+  position: absolute;
+  right: 0;
+  color: var(--accent);
+  font-size: 0.65rem;
+  top: 0.35rem;
+}
