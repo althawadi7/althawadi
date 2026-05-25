@@ -20,6 +20,7 @@ export function SiteFooter() {
             <li><Link to="/tree" className="hover:text-accent">شجرة العائلة</Link></li>
             <li><Link to="/ancestors" className="hover:text-accent">الأجداد</Link></li>
             <li><Link to="/gallery" className="hover:text-accent">الصور</Link></li>
+            <li><Link to="/references" className="hover:text-accent">مراجع</Link></li>
           </ul>
         </div>
 

@@ -10,6 +10,7 @@ const links = [
   { to: "/gallery", label: "الصور" },
   { to: "/news", label: "أخبار المجلس" },
   { to: "/events", label: "المناسبات" },
+  { to: "/references", label: "مراجع" },
   { to: "/contact", label: "تواصل" },
 ] as const;
 
