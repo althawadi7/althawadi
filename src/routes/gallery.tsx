@@ -7,9 +7,9 @@ import palmImage from "@/assets/palm.jpg";
 export const Route = createFileRoute("/gallery")({
   head: () => ({
     meta: [
-      { title: "معرض صور عائلة آل الذوادي" },
-      { name: "description", content: "صور أرشيفية وعائلية تختزن لحظات من تاريخ عائلة آل الذوادي." },
-      { property: "og:title", content: "معرض صور آل الذوادي" },
+      { title: "معرض صور عائلة الذوادي" },
+      { name: "description", content: "صور أرشيفية وعائلية تختزن لحظات من تاريخ عائلة الذوادي." },
+      { property: "og:title", content: "معرض صور الذوادي" },
       { property: "og:url", content: "/gallery" },
     ],
     links: [{ rel: "canonical", href: "/gallery" }],

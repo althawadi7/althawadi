@@ -5,9 +5,9 @@ import { Instagram, Mail, MessageCircle } from "lucide-react";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "تواصل مع مجلس آل الذوادي" },
-      { name: "description", content: "للتواصل مع مجلس عائلة آل الذوادي والمساهمة بالمعلومات والصور." },
-      { property: "og:title", content: "تواصل مع آل الذوادي" },
+      { title: "تواصل مع مجلس الذوادي" },
+      { name: "description", content: "للتواصل مع مجلس عائلة الذوادي والمساهمة بالمعلومات والصور." },
+      { property: "og:title", content: "تواصل مع الذوادي" },
       { property: "og:url", content: "/contact" },
     ],
     links: [{ rel: "canonical", href: "/contact" }],

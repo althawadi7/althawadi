@@ -4,9 +4,9 @@ import { PageHero } from "@/components/PageHero";
 export const Route = createFileRoute("/events")({
   head: () => ({
     meta: [
-      { title: "مناسبات عائلة آل الذوادي" },
-      { name: "description", content: "تقويم مناسبات وتجمعات عائلة آل الذوادي." },
-      { property: "og:title", content: "مناسبات آل الذوادي" },
+      { title: "مناسبات عائلة الذوادي" },
+      { name: "description", content: "تقويم مناسبات وتجمعات عائلة الذوادي." },
+      { property: "og:title", content: "مناسبات الذوادي" },
       { property: "og:url", content: "/events" },
     ],
     links: [{ rel: "canonical", href: "/events" }],
@@ -15,7 +15,7 @@ export const Route = createFileRoute("/events")({
 });
 
 const events = [
-  { date: "—", month: "رمضان", title: "غبقة العائلة السنويّة", place: "مجلس آل الذوادي" },
+  { date: "—", month: "رمضان", title: "غبقة العائلة السنويّة", place: "مجلس الذوادي" },
   { date: "—", month: "شوال", title: "تجمّع العيد", place: "بيت الجد" },
   { date: "—", month: "ذو الحجة", title: "لقاء الأبناء والأحفاد", place: "المجلس الكبير" },
   { date: "—", month: "محرم", title: "اجتماع تنسيق المجلس", place: "المجلس" },

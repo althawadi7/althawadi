@@ -21,7 +21,7 @@ export function SiteHeader() {
         <Link to="/" className="flex items-center gap-3 group">
           <span className="grid h-10 w-10 place-items-center rounded-full border border-primary/40 font-display text-primary text-lg">ذ</span>
           <span className="leading-tight">
-            <span className="block font-display text-lg text-foreground">آل الذوادي</span>
+            <span className="block font-display text-lg text-foreground">الذوادي</span>
             <span className="block text-[11px] uppercase tracking-[0.25em] text-muted-foreground font-latin">AL Thawadi</span>
           </span>
         </Link>

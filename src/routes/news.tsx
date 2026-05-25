@@ -5,9 +5,9 @@ import { Instagram, ExternalLink } from "lucide-react";
 export const Route = createFileRoute("/news")({
   head: () => ({
     meta: [
-      { title: "أخبار مجلس آل الذوادي" },
-      { name: "description", content: "آخر أخبار وأنشطة مجلس عائلة آل الذوادي عبر إنستغرام." },
-      { property: "og:title", content: "أخبار مجلس آل الذوادي" },
+      { title: "أخبار مجلس الذوادي" },
+      { name: "description", content: "آخر أخبار وأنشطة مجلس عائلة الذوادي عبر إنستغرام." },
+      { property: "og:title", content: "أخبار مجلس الذوادي" },
       { property: "og:url", content: "/news" },
     ],
     links: [{ rel: "canonical", href: "/news" }],
@@ -27,7 +27,7 @@ function NewsPage() {
       <section className="mx-auto max-w-3xl px-6 py-20 text-center">
         <div className="border border-border rounded-sm p-12 bg-card/60 paper-texture">
           <Instagram className="mx-auto h-10 w-10 text-accent" strokeWidth={1.2} />
-          <h2 className="mt-6 font-display text-3xl text-foreground">مجلس آل الذوادي على إنستغرام</h2>
+          <h2 className="mt-6 font-display text-3xl text-foreground">مجلس الذوادي على إنستغرام</h2>
           <p className="mt-4 text-muted-foreground leading-8">
             تابعوا حسابنا الرسمي لمتابعة آخر الصور، الإعلانات، ومناسبات العائلة.
             ندعوكم للمشاركة معنا والتفاعل.
