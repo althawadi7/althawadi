@@ -5,9 +5,9 @@ import palmImage from "@/assets/palm.jpg";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "عن عائلة آل الذوادي" },
-      { name: "description", content: "تاريخ عائلة آل الذوادي، أصولها، قيمها، ومسيرتها عبر الأجيال." },
-      { property: "og:title", content: "عن عائلة آل الذوادي" },
+      { title: "عن عائلة الذوادي" },
+      { name: "description", content: "تاريخ عائلة الذوادي، أصولها، قيمها، ومسيرتها عبر الأجيال." },
+      { property: "og:title", content: "عن عائلة الذوادي" },
       { property: "og:description", content: "تاريخ ونشأة وقيم عائلة الذوادي." },
       { property: "og:url", content: "/about" },
     ],
@@ -22,7 +22,7 @@ function AboutPage() {
       <PageHero
         eyebrow="About — عن العائلة"
         title="حكايةُ اسمٍ، ومسيرةُ أجيال"
-        description="من جدٍّ مؤسّسٍ إلى أحفادٍ يحفظون الأمانة، تمتدّ عائلة آل الذوادي عبر الزمن بقيمٍ راسخة وأخلاقٍ موروثة."
+        description="من جدٍّ مؤسّسٍ إلى أحفادٍ يحفظون الأمانة، تمتدّ عائلة الذوادي عبر الزمن بقيمٍ راسخة وأخلاقٍ موروثة."
       />
 
       <article className="mx-auto max-w-3xl px-6 py-20 prose-content">
@@ -30,7 +30,7 @@ function AboutPage() {
           <section>
             <h2 className="font-display text-3xl text-foreground mb-4">الأصل والنشأة</h2>
             <p className="text-muted-foreground">
-              تعود جذور عائلة آل الذوادي إلى أرضٍ خليجيةٍ عريقة، حيث استقرّ الجدّ الأكبر
+              تعود جذور عائلة الذوادي إلى أرضٍ خليجيةٍ عريقة، حيث استقرّ الجدّ الأكبر
               وأسّس بيتًا عُرف بالكرم والنخوة. ومنذ ذلك الحين، توارثت الأجيال هذا الاسم
               الكريم وحملته في كلّ مجلسٍ ومناسبة.
             </p>
@@ -50,7 +50,7 @@ function AboutPage() {
           <section>
             <h2 className="font-display text-3xl text-foreground mb-4">قيمنا</h2>
             <p className="text-muted-foreground">
-              نحن في آل الذوادي نؤمن بأن العائلة هي السند الأول والأخير. نتمسّك بقيم
+              نحن في الذوادي نؤمن بأن العائلة هي السند الأول والأخير. نتمسّك بقيم
               صلة الرحم، وإكرام الضيف، ونصرة المظلوم، والحفاظ على الموروث الذي
               تركه لنا الآباء والأجداد.
             </p>
@@ -72,7 +72,7 @@ function AboutPage() {
           <section>
             <h2 className="font-display text-3xl text-foreground mb-4">مجلس الذوادي اليوم</h2>
             <p className="text-muted-foreground">
-              يضمّ مجلس آل الذوادي اليوم أبناءً وأحفادًا من مختلف الأجيال، يجتمعون
+              يضمّ مجلس الذوادي اليوم أبناءً وأحفادًا من مختلف الأجيال، يجتمعون
               في المناسبات السعيدة والحزينة، ويعملون يدًا واحدة على تعزيز روابط
               العائلة وتوثيق إرثها للأجيال القادمة.
             </p>

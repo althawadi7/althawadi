@@ -7,10 +7,10 @@ import { ArrowLeft, Users, BookOpen, Image as ImageIcon, Calendar } from "lucide
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "آل الذوادي — مجلس العائلة" },
-      { name: "description", content: "بيت من الذكريات، وصفحة من التاريخ. تعرّف على عائلة آل الذوادي، شجرتها، أجدادها وأخبار مجلسها." },
-      { property: "og:title", content: "آل الذوادي — مجلس العائلة" },
-      { property: "og:description", content: "تاريخ ونسب وذكريات عائلة آل الذوادي." },
+      { title: "الذوادي — مجلس العائلة" },
+      { name: "description", content: "بيت من الذكريات، وصفحة من التاريخ. تعرّف على عائلة الذوادي، شجرتها، أجدادها وأخبار مجلسها." },
+      { property: "og:title", content: "الذوادي — مجلس العائلة" },
+      { property: "og:description", content: "تاريخ ونسب وذكريات عائلة الذوادي." },
       { property: "og:url", content: "/" },
     ],
     links: [{ rel: "canonical", href: "/" }],
@@ -26,7 +26,7 @@ function HomePage() {
         <div className="absolute inset-0">
           <img
             src={heroImage}
-            alt="مجلس عائلة آل الذوادي"
+            alt="مجلس عائلة الذوادي"
             width={1920}
             height={1280}
             className="h-full w-full object-cover"
@@ -128,7 +128,7 @@ function HomePage() {
             <p className="text-[11px] uppercase tracking-[0.4em] text-accent font-latin">من الذاكرة</p>
             <h2 className="mt-3 font-display text-4xl text-foreground">جذورٌ ضاربةٌ في الأرض</h2>
             <p className="mt-6 text-muted-foreground leading-9">
-              نشأت عائلة آل الذوادي في كنف بيئةٍ خليجيةٍ أصيلة، تجمع بين كرم الصحراء
+              نشأت عائلة الذوادي في كنف بيئةٍ خليجيةٍ أصيلة، تجمع بين كرم الصحراء
               وبركة البحر. ورّثنا الأجداد قيم النخوة والكرم، وحفظوا لنا الاسم نقيًّا،
               فاجتهد الأبناء في حفظ هذا الإرث ونقله إلى من بعدهم.
             </p>

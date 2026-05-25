@@ -6,7 +6,7 @@ export function SiteFooter() {
     <footer className="mt-24 border-t border-border bg-card/40">
       <div className="mx-auto max-w-7xl px-6 py-14 grid gap-10 md:grid-cols-3">
         <div>
-          <div className="font-display text-2xl text-foreground">آل الذوادي</div>
+          <div className="font-display text-2xl text-foreground">الذوادي</div>
           <p className="mt-3 text-sm text-muted-foreground leading-7 max-w-sm">
             بيت من الذكريات، وصفحة من التاريخ. نوثّق هنا نسب عائلتنا، وسير أجدادنا،
             وصورًا تحكي مسيرتنا جيلًا بعد جيل.
@@ -20,6 +20,7 @@ export function SiteFooter() {
             <li><Link to="/tree" className="hover:text-accent">شجرة العائلة</Link></li>
             <li><Link to="/ancestors" className="hover:text-accent">الأجداد</Link></li>
             <li><Link to="/gallery" className="hover:text-accent">الصور</Link></li>
+            <li><Link to="/references" className="hover:text-accent">مراجع</Link></li>
           </ul>
         </div>
 
@@ -42,7 +43,7 @@ export function SiteFooter() {
       </div>
       <div className="border-t border-border/60">
         <div className="mx-auto max-w-7xl px-6 py-5 text-xs text-muted-foreground flex flex-wrap justify-between gap-3">
-          <span>© {new Date().getFullYear()} مجلس آل الذوادي — جميع الحقوق محفوظة</span>
+          <span>© {new Date().getFullYear()} مجلس الذوادي — جميع الحقوق محفوظة</span>
           <span className="font-latin tracking-[0.2em] uppercase">AL Thawadi Family</span>
         </div>
       </div>

@@ -4,9 +4,9 @@ import { PageHero } from "@/components/PageHero";
 export const Route = createFileRoute("/tree")({
   head: () => ({
     meta: [
-      { title: "شجرة عائلة آل الذوادي" },
-      { name: "description", content: "شجرة أنساب عائلة آل الذوادي من الجد المؤسس إلى الأحفاد." },
-      { property: "og:title", content: "شجرة عائلة آل الذوادي" },
+      { title: "شجرة عائلة الذوادي" },
+      { name: "description", content: "شجرة أنساب عائلة الذوادي من الجد المؤسس إلى الأحفاد." },
+      { property: "og:title", content: "شجرة عائلة الذوادي" },
       { property: "og:url", content: "/tree" },
     ],
     links: [{ rel: "canonical", href: "/tree" }],
@@ -90,7 +90,7 @@ function TreePage() {
     <>
       <PageHero
         eyebrow="Family Tree — شجرة الأنساب"
-        title="شجرةُ آل الذوادي"
+        title="شجرةُ الذوادي"
         description="هذه شجرةٌ مبدئيّة قابلة للتحديث والتوسعة. ندعو جميع أبناء العائلة للمساهمة في إثرائها بالأسماء والتواريخ الموثّقة."
       />
 

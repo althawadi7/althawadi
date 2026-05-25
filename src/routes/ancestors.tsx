@@ -4,9 +4,9 @@ import { PageHero } from "@/components/PageHero";
 export const Route = createFileRoute("/ancestors")({
   head: () => ({
     meta: [
-      { title: "أجداد عائلة آل الذوادي" },
-      { name: "description", content: "سير الأجداد والشخصيات البارزة في عائلة آل الذوادي." },
-      { property: "og:title", content: "أجداد عائلة آل الذوادي" },
+      { title: "أجداد عائلة الذوادي" },
+      { name: "description", content: "سير الأجداد والشخصيات البارزة في عائلة الذوادي." },
+      { property: "og:title", content: "أجداد عائلة الذوادي" },
       { property: "og:url", content: "/ancestors" },
     ],
     links: [{ rel: "canonical", href: "/ancestors" }],
