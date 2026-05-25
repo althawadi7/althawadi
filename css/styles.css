@@ -25,10 +25,11 @@
 
 *, *::before, *::after { box-sizing: border-box; border-color: var(--border); }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: clip; }
 
 body {
   margin: 0;
+  overflow-x: clip;
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-body);
@@ -316,64 +317,271 @@ button, input, textarea { font-family: inherit; }
 /* Icon sizing */
 .icon { flex-shrink: 0; stroke: currentColor; fill: none; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
 
-/* Family tree connectors */
-.family-tree > li { position: relative; display: flex; flex-direction: column; align-items: center; }
+/* Family tree */
+.family-tree-wrap {
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+.family-tree-scroll {
+  overflow-x: auto;
+  overflow-y: visible;
+  padding-bottom: 1.25rem;
+  padding-top: 0.25rem;
+}
+
+.family-tree-scroll::-webkit-scrollbar { height: 8px; }
+.family-tree-scroll::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+.family-tree {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  display: inline-flex;
+  justify-content: center;
+  width: max-content;
+  min-width: 100%;
+}
+
+.family-tree > li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .family-tree-node {
   position: relative;
-  z-index: 10;
+  z-index: 2;
   border-radius: var(--radius);
   border: 1px solid var(--border);
   padding: 0.75rem 1.25rem;
   text-align: center;
   background: var(--background);
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  white-space: nowrap;
 }
+
 .family-tree-node.is-root {
   border-color: var(--accent);
   background: color-mix(in oklch, var(--accent) 10%, transparent);
 }
+
+/* Each generation row */
 .family-tree-children {
   display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
   justify-content: center;
-  gap: 1.5rem;
-  padding-top: 2.5rem;
-  position: relative;
-  list-style: none;
+  align-items: flex-start;
+  gap: 2rem;
+  padding: 0;
   margin: 0;
-  padding-right: 0;
+  list-style: none;
+  position: relative;
+  padding-top: 2.5rem;
+  width: max-content;
 }
+
+/* Vertical stem from parent down to horizontal bar */
 .family-tree-children::before {
   content: '';
   position: absolute;
   top: 0;
-  right: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
   height: 1.25rem;
-  border-right: 1px solid var(--border);
+  background: var(--border);
 }
+
+/* Horizontal bar connecting all siblings (desktop) */
+.family-tree-children::after {
+  content: '';
+  position: absolute;
+  top: 1.25rem;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--border);
+}
+
+/* Each branch (son / grandchild column) */
 .family-tree-children > li {
   position: relative;
-  padding-top: 1.25rem;
   list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 0 0 auto;
+  padding-top: 1.25rem;
+  min-width: max-content;
 }
+
+/* Vertical line from horizontal bar up to this node */
 .family-tree-children > li::before {
   content: '';
   position: absolute;
   top: 0;
-  right: 50%;
-  height: 1.25rem;
-  border-right: 1px solid var(--border);
-}
-.family-tree-children > li::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  height: 1px;
-  background: var(--border);
-  right: 50%;
   left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 1.25rem;
+  background: var(--border);
 }
-.family-tree-children > li:first-child::after { right: 50%; left: 0; }
-.family-tree-children > li:last-child::after { right: 0; left: 50%; }
+
+/* Hide per-item horizontal segments — use ul::after instead */
+.family-tree-children > li::after {
+  display: none;
+}
+
+/* Single child: no horizontal bar needed */
+.family-tree-children:has(> li:only-child)::after {
+  display: none;
+}
+
+.family-tree-hint {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+  margin-bottom: 0.75rem;
+  display: none;
+}
+
+/* Desktop / laptop: horizontal org chart */
+@media (min-width: 768px) {
+  .family-tree-scroll {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  /* Line from node down to children row */
+  .family-tree-node:has(+ .family-tree-children)::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 1rem;
+    background: var(--border);
+    margin: 0.35rem auto 0;
+  }
+
+  .family-tree-children > li {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+  }
+
+  /* Sons row — wider gap between branches */
+  .family-tree > li > .family-tree-children {
+    gap: 2.5rem;
+    padding-top: 2.5rem;
+  }
+
+  /* Grandchildren row — compact under each son */
+  .family-tree-children .family-tree-children {
+    gap: 1.5rem;
+    padding-top: 2rem;
+    margin-top: 0.25rem;
+  }
+
+  .family-tree-children .family-tree-children > li {
+    padding-top: 1rem;
+  }
+}
+
+/* Events list */
+.event-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.event-date {
+  text-align: center;
+  width: 5rem;
+  flex-shrink: 0;
+  border-left: 1px solid var(--border);
+  padding-left: 1.5rem;
+}
+
+/* Ancestors timeline */
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  border-right: 1px solid var(--border);
+  padding-right: 2rem;
+}
+
+.timeline-item {
+  position: relative;
+}
+
+.timeline-marker {
+  position: absolute;
+  top: 0.25rem;
+  right: -2.625rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: grid;
+  place-items: center;
+  border-radius: 9999px;
+  background: var(--background);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: 1rem;
+}
+
+/* Hero banner */
+.hero-banner {
+  min-height: 22rem;
+}
+
+.hero-banner .absolute.inset-0 img {
+  min-height: 100%;
+  object-fit: cover;
+}
+
+/* Site header */
+.site-header-inner {
+  gap: 0.75rem;
+}
+
+.site-logo-text {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.site-header-inner > a {
+  min-width: 0;
+  flex-shrink: 1;
+}
+
+#mobile-nav nav {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.footer-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Page spacing utilities */
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+.py-12 { padding-top: 3rem; padding-bottom: 3rem; }
+.max-w-full { max-width: 100%; }
+.mx-0 { margin-left: 0; margin-right: 0; }
+.text-2xl { font-size: 1.5rem; line-height: 2rem; }
+.text-balance { text-wrap: balance; }
 
 /* Responsive */
 @media (min-width: 640px) {
@@ -390,6 +598,8 @@ button, input, textarea { font-family: inherit; }
   .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .md\:text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+  .md\:py-14 { padding-top: 3.5rem; padding-bottom: 3.5rem; }
+  .md\:py-20 { padding-top: 5rem; padding-bottom: 5rem; }
   .md\:py-40 { padding-top: 10rem; padding-bottom: 10rem; }
   .md\:text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
   .md\:text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
@@ -453,3 +663,160 @@ button, input, textarea { font-family: inherit; }
   font-size: 0.65rem;
   top: 0.35rem;
 }
+
+/* ========== Responsive layout ========== */
+@media (min-width: 640px) {
+  .sm\:px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+}
+
+@media (max-width: 767px) {
+  /* Typography scale */
+  .text-5xl { font-size: 2rem; line-height: 1.2; }
+  .text-4xl { font-size: 1.75rem; line-height: 1.25; }
+  .text-3xl { font-size: 1.5rem; line-height: 1.3; }
+  .text-2xl { font-size: 1.25rem; line-height: 1.35; }
+
+  .py-20 { padding-top: 3rem; padding-bottom: 3rem; }
+  .py-24 { padding-top: 3.5rem; padding-bottom: 3.5rem; }
+  .py-28 { padding-top: 4rem; padding-bottom: 4rem; }
+  .px-6 { padding-left: 1rem; padding-right: 1rem; }
+
+  .-mx-6 { margin-left: 0; margin-right: 0; }
+
+  .hero-banner { min-height: 18rem; }
+  .hero-banner .relative.mx-auto { padding-top: 4rem; padding-bottom: 4rem; }
+
+  /* Family tree: vertical stack on mobile */
+  .family-tree-hint { display: block; }
+
+  .family-tree-scroll {
+    overflow-x: visible;
+    display: block;
+  }
+
+  .family-tree {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .family-tree > li {
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .family-tree-children {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    width: 100%;
+    padding-top: 0.75rem;
+    margin-top: 0.5rem;
+    margin-right: 0.75rem;
+    padding-right: 1rem;
+    border-right: 2px solid var(--border);
+  }
+
+  .family-tree-children .family-tree-children {
+    margin-right: 0.5rem;
+    gap: 0.5rem;
+  }
+
+  .family-tree-children::before,
+  .family-tree-children::after,
+  .family-tree-children > li::before {
+    display: none;
+  }
+
+  .family-tree-children > li {
+    padding-top: 0;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .family-tree-node {
+    width: 100%;
+    white-space: normal;
+    text-align: right;
+  }
+
+  .family-tree .whitespace-nowrap {
+    white-space: normal;
+  }
+
+  /* Events */
+  .event-row {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    padding: 1.25rem !important;
+  }
+
+  .event-date {
+    width: 100%;
+    border-left: none;
+    border-bottom: 1px solid var(--border);
+    padding-left: 0;
+    padding-bottom: 0.75rem;
+    text-align: right;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .event-date .font-display { font-size: 1.25rem; }
+
+  /* Timeline */
+  .timeline {
+    padding-right: 2.75rem;
+  }
+
+  .timeline-marker {
+    right: -2.35rem;
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.875rem;
+  }
+
+  /* Heritage overlap image */
+  .heritage-stack .heritage-inset {
+    position: static;
+    width: 100%;
+    max-width: 14rem;
+    margin: 1rem auto 0;
+    display: block;
+  }
+
+  /* Footer */
+  .footer-bar {
+    flex-direction: column !important;
+    justify-content: center !important;
+    text-align: center;
+    gap: 0.5rem;
+  }
+
+  /* Grid gaps on small screens */
+  .grid.gap-12 { gap: 2rem; }
+  .gap-6 { gap: 1rem; }
+
+  /* Notice & forms */
+  .notice-box { padding: 1rem; }
+
+  form.border.p-8 { padding: 1.25rem; }
+}
+
+@media (min-width: 768px) {
+  .family-tree-hint { display: none; }
+
+  .hero-banner { min-height: 32rem; }
+
+  .timeline {
+    padding-right: 3rem;
+  }
+
+  .timeline-marker {
+    right: -3.375rem;
+  }
+}
+
