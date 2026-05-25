@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>شجرة عائلة الذوادي</title>
+  <meta name="description" content="شجرة أنساب عائلة الذوادي من الجد المؤسس إلى الأحفاد." />
+  <meta property="og:title" content="شجرة عائلة الذوادي" />
+  <link rel="canonical" href="tree.html" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <div class="min-h-screen flex flex-col">
+    <header class="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur">
+      <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+        <a href="index.html" class="flex items-center gap-3 group">
+          <span class="grid h-10 w-10 place-items-center rounded-full border border-primary/40 font-display text-primary text-lg">ذ</span>
+          <span class="leading-tight"><span class="block font-display text-lg text-foreground">الذوادي</span><span class="block text-[11px] uppercase tracking-[0.25em] text-muted-foreground font-latin">AL Thawadi</span></span>
+        </a>
+        <nav class="hidden lg:flex items-center gap-7 text-sm">
+          <a href="index.html" class="nav-link text-foreground/70 hover:text-foreground transition-colors">الرئيسية</a>
+          <a href="about.html" class="nav-link text-foreground/70 hover:text-foreground transition-colors">عن العائلة</a>
+          <a href="tree.html" class="nav-link text-foreground/70 hover:text-foreground transition-colors">شجرة العائلة</a>
+          <a href="ancestors.html" class="nav-link text-foreground/70 hover:text-foreground transition-colors">الأجداد</a>
+          <a href="gallery.html" class="nav-link text-foreground/70 hover:text-foreground transition-colors">الصور</a>
+          <a href="news.html" class="nav-link text-foreground/70 hover:text-foreground transition-colors">أخبار المجلس</a>
+          <a href="events.html" class="nav-link text-foreground/70 hover:text-foreground transition-colors">المناسبات</a>
+          <a href="references.html" class="nav-link text-foreground/70 hover:text-foreground transition-colors">مراجع</a>
+          <a href="contact.html" class="nav-link text-foreground/70 hover:text-foreground transition-colors">تواصل</a>
+        </nav>
+        <div class="flex items-center gap-3">
+          <a href="https://www.instagram.com/althawadi_majlis/?hl=ar" target="_blank" rel="noreferrer" class="hidden sm:inline-flex items-center gap-2 rounded-full border border-border px-3 py-1.5 text-xs text-foreground/80 hover:bg-card transition-colors"><svg class="icon h-3.5 w-3.5" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg><span class="font-latin tracking-wide">@althawadi_majlis</span></a>
+          <button id="menu-toggle" type="button" class="lg:hidden p-2 rounded-md hover:bg-card" aria-label="القائمة"><svg id="menu-icon" class="icon h-5 w-5" viewBox="0 0 24 24" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg><svg id="close-icon" class="icon h-5 w-5" viewBox="0 0 24 24" aria-hidden="true" style="display:none"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+        </div>
+      </div>
+      <div id="mobile-nav" class="lg:hidden border-t border-border bg-background">
+        <nav class="flex flex-col px-6 py-4 gap-3 text-sm">
+          <a href="index.html" class="nav-link py-1 text-foreground/80">الرئيسية</a>
+          <a href="about.html" class="nav-link py-1 text-foreground/80">عن العائلة</a>
+          <a href="tree.html" class="nav-link py-1 text-foreground/80">شجرة العائلة</a>
+          <a href="ancestors.html" class="nav-link py-1 text-foreground/80">الأجداد</a>
+          <a href="gallery.html" class="nav-link py-1 text-foreground/80">الصور</a>
+          <a href="news.html" class="nav-link py-1 text-foreground/80">أخبار المجلس</a>
+          <a href="events.html" class="nav-link py-1 text-foreground/80">المناسبات</a>
+          <a href="references.html" class="nav-link py-1 text-foreground/80">مراجع</a>
+          <a href="contact.html" class="nav-link py-1 text-foreground/80">تواصل</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="flex-1">
+      <section class="border-b border-border bg-card/40 paper-texture">
+        <div class="mx-auto max-w-5xl px-6 py-20 text-center">
+          <p class="text-[11px] uppercase tracking-[0.4em] text-accent font-latin">Family Tree — شجرة الأنساب</p>
+          <div class="ornament my-5 mx-auto w-40"></div>
+          <h1 class="font-display text-4xl md:text-5xl text-foreground">شجرةُ الذوادي</h1>
+          <p class="mt-6 max-w-2xl mx-auto text-muted-foreground leading-8">هذه شجرةٌ مبدئيّة قابلة للتحديث والتوسعة. ندعو جميع أبناء العائلة للمساهمة في إثرائها بالأسماء والتواريخ الموثّقة.</p>
+        </div>
+      </section>
+
+      <section class="mx-auto max-w-7xl px-6 py-20">
+        <div class="overflow-x-auto pb-6 -mx-6 px-6">
+          <ul class="flex justify-center min-w-max family-tree" style="list-style:none;padding:0;margin:0;">
+            <li>
+              <div class="family-tree-node is-root">
+                <div class="font-display text-base text-foreground whitespace-nowrap">الجدّ المؤسّس — الذوادي</div>
+                <div class="text-[10px] tracking-wider text-muted-foreground font-latin mt-0.5">—</div>
+              </div>
+              <ul class="family-tree-children">
+                <li>
+                  <div class="family-tree-node">
+                    <div class="font-display text-base text-foreground whitespace-nowrap">الابن الأول</div>
+                    <div class="text-[10px] tracking-wider text-muted-foreground font-latin mt-0.5">—</div>
+                  </div>
+                  <ul class="family-tree-children">
+                    <li><div class="family-tree-node"><div class="font-display text-base text-foreground whitespace-nowrap">حفيد ١</div></div></li>
+                    <li><div class="family-tree-node"><div class="font-display text-base text-foreground whitespace-nowrap">حفيد ٢</div></div></li>
+                    <li><div class="family-tree-node"><div class="font-display text-base text-foreground whitespace-nowrap">حفيد ٣</div></div></li>
+                  </ul>
+                </li>
+                <li>
+                  <div class="family-tree-node">
+                    <div class="font-display text-base text-foreground whitespace-nowrap">الابن الثاني</div>
+                    <div class="text-[10px] tracking-wider text-muted-foreground font-latin mt-0.5">—</div>
+                  </div>
+                  <ul class="family-tree-children">
+                    <li><div class="family-tree-node"><div class="font-display text-base text-foreground whitespace-nowrap">حفيد ٤</div></div></li>
+                    <li><div class="family-tree-node"><div class="font-display text-base text-foreground whitespace-nowrap">حفيد ٥</div></div></li>
+                  </ul>
+                </li>
+                <li>
+                  <div class="family-tree-node">
+                    <div class="font-display text-base text-foreground whitespace-nowrap">الابن الثالث</div>
+                    <div class="text-[10px] tracking-wider text-muted-foreground font-latin mt-0.5">—</div>
+                  </div>
+                  <ul class="family-tree-children">
+                    <li><div class="family-tree-node"><div class="font-display text-base text-foreground whitespace-nowrap">حفيد ٦</div></div></li>
+                    <li><div class="family-tree-node"><div class="font-display text-base text-foreground whitespace-nowrap">حفيد ٧</div></div></li>
+                    <li><div class="family-tree-node"><div class="font-display text-base text-foreground whitespace-nowrap">حفيد ٨</div></div></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <p class="mt-12 text-center text-sm text-muted-foreground max-w-xl mx-auto leading-8">
+          هل لديك معلومات تُكمل الشجرة؟ تواصل معنا لإضافة اسمك أو تصحيح ما يلزم، فهذه الذاكرة ملكٌ لنا جميعًا.
+        </p>
+      </section>
+    </main>
+
+    <footer class="mt-24 border-t border-border bg-card/40">
+      <div class="mx-auto max-w-7xl px-6 py-14 grid gap-10 md:grid-cols-3">
+        <div><div class="font-display text-2xl text-foreground">الذوادي</div><p class="mt-3 text-sm text-muted-foreground leading-7 max-w-sm">بيت من الذكريات، وصفحة من التاريخ. نوثّق هنا نسب عائلتنا، وسير أجدادنا، وصورًا تحكي مسيرتنا جيلًا بعد جيل.</p></div>
+        <div><h4 class="text-xs uppercase tracking-[0.3em] text-muted-foreground font-latin">روابط</h4><ul class="mt-4 space-y-2 text-sm" style="list-style:none;padding:0;"><li><a href="about.html" class="hover:text-accent">عن العائلة</a></li><li><a href="tree.html" class="hover:text-accent">شجرة العائلة</a></li><li><a href="ancestors.html" class="hover:text-accent">الأجداد</a></li><li><a href="gallery.html" class="hover:text-accent">الصور</a></li><li><a href="references.html" class="hover:text-accent">مراجع</a></li></ul></div>
+        <div><h4 class="text-xs uppercase tracking-[0.3em] text-muted-foreground font-latin">تواصل</h4><a href="https://www.instagram.com/althawadi_majlis/?hl=ar" target="_blank" rel="noreferrer" class="mt-4 inline-flex items-center gap-2 text-sm text-foreground/80 hover:text-accent"><svg class="icon h-4 w-4" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg><span class="font-latin">@althawadi_majlis</span></a><p class="mt-4 text-sm text-muted-foreground">للتواصل والمساهمة بالمعلومات والصور: <a href="contact.html" class="text-accent hover:underline mr-1">صفحة التواصل</a></p></div>
+      </div>
+      <div class="border-t border-border/60"><div class="mx-auto max-w-7xl px-6 py-5 text-xs text-muted-foreground flex flex-wrap justify-between gap-3"><span>© <span id="footer-year"></span> مجلس الذوادي — جميع الحقوق محفوظة</span><span class="font-latin tracking-[0.2em] uppercase">AL Thawadi Family</span></div></div>
+    </footer>
+  </div>
+</body>
+</html>

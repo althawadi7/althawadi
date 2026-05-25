@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>أخبار مجلس الذوادي</title>
+  <meta name="description" content="آخر أخبار وأنشطة مجلس عائلة الذوادي عبر إنستغرام." />
+  <meta property="og:title" content="أخبار مجلس الذوادي" />
+  <meta property="og:url" content="news.html" />
+  <link rel="canonical" href="news.html" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <div class="min-h-screen flex flex-col">
+    <header class="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur">
+      <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+        <a href="index.html" class="flex items-center gap-3 group">
+          <span class="grid h-10 w-10 place-items-center rounded-full border border-primary/40 font-display text-primary text-lg">ذ</span>
+          <span class="leading-tight">
+            <span class="block font-display text-lg text-foreground">الذوادي</span>
+            <span class="block text-[11px] uppercase tracking-[0.25em] text-muted-foreground font-latin">AL Thawadi</span>
+          </span>
+        </a>
+        <nav class="hidden lg:flex items-center gap-7 text-sm">
+          <a href="index.html" class="nav-link text-foreground/70 hover:text-foreground transition-colors">الرئيسية</a>
+          <a href="about.html" class="nav-link text-foreground/70 hover:text-foreground transition-colors">عن العائلة</a>
+          <a href="tree.html" class="nav-link text-foreground/70 hover:text-foreground transition-colors">شجرة العائلة</a>
+          <a href="ancestors.html" class="nav-link text-foreground/70 hover:text-foreground transition-colors">الأجداد</a>
+          <a href="gallery.html" class="nav-link text-foreground/70 hover:text-foreground transition-colors">الصور</a>
+          <a href="news.html" class="nav-link text-foreground/70 hover:text-foreground transition-colors">أخبار المجلس</a>
+          <a href="events.html" class="nav-link text-foreground/70 hover:text-foreground transition-colors">المناسبات</a>
+          <a href="references.html" class="nav-link text-foreground/70 hover:text-foreground transition-colors">مراجع</a>
+          <a href="contact.html" class="nav-link text-foreground/70 hover:text-foreground transition-colors">تواصل</a>
+        </nav>
+        <div class="flex items-center gap-3">
+          <a href="https://www.instagram.com/althawadi_majlis/?hl=ar" target="_blank" rel="noreferrer" class="hidden sm:inline-flex items-center gap-2 rounded-full border border-border px-3 py-1.5 text-xs text-foreground/80 hover:bg-card transition-colors">
+            <svg class="icon h-3.5 w-3.5" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+            <span class="font-latin tracking-wide">@althawadi_majlis</span>
+          </a>
+          <button id="menu-toggle" type="button" class="lg:hidden p-2 rounded-md hover:bg-card" aria-label="القائمة">
+            <svg id="menu-icon" class="icon h-5 w-5" viewBox="0 0 24 24" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+            <svg id="close-icon" class="icon h-5 w-5" viewBox="0 0 24 24" aria-hidden="true" style="display:none"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          </button>
+        </div>
+      </div>
+      <div id="mobile-nav" class="lg:hidden border-t border-border bg-background">
+        <nav class="flex flex-col px-6 py-4 gap-3 text-sm">
+          <a href="index.html" class="nav-link py-1 text-foreground/80">الرئيسية</a>
+          <a href="about.html" class="nav-link py-1 text-foreground/80">عن العائلة</a>
+          <a href="tree.html" class="nav-link py-1 text-foreground/80">شجرة العائلة</a>
+          <a href="ancestors.html" class="nav-link py-1 text-foreground/80">الأجداد</a>
+          <a href="gallery.html" class="nav-link py-1 text-foreground/80">الصور</a>
+          <a href="news.html" class="nav-link py-1 text-foreground/80">أخبار المجلس</a>
+          <a href="events.html" class="nav-link py-1 text-foreground/80">المناسبات</a>
+          <a href="references.html" class="nav-link py-1 text-foreground/80">مراجع</a>
+          <a href="contact.html" class="nav-link py-1 text-foreground/80">تواصل</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="flex-1">
+      <section class="border-b border-border bg-card/40 paper-texture">
+        <div class="mx-auto max-w-5xl px-6 py-20 text-center">
+          <p class="text-[11px] uppercase tracking-[0.4em] text-accent font-latin">News — أخبار المجلس</p>
+          <div class="ornament my-5 mx-auto w-40"></div>
+          <h1 class="font-display text-4xl md:text-5xl text-foreground">ما يجري في مجلسنا</h1>
+          <p class="mt-6 max-w-2xl mx-auto text-muted-foreground leading-8">نشاركُ آخر أنشطة المجلس وتجمعات العائلة عبر حساب إنستغرام الرسمي.</p>
+        </div>
+      </section>
+
+      <section class="mx-auto max-w-3xl px-6 py-20 text-center">
+        <div class="border border-border rounded-sm p-12 bg-card/60 paper-texture">
+          <svg class="icon mx-auto h-10 w-10 text-accent" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+          <h2 class="mt-6 font-display text-3xl text-foreground">مجلس الذوادي على إنستغرام</h2>
+          <p class="mt-4 text-muted-foreground leading-8">
+            تابعوا حسابنا الرسمي لمتابعة آخر الصور، الإعلانات، ومناسبات العائلة.
+            ندعوكم للمشاركة معنا والتفاعل.
+          </p>
+          <a
+            href="https://www.instagram.com/althawadi_majlis/?hl=ar"
+            target="_blank"
+            rel="noreferrer"
+            class="mt-8 inline-flex items-center gap-3 rounded-sm bg-primary px-7 py-3 text-sm text-primary-foreground hover:bg-primary/90 transition-colors"
+          >
+            <span class="font-latin tracking-wider">@althawadi_majlis</span>
+            <svg class="icon h-4 w-4" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+          </a>
+        </div>
+
+        <p class="mt-10 text-sm text-muted-foreground">
+          قريبًا — سنضيف هنا أرشيفًا منظّمًا للإعلانات والأخبار العائليّة.
+        </p>
+      </section>
+    </main>
+
+    <footer class="mt-24 border-t border-border bg-card/40">
+      <div class="mx-auto max-w-7xl px-6 py-14 grid gap-10 md:grid-cols-3">
+        <div>
+          <div class="font-display text-2xl text-foreground">الذوادي</div>
+          <p class="mt-3 text-sm text-muted-foreground leading-7 max-w-sm">بيت من الذكريات، وصفحة من التاريخ. نوثّق هنا نسب عائلتنا، وسير أجدادنا، وصورًا تحكي مسيرتنا جيلًا بعد جيل.</p>
+        </div>
+        <div>
+          <h4 class="text-xs uppercase tracking-[0.3em] text-muted-foreground font-latin">روابط</h4>
+          <ul class="mt-4 space-y-2 text-sm" style="list-style:none;padding:0;">
+            <li><a href="about.html" class="hover:text-accent">عن العائلة</a></li>
+            <li><a href="tree.html" class="hover:text-accent">شجرة العائلة</a></li>
+            <li><a href="ancestors.html" class="hover:text-accent">الأجداد</a></li>
+            <li><a href="gallery.html" class="hover:text-accent">الصور</a></li>
+            <li><a href="references.html" class="hover:text-accent">مراجع</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-xs uppercase tracking-[0.3em] text-muted-foreground font-latin">تواصل</h4>
+          <a href="https://www.instagram.com/althawadi_majlis/?hl=ar" target="_blank" rel="noreferrer" class="mt-4 inline-flex items-center gap-2 text-sm text-foreground/80 hover:text-accent">
+            <svg class="icon h-4 w-4" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+            <span class="font-latin">@althawadi_majlis</span>
+          </a>
+          <p class="mt-4 text-sm text-muted-foreground">للتواصل والمساهمة بالمعلومات والصور: <a href="contact.html" class="text-accent hover:underline mr-1">صفحة التواصل</a></p>
+        </div>
+      </div>
+      <div class="border-t border-border/60">
+        <div class="mx-auto max-w-7xl px-6 py-5 text-xs text-muted-foreground flex flex-wrap justify-between gap-3">
+          <span>© <span id="footer-year"></span> مجلس الذوادي — جميع الحقوق محفوظة</span>
+          <span class="font-latin tracking-[0.2em] uppercase">AL Thawadi Family</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
