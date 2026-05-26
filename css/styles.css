@@ -578,6 +578,7 @@ button, input, textarea { font-family: inherit; }
 
 /* Page spacing utilities */
 .px-4 { padding-left: 1rem; padding-right: 1rem; }
+.py-8 { padding-top: 2rem; padding-bottom: 2rem; }
 .py-12 { padding-top: 3rem; padding-bottom: 3rem; }
 .max-w-full { max-width: 100%; }
 .mx-0 { margin-left: 0; margin-right: 0; }
@@ -740,7 +741,7 @@ button, input, textarea { font-family: inherit; }
   background: var(--card);
 }
 
-.archive-doc img {
+.archive-doc > img {
   display: block;
   width: 100%;
   height: auto;
@@ -1118,6 +1119,10 @@ button, input, textarea { font-family: inherit; }
   border-top: 1px solid var(--border);
 }
 
+.ref-section-block.is-section-empty {
+  display: none;
+}
+
 .ref-ig-toolbar {
   display: flex;
   flex-wrap: wrap;
@@ -1128,6 +1133,22 @@ button, input, textarea { font-family: inherit; }
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: color-mix(in oklch, var(--card) 50%, var(--background));
+}
+
+.ref-global-toolbar {
+  position: sticky;
+  top: 4.25rem;
+  z-index: 30;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 8px 24px color-mix(in oklch, var(--background) 55%, transparent);
+}
+
+#references-archive {
+  scroll-margin-top: 5rem;
+}
+
+#instagram-archive {
+  scroll-margin-top: 5rem;
 }
 
 .ref-ig-search-wrap {
@@ -1179,18 +1200,33 @@ button, input, textarea { font-family: inherit; }
 }
 
 @media (min-width: 640px) {
-  .ref-ig-grid {
+  .ref-ig-grid,
+  .ref-grid,
+  .ref-source-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (min-width: 1024px) {
-  .ref-ig-grid {
+  .ref-ig-grid,
+  .ref-grid,
+  .ref-source-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
-.ref-ig-card {
+.ref-grid,
+.ref-source-grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: 1fr;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ref-ig-card,
+.ref-card {
   display: flex;
   flex-direction: column;
   border: 1px solid var(--border);
@@ -1198,18 +1234,169 @@ button, input, textarea { font-family: inherit; }
   background: color-mix(in oklch, var(--card) 45%, var(--background));
   overflow: hidden;
   transition: border-color 150ms, box-shadow 150ms;
+  scroll-margin-top: 6rem;
 }
 
-.ref-ig-card:hover {
+.ref-ig-card:hover,
+.ref-card:hover {
   border-color: color-mix(in oklch, var(--accent) 35%, var(--border));
   box-shadow: 0 4px 20px color-mix(in oklch, var(--foreground) 6%, transparent);
 }
 
+.ref-ig-card.is-hidden,
+.ref-card.is-hidden {
+  display: none;
+}
+
+.ref-source-card {
+  padding: 1.125rem 1.25rem 1.25rem;
+}
+
+.ref-source-card > h3.font-display {
+  margin: 0 0 0.35rem;
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+.ref-source-card > p.text-sm.text-muted-foreground.mt-1 {
+  margin-top: 0;
+  font-size: 0.8125rem;
+  color: var(--accent);
+}
+
+.ref-source-card > p.mt-3.text-sm,
+.ref-source-card > p.text-sm.text-muted-foreground.leading-7 {
+  font-size: 0.8125rem;
+  line-height: 1.85;
+}
+
+.ref-source-card--link {
+  padding: 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+.ref-source-card--link:hover {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.ref-card--link {
+  padding: 0;
+  color: inherit;
+  text-decoration: none;
+  height: 100%;
+}
+
+.ref-card--link > div {
+  padding: 1.125rem 1.25rem;
+  height: 100%;
+}
+
+.ref-card-media-wrap {
+  margin-top: 1rem;
+}
+
+/* Match one grid column so doc thumbs align with Instagram cards */
+.ref-source-card#bni-khalid-1916 .ref-card-media-wrap {
+  width: 100%;
+  max-width: 100%;
+}
+
+@media (min-width: 640px) {
+  .ref-source-card#bni-khalid-1916 .ref-card-media-wrap {
+    width: calc((100% - 1.25rem) / 2);
+  }
+}
+
+@media (min-width: 1024px) {
+  .ref-source-card#bni-khalid-1916 .ref-card-media-wrap {
+    width: calc((100% - 2.5rem) / 3);
+  }
+}
+
+.ref-source-card .doc-excerpt {
+  margin-top: 0.75rem;
+  font-size: 0.8125rem;
+}
+
+.ref-source-card .tribe-table {
+  margin-top: 0.75rem;
+  font-size: 0.8125rem;
+}
+
+.ref-source-card .content-list li {
+  font-size: 0.8125rem;
+}
+
+.ref-ig-badge {
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  color: var(--accent);
+}
+
+.ref-ig-sub {
+  font-size: 0.6875rem;
+  color: var(--muted-foreground);
+  text-align: left;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ref-ig-thumb-label {
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+  letter-spacing: 0.05em;
+}
+
+.ref-ig-thumb--link {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.ref-ig-thumb--link:hover .ref-ig-thumb-label {
+  color: var(--accent);
+}
+
+.ref-source-fulltext {
+  font-size: 0.8125rem;
+  line-height: 1.85;
+  color: var(--muted-foreground);
+}
+
+.ref-source-fulltext .doc-excerpt,
+.ref-source-fulltext .tribe-table,
+.ref-source-fulltext .content-list {
+  margin-top: 0.75rem;
+}
+
+.ref-source-fulltext .archive-doc figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+}
+
+.ref-source-grid > li {
+  display: flex;
+  min-width: 0;
+}
+
+.ref-source-grid > li > .ref-card--link {
+  flex: 1;
+  width: 100%;
+}
+
+.ref-source-grid > li.is-hidden,
 .ref-ig-card.is-hidden {
   display: none;
 }
 
-.ref-ig-thumb {
+.ref-ig-thumb,
+.ref-doc-thumb {
   position: relative;
   display: block;
   width: 100%;
@@ -1220,6 +1407,7 @@ button, input, textarea { font-family: inherit; }
   cursor: zoom-in;
   aspect-ratio: 1;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .ref-ig-thumb--empty {
@@ -1230,12 +1418,22 @@ button, input, textarea { font-family: inherit; }
   cursor: default;
 }
 
-.ref-ig-thumb img {
+.ref-ig-thumb img,
+.ref-doc-thumb img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
+  max-width: none;
+  max-height: none;
   object-fit: cover;
+  object-position: center;
   display: block;
   transition: transform 300ms;
+}
+
+.archive-doc .ref-ig-thumb {
+  border-radius: calc(var(--radius) - 2px);
 }
 
 .ref-ig-thumb:hover img {
@@ -1245,6 +1443,7 @@ button, input, textarea { font-family: inherit; }
 .ref-ig-play {
   position: absolute;
   inset: 0;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1269,6 +1468,7 @@ button, input, textarea { font-family: inherit; }
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
+  z-index: 2;
   padding: 0.15rem 0.5rem;
   font-size: 0.6875rem;
   border-radius: 9999px;
@@ -1313,6 +1513,10 @@ button, input, textarea { font-family: inherit; }
   margin: 0;
   font-size: 1rem;
   line-height: 1.65;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .ref-ig-excerpt {
@@ -1332,22 +1536,187 @@ button, input, textarea { font-family: inherit; }
 }
 
 .ref-ig-details summary {
+  list-style: none;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.25rem;
+  padding: 0.35rem 0.65rem;
+  border: 1px solid color-mix(in oklch, var(--accent) 35%, var(--border));
+  border-radius: 9999px;
   color: var(--accent);
+  background: color-mix(in oklch, var(--accent) 8%, var(--background));
   user-select: none;
-  padding: 0.25rem 0;
+  transition: background 150ms, border-color 150ms;
+}
+
+.ref-ig-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.ref-ig-details summary::before {
+  content: "◂";
+  font-size: 0.65rem;
+  opacity: 0.85;
 }
 
 .ref-ig-details summary:hover {
-  text-decoration: underline;
+  background: color-mix(in oklch, var(--accent) 14%, var(--background));
+  border-color: color-mix(in oklch, var(--accent) 55%, var(--border));
+}
+
+/* Content lives in popup — never expand inline */
+.ref-ig-details .ref-ig-fulltext {
+  display: none !important;
 }
 
 .ref-ig-fulltext {
-  margin-top: 0.75rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--border);
-  max-height: 16rem;
+  font-size: 0.875rem;
+  line-height: 1.9;
+  color: var(--muted-foreground);
+}
+
+/* Details popup */
+body.ref-details-open {
+  overflow: hidden;
+}
+
+.ref-details-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.ref-details-dialog[hidden] {
+  display: none !important;
+}
+
+.ref-details-backdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  background: color-mix(in oklch, black 72%, transparent);
+  cursor: pointer;
+}
+
+.ref-details-panel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: min(96vw, 40rem);
+  max-height: min(88vh, 42rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--background);
+  box-shadow: 0 24px 48px color-mix(in oklch, black 35%, transparent);
+  overflow: hidden;
+}
+
+.ref-details-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1rem 1.125rem;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in oklch, var(--card) 55%, var(--background));
+  flex-shrink: 0;
+}
+
+.ref-details-title {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  flex: 1;
+  min-width: 0;
+}
+
+.ref-details-close {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  background: var(--background);
+  color: var(--foreground);
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 150ms, border-color 150ms;
+}
+
+.ref-details-close:hover {
+  background: var(--card);
+  border-color: color-mix(in oklch, var(--accent) 40%, var(--border));
+}
+
+.ref-details-body {
+  flex: 1;
+  min-height: 0;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 1.125rem 1.25rem 1.25rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ref-details-body .ref-ig-caption-p,
+.ref-details-body p {
+  margin: 0 0 0.875rem;
+  font-size: 0.875rem;
+  line-height: 1.9;
+  color: var(--muted-foreground);
+  text-align: justify;
+}
+
+.ref-details-body .ref-ig-caption-p:last-child,
+.ref-details-body p:last-child {
+  margin-bottom: 0;
+}
+
+.ref-details-body .doc-excerpt {
+  margin: 0.75rem 0;
+  padding: 0.75rem 1rem;
+  border-right: 3px solid var(--accent);
+  background: color-mix(in oklch, var(--card) 60%, var(--background));
+  font-size: 0.8125rem;
+  line-height: 1.85;
+}
+
+.ref-details-body .tribe-table {
+  width: 100%;
+  margin: 0.75rem 0;
+  font-size: 0.75rem;
+  border-collapse: collapse;
+}
+
+.ref-details-body .tribe-table th,
+.ref-details-body .tribe-table td {
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--border);
+}
+
+.ref-details-body .content-list {
+  margin: 0.5rem 0 0.75rem;
+  padding-right: 1.25rem;
+  font-size: 0.8125rem;
+  line-height: 1.75;
+}
+
+.ref-details-body .archive-doc figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+}
+
+.ref-details-body a {
+  color: var(--accent);
+  word-break: break-word;
 }
 
 .ref-ig-caption-p {
@@ -1392,10 +1761,12 @@ body.ref-ig-lightbox-open {
 .ref-ig-lightbox-panel {
   position: relative;
   z-index: 1;
-  width: min(96vw, 56rem);
+  width: auto;
+  max-width: min(96vw, 90rem);
   max-height: 92vh;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .ref-ig-lightbox-close {
@@ -1418,27 +1789,26 @@ body.ref-ig-lightbox-open {
   display: flex;
   align-items: center;
   justify-content: center;
-  max-height: 92vh;
+  max-width: min(96vw, 90rem);
+  max-height: calc(92vh - 1rem);
   border-radius: var(--radius);
-  overflow: hidden;
-  background: #000;
+  overflow: auto;
+  background: color-mix(in oklch, black 92%, transparent);
 }
 
-.ref-ig-lightbox-media img {
+/* Full image/video — no crop (thumbnails use cover in the grid only) */
+.ref-ig-lightbox-media .ref-ig-lightbox-full {
   display: block;
-  max-width: 100%;
-  max-height: 92vh;
   width: auto;
   height: auto;
+  max-width: min(96vw, 90rem);
+  max-height: calc(92vh - 1rem);
   object-fit: contain;
+  object-position: center;
   margin: 0 auto;
 }
 
-.ref-ig-lightbox-media video {
-  display: block;
-  max-width: 100%;
-  max-height: 92vh;
-  width: 100%;
+.ref-ig-lightbox-media video.ref-ig-lightbox-full {
   background: #000;
 }
 
@@ -1450,8 +1820,14 @@ body.ref-ig-lightbox-open {
   }
 
   .ref-ig-lightbox-panel {
-    width: 100%;
+    max-width: 100%;
     max-height: 85vh;
+  }
+
+  .ref-ig-lightbox-media,
+  .ref-ig-lightbox-media .ref-ig-lightbox-full {
+    max-width: 100%;
+    max-height: calc(85vh - 1rem);
   }
 }
 
@@ -1680,6 +2056,181 @@ body.ref-ig-lightbox-open {
   .notice-box { padding: 1rem; }
 
   form.border.p-8 { padding: 1.25rem; }
+
+  /* References archive — compact cards, clear gaps */
+  #references-archive.references-page {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 2.5rem;
+  }
+
+  #references-archive + .mt-16,
+  #references-archive .mt-16 {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+  }
+
+  main > .mx-auto.max-w-4xl.py-8 {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  #references-archive .ref-ig-grid {
+    gap: 0.875rem;
+  }
+
+  #references-archive .ref-ig-card {
+    flex-direction: row;
+    align-items: stretch;
+    border-radius: calc(var(--radius) - 1px);
+  }
+
+  #references-archive .ref-ig-thumb,
+  #references-archive .ref-doc-thumb,
+  #references-archive .ref-ig-thumb--empty {
+    width: 5.75rem;
+    min-width: 5.75rem;
+    max-width: 5.75rem;
+    aspect-ratio: 1;
+    flex-shrink: 0;
+    border-radius: 0;
+  }
+
+  #references-archive .ref-ig-card-body {
+    flex: 1;
+    min-width: 0;
+    padding: 0.625rem 0.75rem;
+    gap: 0.3rem;
+  }
+
+  #references-archive .ref-ig-card-meta {
+    gap: 0.35rem;
+  }
+
+  #references-archive .ref-ig-badge,
+  #references-archive .ref-ig-num {
+    font-size: 0.75rem;
+  }
+
+  #references-archive .ref-ig-sub {
+    font-size: 0.625rem;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  #references-archive .ref-ig-card-title {
+    font-size: 0.875rem;
+    line-height: 1.45;
+    -webkit-line-clamp: 2;
+  }
+
+  #references-archive .ref-ig-excerpt {
+    font-size: 0.6875rem;
+    line-height: 1.55;
+    -webkit-line-clamp: 2;
+  }
+
+  #references-archive .ref-ig-details {
+    font-size: 0.6875rem;
+  }
+
+  #references-archive .ref-ig-details summary {
+    padding: 0.15rem 0;
+  }
+
+  #references-archive .ref-details-panel {
+    width: 100%;
+    max-height: 90vh;
+  }
+
+  #references-archive .ref-details-header {
+    padding: 0.875rem 1rem;
+  }
+
+  #references-archive .ref-details-title {
+    font-size: 0.9375rem;
+  }
+
+  #references-archive .ref-details-body {
+    padding: 1rem;
+  }
+
+  #references-archive .ref-source-fulltext p,
+  #references-archive .ref-source-fulltext .doc-excerpt,
+  #references-archive .ref-source-fulltext li {
+    font-size: 0.6875rem;
+    line-height: 1.6;
+    margin-top: 0.5rem;
+  }
+
+  #references-archive .ref-source-fulltext .tribe-table {
+    font-size: 0.625rem;
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #references-archive .ref-global-toolbar {
+    top: 3.5rem;
+    margin-bottom: 0.875rem;
+    padding: 0.625rem 0.75rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  #references-archive .ref-ig-search {
+    padding: 0.55rem 0.75rem;
+    font-size: 0.875rem;
+  }
+
+  #references-archive .ref-ig-count {
+    width: 100%;
+    white-space: normal;
+    text-align: center;
+    font-size: 0.75rem;
+  }
+
+  #references-archive .ref-ig-empty {
+    margin-bottom: 0.75rem;
+    padding: 0.75rem;
+    font-size: 0.8125rem;
+  }
+
+  #references-archive .ref-ig-play::after {
+    width: 2rem;
+    height: 2rem;
+    background-size: 0.875rem;
+  }
+
+  #references-archive .ref-ig-type-badge {
+    font-size: 0.5625rem;
+    top: 0.25rem;
+    right: 0.25rem;
+  }
+}
+
+/* References: 2-column grid on larger phones */
+@media (min-width: 480px) and (max-width: 639px) {
+  #references-archive .ref-ig-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  #references-archive .ref-ig-card {
+    flex-direction: column;
+  }
+
+  #references-archive .ref-ig-thumb,
+  #references-archive .ref-doc-thumb,
+  #references-archive .ref-ig-thumb--empty {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+  }
 }
 
 @media (min-width: 768px) {

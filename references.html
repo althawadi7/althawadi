@@ -60,15 +60,15 @@
 
     <main class="flex-1">
       <section class="border-b border-border bg-card/40 paper-texture">
-        <div class="mx-auto max-w-5xl px-6 py-20 text-center">
+        <div class="mx-auto max-w-5xl px-4 sm:px-6 py-12 text-center">
           <p class="text-[11px] uppercase tracking-[0.4em] text-accent font-latin">References — مراجع ومصادر</p>
           <div class="ornament my-5 mx-auto w-40"></div>
           <h1 class="font-display text-4xl md:text-5xl text-foreground">مصادرنا ومراجعنا</h1>
-          <p class="mt-6 max-w-2xl mx-auto text-muted-foreground leading-8">كتب ومصادر ذكرت العماير والذواودة في سياق بني خالد والبحرين — مقسّمة أكاديميًّا للقراءة والتحقق.</p>
+          <p class="mt-6 max-w-2xl mx-auto text-muted-foreground leading-8">كتب ومصادر ومنشورات ذكرت العماير والذواودة — للقراءة والبحث والتحقق.</p>
         </div>
       </section>
 
-      <section class="mx-auto max-w-4xl px-6 py-12">
+      <section class="mx-auto max-w-4xl px-4 sm:px-6 py-8">
         <div class="notice-box notice-box--warning">
           <p class="text-sm text-muted-foreground leading-8" style="margin:0;">
             هذه المراجع تخصّ <strong class="text-foreground">الذواودة في مملكة البحرين</strong> (العماير من بني خالد، الحد والمحرق).
@@ -78,60 +78,125 @@
         </div>
       </section>
 
-      <section class="mx-auto max-w-6xl px-6 pb-20">
-        <p class="text-sm text-muted-foreground leading-8 mb-8">
-          كل مرجعٍ أدناه يذكر <strong class="text-foreground">العماير</strong> و/أو <strong class="text-foreground">الذواودة</strong>
-          في سياق بني خالد والبحرين — للقراءة والتحقق الأكاديمي.
-        </p>
+      <section class="mx-auto max-w-6xl px-4 sm:px-6 pb-20 references-page" id="references-archive" aria-label="أرشيف المراجع والمنشورات">
+        <span id="instagram-archive" class="sr-only" aria-hidden="true"></span>
+        <div class="ref-ig-toolbar ref-global-toolbar" id="ref-search-toolbar">
+          <label class="ref-ig-search-wrap">
+            <span class="sr-only">بحث في المراجع والمنشورات</span>
+            <input type="search" id="ref-global-search" class="ref-ig-search" placeholder="ابحث في كل المراجع والمنشورات… (مثال: عبدالله، غوص، الخالدي)" autocomplete="off" />
+          </label>
+          <p id="ref-global-count" class="ref-ig-count" aria-live="polite"></p>
+        </div>
+        <p id="ref-global-empty" class="ref-ig-empty" hidden>لا توجد نتائج مطابقة للبحث.</p>
 
-        <h2 class="ref-section-title">١ — مصادر الأنساب والقبيلة الأم (العماير — بني خالد)</h2>
-        <p class="text-sm text-muted-foreground mb-4 leading-7">المرجع الأول لإثبات الفرع الصريح داخل القبيلة الأم.</p>
-        <ul class="space-y-6" style="list-style:none;padding:0;margin:0;">
-          <li class="border border-border rounded-sm p-6 bg-card/40">
-            <h3 class="font-display text-xl text-foreground">من أخبار وتاريخ بني خالد</h3>
-            <p class="text-sm text-muted-foreground mt-1">محمد يوسف الخالدي</p>
-            <p class="mt-3 text-sm text-muted-foreground leading-7">
+        <ul class="ref-ig-grid" id="ref-all-grid">
+          <li class="ref-ig-card ref-ig-card--source" data-search="من أخبار وتاريخ بني خالد محمد يوسف الخالدي سياق الذكر: يفصّل في بطون وأفخاذ القبيلة، ويذكر «العماير» ويعدد فروعهم المستقرة في سواحل الخليج، ويذكر «الذواودة» كأحد الفروع البحرية التي انتقلت واستقرت في البحرين وتوارثت المشيخة والتجارة.">
+            <div class="ref-ig-thumb ref-ig-thumb--empty" aria-hidden="true">
+              <span class="ref-ig-thumb-label">مرجع</span>
+            </div>
+            <div class="ref-ig-card-body">
+              <div class="ref-ig-card-meta">
+                <span class="ref-ig-badge">مرجع</span>
+                <span class="ref-ig-sub">محمد يوسف الخالدي</span>
+              </div>
+              <h3 class="ref-ig-card-title font-display text-foreground">من أخبار وتاريخ بني خالد</h3>
+              <p class="ref-ig-excerpt">سياق الذكر: يفصّل في بطون وأفخاذ القبيلة، ويذكر «العماير» ويعدد فروعهم المستقرة في سواحل الخليج، ويذكر «الذواودة» كأحد الفروع البحرية التي انتقلت واستقرت في ال…</p>
+              <details class="ref-ig-details">
+                <summary>عرض التفاصيل</summary>
+                <div class="ref-ig-fulltext ref-source-fulltext">
+<p class="mt-3 text-sm text-muted-foreground leading-7">
               <strong class="text-foreground">سياق الذكر:</strong> يفصّل في بطون وأفخاذ القبيلة، ويذكر «العماير» ويعدد فروعهم
               المستقرة في سواحل الخليج، ويذكر «الذواودة» كأحد الفروع البحرية التي انتقلت واستقرت في البحرين وتوارثت
               المشيخة والتجارة.
             </p>
+                </div>
+              </details>
+            </div>
           </li>
-          <li class="border border-border rounded-sm p-6 bg-card/40">
-            <h3 class="font-display text-xl text-foreground">بنو خالد عبر القرون</h3>
-            <p class="text-sm text-muted-foreground mt-1">عبد الكريم الوهبي</p>
-            <p class="mt-3 text-sm text-muted-foreground leading-7">
+          <li class="ref-ig-card ref-ig-card--source" data-search="بنو خالد عبر القرون عبد الكريم الوهبي سياق الذكر: يستعرض تاريخ إمارة بني خالد السياسية والاقتصادية، ويتطرق إلى دور العماير كقوة بحرية للقبيلة على الساحل الشرقي (القطيف، جزيرة جنة، وجناح)، وكيف تفرعت منهم الأسر الحضرية في قطر والبحرين — ومنها عائلة الذوادي.">
+            <div class="ref-ig-thumb ref-ig-thumb--empty" aria-hidden="true">
+              <span class="ref-ig-thumb-label">مرجع</span>
+            </div>
+            <div class="ref-ig-card-body">
+              <div class="ref-ig-card-meta">
+                <span class="ref-ig-badge">مرجع</span>
+                <span class="ref-ig-sub">عبد الكريم الوهبي</span>
+              </div>
+              <h3 class="ref-ig-card-title font-display text-foreground">بنو خالد عبر القرون</h3>
+              <p class="ref-ig-excerpt">سياق الذكر: يستعرض تاريخ إمارة بني خالد السياسية والاقتصادية، ويتطرق إلى دور العماير كقوة بحرية للقبيلة على الساحل الشرقي (القطيف، جزيرة جنة، وجناح)، وكيف تفرع…</p>
+              <details class="ref-ig-details">
+                <summary>عرض التفاصيل</summary>
+                <div class="ref-ig-fulltext ref-source-fulltext">
+<p class="mt-3 text-sm text-muted-foreground leading-7">
               <strong class="text-foreground">سياق الذكر:</strong> يستعرض تاريخ إمارة بني خالد السياسية والاقتصادية، ويتطرق إلى
               دور العماير كقوة بحرية للقبيلة على الساحل الشرقي (القطيف، جزيرة جنة، وجناح)، وكيف تفرعت منهم الأسر الحضرية
               في قطر والبحرين — ومنها عائلة الذوادي.
             </p>
+                </div>
+              </details>
+            </div>
           </li>
-          <li class="border border-border rounded-sm p-6 bg-card/40">
-            <h3 class="font-display text-xl text-foreground">القبائل والبيوتات المؤرخة في دولة البحرين</h3>
-            <p class="text-sm text-muted-foreground mt-1">د. منصور الشقحاء</p>
-            <p class="mt-3 text-sm text-muted-foreground leading-7">
+          <li class="ref-ig-card ref-ig-card--source" data-search="القبائل والبيوتات المؤرخة في دولة البحرين د. منصور الشقحاء سياق الذكر: يوثّق الأسر البحرينية ذات الأصول القبيلية الممتدة، ويذكر عائلة الذوادي صراحةً بانتسابها إلى العماير من بني خالد ، وموطنهم التاريخي في المحرق والحد.">
+            <div class="ref-ig-thumb ref-ig-thumb--empty" aria-hidden="true">
+              <span class="ref-ig-thumb-label">مرجع</span>
+            </div>
+            <div class="ref-ig-card-body">
+              <div class="ref-ig-card-meta">
+                <span class="ref-ig-badge">مرجع</span>
+                <span class="ref-ig-sub">د. منصور الشقحاء</span>
+              </div>
+              <h3 class="ref-ig-card-title font-display text-foreground">القبائل والبيوتات المؤرخة في دولة البحرين</h3>
+              <p class="ref-ig-excerpt">سياق الذكر: يوثّق الأسر البحرينية ذات الأصول القبيلية الممتدة، ويذكر عائلة الذوادي صراحةً بانتسابها إلى العماير من بني خالد ، وموطنهم التاريخي في المحرق والحد.</p>
+              <details class="ref-ig-details">
+                <summary>عرض التفاصيل</summary>
+                <div class="ref-ig-fulltext ref-source-fulltext">
+<p class="mt-3 text-sm text-muted-foreground leading-7">
               <strong class="text-foreground">سياق الذكر:</strong> يوثّق الأسر البحرينية ذات الأصول القبيلية الممتدة، ويذكر
               عائلة الذوادي صراحةً بانتسابها إلى <strong class="text-foreground">العماير من بني خالد</strong>، وموطنهم
               التاريخي في المحرق والحد.
             </p>
+                </div>
+              </details>
+            </div>
           </li>
-          <li class="border border-border rounded-sm p-6 bg-card/40">
-            <h3 class="font-display text-xl text-foreground">الجمهرة في أنساب الأسر والقبائل في الخليج والجزيرة العربية</h3>
-            <p class="text-sm text-muted-foreground mt-1">العلامة حمد الجاسر</p>
-            <p class="mt-3 text-sm text-muted-foreground leading-7">
+          <li class="ref-ig-card ref-ig-card--source" data-search="الجمهرة في أنساب الأسر والقبائل في الخليج والجزيرة العربية العلامة حمد الجاسر سياق الذكر: معجم ضخم يوثّق الأسر وأصولها؛ يسجل عائلة الذوادي في البحرين مرجعًا إياهم إلى نسبهم الخالدي الصريح (العماير)، ويوضّح تواجدهم الحضري في مدن وقرى البحرين والمنطقة الشرقية، مع التفريق بينهم وبين تشابه الأسماء في مناطق أخرى.">
+            <div class="ref-ig-thumb ref-ig-thumb--empty" aria-hidden="true">
+              <span class="ref-ig-thumb-label">مرجع</span>
+            </div>
+            <div class="ref-ig-card-body">
+              <div class="ref-ig-card-meta">
+                <span class="ref-ig-badge">مرجع</span>
+                <span class="ref-ig-sub">العلامة حمد الجاسر</span>
+              </div>
+              <h3 class="ref-ig-card-title font-display text-foreground">الجمهرة في أنساب الأسر والقبائل في الخليج والجزيرة العربية</h3>
+              <p class="ref-ig-excerpt">سياق الذكر: معجم ضخم يوثّق الأسر وأصولها؛ يسجل عائلة الذوادي في البحرين مرجعًا إياهم إلى نسبهم الخالدي الصريح (العماير)، ويوضّح تواجدهم الحضري في مدن وقرى البح…</p>
+              <details class="ref-ig-details">
+                <summary>عرض التفاصيل</summary>
+                <div class="ref-ig-fulltext ref-source-fulltext">
+<p class="mt-3 text-sm text-muted-foreground leading-7">
               <strong class="text-foreground">سياق الذكر:</strong> معجم ضخم يوثّق الأسر وأصولها؛ يسجل عائلة الذوادي في البحرين
               مرجعًا إياهم إلى نسبهم الخالدي الصريح (العماير)، ويوضّح تواجدهم الحضري في مدن وقرى البحرين والمنطقة الشرقية،
               مع التفريق بينهم وبين تشابه الأسماء في مناطق أخرى.
             </p>
+                </div>
+              </details>
+            </div>
           </li>
-        </ul>
-
-        <h2 class="ref-section-title">٢ — المصادر التاريخية الرسمية والوثائق الدولية</h2>
-        <p class="text-sm text-muted-foreground mb-4 leading-7">أقوى المصادر ميدانيًّا في رصد الأعيان وتجارة اللؤلؤ وسفن الغوص.</p>
-        <ul class="space-y-6" style="list-style:none;padding:0;margin:0;">
-          <li class="border border-border rounded-sm p-6 bg-card/40">
-            <h3 class="font-display text-xl text-foreground">دليل الخليج — Geographical and Historical Gazetteer of the Persian Gulf</h3>
-            <p class="text-sm text-muted-foreground mt-1 font-latin">J.G. Lorimer</p>
-            <p class="mt-3 text-sm text-muted-foreground leading-7">
+          <li class="ref-ig-card ref-ig-card--source" data-search="دليل الخليج — Geographical and Historical Gazetteer of the Persian Gulf J.G. Lorimer سياق الذكر: في القسم الجغرافي (مادة البحرين — والحد والمحرق)، يذكر قبيلة «الذواودة» (Al-Thawawdah) بالاسم كفرع مستقر، ويحدد تعدادهم وامتلاكهم لبيوت وسفن غوص، ويصنفهم ضمن القبائل الحضرية ذات المكانة العالية في مدينة الحد والمحرق. المجلد الجغرافي — مادة البحرين (السكان) «الذواودة (Thawāwdeh) ومفردها ذوادي (Thawādi): قبيلة عربية مستقرة (حضر) في جزر البحرين… يتركز سكنهم في مدينتي الحد والمحرق… يشتغل معظم رجالهم في الغوص على اللؤلؤ والتجارة البحرية، ويمتلكون عدداً من سفن الغوص الراسية على الساحل.» جدول قبائل البحرين — دليل الخليج «الحد:… القبائل الرئيسية… الذواودة (Thawāwdeh). ويعمل سكان البلدة، ومنهم الذواودة، في الغوص على اللؤلؤ حيث تمتلك البلدة أسطولاً كبيراً من سفن الغوص يتجاوز 150 سفينة…» مادة مدينة الحد — دليل الخليج">
+            <div class="ref-ig-thumb ref-ig-thumb--empty" aria-hidden="true">
+              <span class="ref-ig-thumb-label">مرجع</span>
+            </div>
+            <div class="ref-ig-card-body">
+              <div class="ref-ig-card-meta">
+                <span class="ref-ig-badge">مرجع</span>
+                <span class="ref-ig-sub">J.G. Lorimer</span>
+              </div>
+              <h3 class="ref-ig-card-title font-display text-foreground">دليل الخليج — Geographical and Historical Gazetteer of the Persian Gulf</h3>
+              <p class="ref-ig-excerpt">سياق الذكر: في القسم الجغرافي (مادة البحرين — والحد والمحرق)، يذكر قبيلة «الذواودة» (Al-Thawawdah) بالاسم كفرع مستقر، ويحدد تعدادهم وامتلاكهم لبيوت وسفن غوص، و…</p>
+              <details class="ref-ig-details">
+                <summary>عرض التفاصيل</summary>
+                <div class="ref-ig-fulltext ref-source-fulltext">
+<p class="mt-3 text-sm text-muted-foreground leading-7">
               <strong class="text-foreground">سياق الذكر:</strong> في القسم الجغرافي (مادة البحرين — والحد والمحرق)، يذكر قبيلة
               «الذواودة» (Al-Thawawdah) بالاسم كفرع مستقر، ويحدد تعدادهم وامتلاكهم لبيوت وسفن غوص، ويصنفهم ضمن القبائل
               الحضرية ذات المكانة العالية في مدينة الحد والمحرق.
@@ -148,11 +213,23 @@
               حيث تمتلك البلدة أسطولاً كبيراً من سفن الغوص يتجاوز 150 سفينة…»
               <cite>مادة مدينة الحد — دليل الخليج</cite>
             </blockquote>
+                </div>
+              </details>
+            </div>
           </li>
-          <li class="border border-border rounded-sm p-6 bg-card/40" id="bni-khalid-1916">
-            <h3 class="font-display text-xl text-foreground">تقرير استخباري بريطاني — تقسيم بني خالد (1916)</h3>
-            <p class="text-sm text-muted-foreground mt-1 font-latin">IOR/L/PS/20/E84/1 — Settled Tribes of the Centre, p. 608</p>
-            <p class="mt-3 text-sm text-muted-foreground leading-7">
+          <li class="ref-ig-card ref-ig-card--source" id="bni-khalid-1916" data-search="تقرير استخباري بريطاني — تقسيم بني خالد (1916) IOR/L/PS/20/E84/1 — Settled Tribes of the Centre, p. 608 سياق الذكر: جدول رسمي في تقرير المقيمية البريطانية يُقسّم بني خالد (Beni Khālid) إلى بطون وعشائر. يذكر الذواودة (Dawāudah) صراحةً تحت بطن العماير (&#x27;Amā&#x27;ir) — لا تحت المهاشير ولا الجبور — مع ذكر تواجدهم في يسرة (Yasrah) بالبحرين وعنك بالقطيف. «&#x27;Amā&#x27;ir — Dawāudah: A few at Yasrah in Bahrein and at &#x27;Anik in the Qatif Oasis.» British Intelligence Report, 1916 — IOR/L/PS/20/E84/1, p. 608 صورة الأصل: صفحة 608 — «13. Beni Khālid» — جدول BENI KHĀLID. المرجع: IOR/L/PS/20/E84/1 تقسيم بني خالد كما ورد في التقرير (ترجمة موجزة): البطن العشائر / الفروع العماير الذواودة، آل حسن، آل خالد، آل رزين، آل شاهين آل صبيح البوعينين، الظهيرات، الهدهود، الحميدات، آل كتب العرافة — آل دوشان — آل حمران — الجبور — المهاشير — آل مقدم — آل قماز — هذا التقرير يُثبت موقع الذواودة في شجرة بني خالد — انظر صفحة النسب .">
+            <button type="button" class="ref-ig-thumb ref-ig-lightbox-trigger ref-doc-thumb" data-type="image" data-src="assets/E5UyU7aXEAIYjw9.jpg" aria-label="عرض الوثيقة"><img src="assets/E5UyU7aXEAIYjw9.jpg" alt="صفحة 608 من تقرير بني خالد — IOR/L/PS/20/E84/1 — يظهر الذواودة (Dawāudah) تحت العماير" loading="lazy" /></button>
+            <div class="ref-ig-card-body">
+              <div class="ref-ig-card-meta">
+                <span class="ref-ig-badge">مرجع</span>
+                <span class="ref-ig-sub">IOR/L/PS/20/E84/1 — Settled Tribes of the Centre, p. 608</span>
+              </div>
+              <h3 class="ref-ig-card-title font-display text-foreground">تقرير استخباري بريطاني — تقسيم بني خالد (1916)</h3>
+              <p class="ref-ig-excerpt">سياق الذكر: جدول رسمي في تقرير المقيمية البريطانية يُقسّم بني خالد (Beni Khālid) إلى بطون وعشائر. يذكر الذواودة (Dawāudah) صراحةً تحت بطن العماير (&#x27;Amā&#x27;ir) — ل…</p>
+              <details class="ref-ig-details">
+                <summary>عرض التفاصيل</summary>
+                <div class="ref-ig-fulltext ref-source-fulltext">
+<p class="mt-3 text-sm text-muted-foreground leading-7">
               <strong class="text-foreground">سياق الذكر:</strong> جدول رسمي في تقرير المقيمية البريطانية يُقسّم
               <strong class="text-foreground">بني خالد</strong> (Beni Khālid) إلى بطون وعشائر. يذكر
               <strong class="text-foreground">الذواودة (Dawāudah)</strong> صراحةً تحت بطن
@@ -163,8 +240,8 @@
               «'Amā'ir — Dawāudah: A few at Yasrah in Bahrein and at 'Anik in the Qatif Oasis.»
               <cite>British Intelligence Report, 1916 — IOR/L/PS/20/E84/1, p. 608</cite>
             </blockquote>
-            <figure class="archive-doc">
-              <img src="assets/E5UyU7aXEAIYjw9.jpg" alt="صفحة 608 من تقرير بني خالد — IOR/L/PS/20/E84/1 — يظهر الذواودة (Dawāudah) تحت العماير" loading="lazy" width="1200" height="900" />
+            <figure class="archive-doc ref-card-media-wrap">
+              
               <figcaption>
                 صورة الأصل: صفحة 608 — «13. Beni Khālid» — جدول BENI KHĀLID. المرجع:
                 <span class="font-latin">IOR/L/PS/20/E84/1</span>
@@ -202,36 +279,70 @@
               هذا التقرير يُثبت موقع <strong class="text-foreground">الذواودة</strong> في شجرة بني خالد —
               <a href="about.html" class="text-accent hover:underline">انظر صفحة النسب</a>.
             </p>
+                </div>
+              </details>
+            </div>
           </li>
-          <li class="border border-border rounded-sm p-6 bg-card/40">
-            <h3 class="font-display text-xl text-foreground">معجم قبائل الخليج في المخطوطات البريطانية</h3>
-            <p class="text-sm text-muted-foreground mt-1">مستل من تقارير المقيمية البريطانية — إعداد وترجمة عدة باحثين</p>
-            <p class="mt-3 text-sm text-muted-foreground leading-7">
+          <li class="ref-ig-card ref-ig-card--source" data-search="معجم قبائل الخليج في المخطوطات البريطانية مستل من تقارير المقيمية البريطانية — إعداد وترجمة عدة باحثين سياق الذكر: إحصائيات قديمة لرجالات القبائل وأصحاب سفن الغوص وتجار اللؤلؤ؛ تظهر فيه أسماء أجداد العائلة (مثل أحمد بن حسن والشيخ عبد الله بن عيسى ) في وثائق مبيعات اللؤلؤ والعرائض الأهلية.">
+            <div class="ref-ig-thumb ref-ig-thumb--empty" aria-hidden="true">
+              <span class="ref-ig-thumb-label">مرجع</span>
+            </div>
+            <div class="ref-ig-card-body">
+              <div class="ref-ig-card-meta">
+                <span class="ref-ig-badge">مرجع</span>
+                <span class="ref-ig-sub">مستل من تقارير المقيمية البريطانية — إعداد وترجمة عدة باحثين</span>
+              </div>
+              <h3 class="ref-ig-card-title font-display text-foreground">معجم قبائل الخليج في المخطوطات البريطانية</h3>
+              <p class="ref-ig-excerpt">سياق الذكر: إحصائيات قديمة لرجالات القبائل وأصحاب سفن الغوص وتجار اللؤلؤ؛ تظهر فيه أسماء أجداد العائلة (مثل أحمد بن حسن والشيخ عبد الله بن عيسى ) في وثائق مبيع…</p>
+              <details class="ref-ig-details">
+                <summary>عرض التفاصيل</summary>
+                <div class="ref-ig-fulltext ref-source-fulltext">
+<p class="mt-3 text-sm text-muted-foreground leading-7">
               <strong class="text-foreground">سياق الذكر:</strong> إحصائيات قديمة لرجالات القبائل وأصحاب سفن الغوص وتجار اللؤلؤ؛
               تظهر فيه أسماء أجداد العائلة (مثل <strong class="text-foreground">أحمد بن حسن</strong> والشيخ
               <strong class="text-foreground">عبد الله بن عيسى</strong>) في وثائق مبيعات اللؤلؤ والعرائض الأهلية.
             </p>
+                </div>
+              </details>
+            </div>
           </li>
-          <li class="border border-border rounded-sm p-6 bg-card/40">
-            <h3 class="font-display text-xl text-foreground">سجلات المقيمية البريطانية في الخليج</h3>
-            <p class="text-sm text-muted-foreground mt-1 font-latin">British Residency Records — Qatar Digital Library</p>
-            <p class="mt-3 text-sm text-muted-foreground leading-7">
+          <li class="ref-ig-card ref-ig-card--source" data-search="سجلات المقيمية البريطانية في الخليج British Residency Records — Qatar Digital Library سياق الذكر: مراسلات أعيان البحرين وتوقيعات العرائض المرفوعة لحكام البحرين والمقيم السياسي البريطاني؛ تظهر فيها أسماء كبار أعيان وتجار الذواودة في سياق أعيان البلاد والغوص.">
+            <div class="ref-ig-thumb ref-ig-thumb--empty" aria-hidden="true">
+              <span class="ref-ig-thumb-label">مرجع</span>
+            </div>
+            <div class="ref-ig-card-body">
+              <div class="ref-ig-card-meta">
+                <span class="ref-ig-badge">مرجع</span>
+                <span class="ref-ig-sub">British Residency Records — Qatar Digital Library</span>
+              </div>
+              <h3 class="ref-ig-card-title font-display text-foreground">سجلات المقيمية البريطانية في الخليج</h3>
+              <p class="ref-ig-excerpt">سياق الذكر: مراسلات أعيان البحرين وتوقيعات العرائض المرفوعة لحكام البحرين والمقيم السياسي البريطاني؛ تظهر فيها أسماء كبار أعيان وتجار الذواودة في سياق أعيان ال…</p>
+              <details class="ref-ig-details">
+                <summary>عرض التفاصيل</summary>
+                <div class="ref-ig-fulltext ref-source-fulltext">
+<p class="mt-3 text-sm text-muted-foreground leading-7">
               <strong class="text-foreground">سياق الذكر:</strong> مراسلات أعيان البحرين وتوقيعات العرائض المرفوعة لحكام البحرين
               والمقيم السياسي البريطاني؛ تظهر فيها أسماء كبار أعيان وتجار الذواودة في سياق أعيان البلاد والغوص.
             </p>
+                </div>
+              </details>
+            </div>
           </li>
-        </ul>
-
-        <h2 class="ref-section-title" id="abdullah-docs">٢-ب — وثائق النوخذة عبد الله بن عيسى الذوادي</h2>
-        <p class="text-sm text-muted-foreground mb-4 leading-7">
-          وثائق أولية تثبت مكانته كـ<strong class="text-foreground"> نوخذة غوص</strong> وشيخ في الحد —
-          <a href="ancestors.html#abdullah-bin-isa" class="text-accent hover:underline">سيرته في صفحة الأجداد</a>.
-        </p>
-        <ul class="space-y-6" style="list-style:none;padding:0;margin:0;">
-          <li class="border border-border rounded-sm p-6 bg-card/40" id="petition-1925">
-            <h3 class="font-display text-xl text-foreground">عريضة نواخذة الغوص — 1344هـ / أكتوبر 1925</h3>
-            <p class="text-sm text-muted-foreground mt-1">مرفوعة إلى الشيخ حمد بن عيسى آل خليفة — ثم إلى المقيم البريطاني</p>
-            <p class="mt-3 text-sm text-muted-foreground leading-7">
+          <li class="ref-ig-card ref-ig-card--source" id="petition-1925" data-search="عريضة نواخذة الغوص — 1344هـ / أكتوبر 1925 مرفوعة إلى الشيخ حمد بن عيسى آل خليفة — ثم إلى المقيم البريطاني سياق الذكر: اعتراض نواخذة وتجار الغوص على أنظمة مقترحة تحدّ من سلطة النوخذة في بيع المحصول وإدارة الجزوى. عبد الله بن عيسى الذوادي أول الموقّعين على العريضة. بسم الله الرحمن الرحيم إلى جناب الأجل الأمجد الأفخم الشيخ حمد بن الشيخ عيسى آل خليفة المحترم… «…نرفع لسعادتكم شكوانا من خسارة المال واشتغال البال والسبب في ذلك النظامات الجارية في خصوص الغوص قد أضرت بنا… الذي نرجو من فضلكم أن يكون البيع بنظر النواخذة…» حرر في ربيع الآخر سنة 1344هـ — عبدالله بن عيسى الذوادي (أول الموقّعين) من الموقّعين: صحيح مبارك بن شاهين العماري، حمد بن صقر البوفلاسة، مهنا بن فضل النعيمي، عيسى بن حمد الختم، سعد بن عمران الجميري، علي بن جمعة المضحكي، وأحمد بن عيسى النعيمي — بين آخرين.">
+            <div class="ref-ig-thumb ref-ig-thumb--empty" aria-hidden="true">
+              <span class="ref-ig-thumb-label">مرجع</span>
+            </div>
+            <div class="ref-ig-card-body">
+              <div class="ref-ig-card-meta">
+                <span class="ref-ig-badge">مرجع</span>
+                <span class="ref-ig-sub">مرفوعة إلى الشيخ حمد بن عيسى آل خليفة — ثم إلى المقيم البريطاني</span>
+              </div>
+              <h3 class="ref-ig-card-title font-display text-foreground">عريضة نواخذة الغوص — 1344هـ / أكتوبر 1925</h3>
+              <p class="ref-ig-excerpt">سياق الذكر: اعتراض نواخذة وتجار الغوص على أنظمة مقترحة تحدّ من سلطة النوخذة في بيع المحصول وإدارة الجزوى. عبد الله بن عيسى الذوادي أول الموقّعين على العريضة.</p>
+              <details class="ref-ig-details">
+                <summary>عرض التفاصيل</summary>
+                <div class="ref-ig-fulltext ref-source-fulltext">
+<p class="mt-3 text-sm text-muted-foreground leading-7">
               <strong class="text-foreground">سياق الذكر:</strong> اعتراض نواخذة وتجار الغوص على أنظمة مقترحة تحدّ من
               سلطة النوخذة في بيع المحصول وإدارة الجزوى. <strong class="text-foreground">عبد الله بن عيسى الذوادي</strong>
               أول الموقّعين على العريضة.
@@ -247,114 +358,189 @@
               من الموقّعين: صحيح مبارك بن شاهين العماري، حمد بن صقر البوفلاسة، مهنا بن فضل النعيمي، عيسى بن حمد الختم،
               سعد بن عمران الجميري، علي بن جمعة المضحكي، وأحمد بن عيسى النعيمي — بين آخرين.
             </p>
+                </div>
+              </details>
+            </div>
           </li>
-          <li class="border border-border rounded-sm p-6 bg-card/40" id="municipality-letters">
-            <h3 class="font-display text-xl text-foreground">مراسلات بلدية المحرق — 1354–1357هـ (1936–1938)</h3>
-            <p class="text-sm text-muted-foreground mt-1">مجلس إدارة بلدية المحرق — سجلات الغوص والرسوم</p>
-            <p class="mt-3 text-sm text-muted-foreground leading-7">
+          <li class="ref-ig-card ref-ig-card--source" id="municipality-letters" data-search="مراسلات بلدية المحرق — 1354–1357هـ (1936–1938) مجلس إدارة بلدية المحرق — سجلات الغوص والرسوم سياق الذكر: كتب رسمية موجهة إلى عبد الله بن عيسى الذوادي تطلب منه تقديم قوائم الجزوى (البحارة) ورسوم البلدية عن مواسم الغوص الثلاثة (التسقام، السلف، الخرجية): 11 رجب 1355هـ / 27-9-1936 — قائمة أسماء الجزوى ودراهم موسم الخرجية">
+            <div class="ref-ig-thumb ref-ig-thumb--empty" aria-hidden="true">
+              <span class="ref-ig-thumb-label">مرجع</span>
+            </div>
+            <div class="ref-ig-card-body">
+              <div class="ref-ig-card-meta">
+                <span class="ref-ig-badge">مرجع</span>
+                <span class="ref-ig-sub">مجلس إدارة بلدية المحرق — سجلات الغوص والرسوم</span>
+              </div>
+              <h3 class="ref-ig-card-title font-display text-foreground">مراسلات بلدية المحرق — 1354–1357هـ (1936–1938)</h3>
+              <p class="ref-ig-excerpt">سياق الذكر: كتب رسمية موجهة إلى عبد الله بن عيسى الذوادي تطلب منه تقديم قوائم الجزوى (البحارة) ورسوم البلدية عن مواسم الغوص الثلاثة (التسقام، السلف، الخرجية):</p>
+              <details class="ref-ig-details">
+                <summary>عرض التفاصيل</summary>
+                <div class="ref-ig-fulltext ref-source-fulltext">
+<p class="mt-3 text-sm text-muted-foreground leading-7">
               <strong class="text-foreground">سياق الذكر:</strong> كتب رسمية موجهة إلى
               <strong class="text-foreground">عبد الله بن عيسى الذوادي</strong> تطلب منه تقديم قوائم الجزوى
               (البحارة) ورسوم البلدية عن مواسم الغوص الثلاثة (التسقام، السلف، الخرجية):
             </p>
             <ul class="content-list text-sm mt-3">
-              <li><strong class="text-foreground">11 رجب 1355هـ / 27-9-1936</strong> — قائمة أسماء الجزوى ودراهم موسم الخرجية</li>
-              <li><strong class="text-foreground">8 ربيع 1356هـ / 19-5-1937</strong> — إعلان الحكومة رقم 4 — رسوم المواسم الثلاثة</li>
-              <li><strong class="text-foreground">8 رمضان 1356هـ / 12-11-1937</strong> — بحار محميد بن إبراهيم — رسوم البلدية</li>
-              <li><strong class="text-foreground">29 رجب 1357هـ / 24-9-1938</strong> — بحاران: حسن بن أحمد كلاتي ومحمد بن علي بوريال</li>
-            </ul>
+              <li><strong class="text-foreground">11 رجب 1355هـ / 27-9-1936</strong> — قائمة أسماء الجزوى ودراهم موسم الخرجية
+                </div>
+              </details>
+            </div>
           </li>
-          <li class="border border-border rounded-sm p-6 bg-card/40">
-            <h3 class="font-display text-xl text-foreground">نواخذة البحرين — بشار الحادي</h3>
-            <p class="text-sm text-muted-foreground mt-1">قائمة أسماء النواخذة 1920–1960 — مستخرجة من وثائق البلدية</p>
-            <p class="mt-3 text-sm text-muted-foreground leading-7">
+          <li class="ref-ig-card ref-ig-card--source" data-search="نواخذة البحرين — بشار الحادي قائمة أسماء النواخذة 1920–1960 — مستخرجة من وثائق البلدية سياق الذكر: يذكر النوخذة عبد الله بن عيسى الذوادي ضمن أكثر من 400 اسم نوخذة وثّقهم الباحث من سجلات البلدية والدفاتر الحكومية والخاصة. bashaaralhadi.blogspot.com — نواخذة البحرين">
+            <div class="ref-ig-thumb ref-ig-thumb--empty" aria-hidden="true">
+              <span class="ref-ig-thumb-label">مرجع</span>
+            </div>
+            <div class="ref-ig-card-body">
+              <div class="ref-ig-card-meta">
+                <span class="ref-ig-badge">مرجع</span>
+                <span class="ref-ig-sub">قائمة أسماء النواخذة 1920–1960 — مستخرجة من وثائق البلدية</span>
+              </div>
+              <h3 class="ref-ig-card-title font-display text-foreground">نواخذة البحرين — بشار الحادي</h3>
+              <p class="ref-ig-excerpt">سياق الذكر: يذكر النوخذة عبد الله بن عيسى الذوادي ضمن أكثر من 400 اسم نوخذة وثّقهم الباحث من سجلات البلدية والدفاتر الحكومية والخاصة.</p>
+              <details class="ref-ig-details">
+                <summary>عرض التفاصيل</summary>
+                <div class="ref-ig-fulltext ref-source-fulltext">
+<p class="mt-3 text-sm text-muted-foreground leading-7">
               <strong class="text-foreground">سياق الذكر:</strong> يذكر
               <strong class="text-foreground">النوخذة عبد الله بن عيسى الذوادي</strong> ضمن أكثر من 400 اسم
               نوخذة وثّقهم الباحث من سجلات البلدية والدفاتر الحكومية والخاصة.
             </p>
             <a href="https://bashaaralhadi.blogspot.com/2014/11/blog-post_5.html" target="_blank" rel="noreferrer" class="mt-3 inline-block text-xs text-accent hover:underline font-latin break-all">bashaaralhadi.blogspot.com — نواخذة البحرين</a>
+                </div>
+              </details>
+            </div>
           </li>
-        </ul>
-
-        <h2 class="ref-section-title">٣ — كتب تاريخ وتراث البحرين</h2>
-        <p class="text-sm text-muted-foreground mb-4 leading-7">الدور السياسي والتحالفي مع آل خليفة منذ التأسيس.</p>
-        <ul class="space-y-6" style="list-style:none;padding:0;margin:0;">
-          <li class="border border-border rounded-sm p-6 bg-card/40">
-            <h3 class="font-display text-xl text-foreground">التحفة النبهانية في تاريخ الجزيرة العربية</h3>
-            <p class="text-sm text-muted-foreground mt-1">الشيخ محمد بن خليفة النبهاني</p>
-            <p class="mt-3 text-sm text-muted-foreground leading-7">
+          <li class="ref-ig-card ref-ig-card--source" data-search="التحفة النبهانية في تاريخ الجزيرة العربية الشيخ محمد بن خليفة النبهاني سياق الذكر: يفرد فصولاً لتاريخ العوائل والأعيان الذين ساهموا في بناء البحرين الحديثة بعد فتح ١٧٨٣م، ويأتي على ذكر رجالات وأعيان الذواودة في الحد ومجالسهم المفتوحة ودورهم الاجتماعي.">
+            <div class="ref-ig-thumb ref-ig-thumb--empty" aria-hidden="true">
+              <span class="ref-ig-thumb-label">مرجع</span>
+            </div>
+            <div class="ref-ig-card-body">
+              <div class="ref-ig-card-meta">
+                <span class="ref-ig-badge">مرجع</span>
+                <span class="ref-ig-sub">الشيخ محمد بن خليفة النبهاني</span>
+              </div>
+              <h3 class="ref-ig-card-title font-display text-foreground">التحفة النبهانية في تاريخ الجزيرة العربية</h3>
+              <p class="ref-ig-excerpt">سياق الذكر: يفرد فصولاً لتاريخ العوائل والأعيان الذين ساهموا في بناء البحرين الحديثة بعد فتح ١٧٨٣م، ويأتي على ذكر رجالات وأعيان الذواودة في الحد ومجالسهم المفت…</p>
+              <details class="ref-ig-details">
+                <summary>عرض التفاصيل</summary>
+                <div class="ref-ig-fulltext ref-source-fulltext">
+<p class="mt-3 text-sm text-muted-foreground leading-7">
               <strong class="text-foreground">سياق الذكر:</strong> يفرد فصولاً لتاريخ العوائل والأعيان الذين ساهموا في بناء
               البحرين الحديثة بعد فتح ١٧٨٣م، ويأتي على ذكر رجالات وأعيان الذواودة في الحد ومجالسهم المفتوحة ودورهم الاجتماعي.
             </p>
+                </div>
+              </details>
+            </div>
           </li>
-          <li class="border border-border rounded-sm p-6 bg-card/40">
-            <h3 class="font-display text-xl text-foreground">تاريخ القبائل العربية في جزر البحرين</h3>
-            <p class="text-sm text-muted-foreground mt-1">بشير زين العابدين</p>
-            <p class="mt-3 text-sm text-muted-foreground leading-7">
+          <li class="ref-ig-card ref-ig-card--source" data-search="تاريخ القبائل العربية في جزر البحرين بشير زين العابدين سياق الذكر: يستعرض ديموغرافية وجغرافيا القبائل في البحرين، ويوثّق استقرار العماير (والذواودة) في شرق الجزيرة (الحد) ودورهم التأسيسي والدفاعي كجزء من النسيج القبلي الموالي للحكم.">
+            <div class="ref-ig-thumb ref-ig-thumb--empty" aria-hidden="true">
+              <span class="ref-ig-thumb-label">مرجع</span>
+            </div>
+            <div class="ref-ig-card-body">
+              <div class="ref-ig-card-meta">
+                <span class="ref-ig-badge">مرجع</span>
+                <span class="ref-ig-sub">بشير زين العابدين</span>
+              </div>
+              <h3 class="ref-ig-card-title font-display text-foreground">تاريخ القبائل العربية في جزر البحرين</h3>
+              <p class="ref-ig-excerpt">سياق الذكر: يستعرض ديموغرافية وجغرافيا القبائل في البحرين، ويوثّق استقرار العماير (والذواودة) في شرق الجزيرة (الحد) ودورهم التأسيسي والدفاعي كجزء من النسيج الق…</p>
+              <details class="ref-ig-details">
+                <summary>عرض التفاصيل</summary>
+                <div class="ref-ig-fulltext ref-source-fulltext">
+<p class="mt-3 text-sm text-muted-foreground leading-7">
               <strong class="text-foreground">سياق الذكر:</strong> يستعرض ديموغرافية وجغرافيا القبائل في البحرين، ويوثّق
               استقرار العماير (والذواودة) في شرق الجزيرة (الحد) ودورهم التأسيسي والدفاعي كجزء من النسيج القبلي الموالي للحكم.
             </p>
+                </div>
+              </details>
+            </div>
           </li>
-        </ul>
-
-        <h2 class="ref-section-title">٤ — صحافة ومصادر إعلامية — البحرين</h2>
-        <ul class="space-y-6" style="list-style:none;padding:0;margin:0;">
-          <li class="border border-border rounded-sm p-6 bg-card/40" id="danat-abdullah">
-            <h3 class="font-display text-xl text-foreground">جريدة البحرين — دانة عبد الله الذوادي</h3>
-            <p class="text-sm text-muted-foreground mt-1">عبد الله الزائد — محرر جريدة البحرين</p>
-            <p class="mt-3 text-sm text-muted-foreground leading-7">
+          <li class="ref-ig-card ref-ig-card--source" id="danat-abdullah" data-search="جريدة البحرين — دانة عبد الله الذوادي عبد الله الزائد — محرر جريدة البحرين سياق الذكر: أخبار عن اللؤلؤة النادرة التي اشتراها الحاج عبد الرحمن القصيبي من الشيخ عبد الله بن عيسى الذوادي : 6 رجب 1358هـ / 17 أغسطس 1939 — «لؤلؤة نادرة الوجود من مغاصات البحرين… زنتها 18 قيراطاً»">
+            <div class="ref-ig-thumb ref-ig-thumb--empty" aria-hidden="true">
+              <span class="ref-ig-thumb-label">مرجع</span>
+            </div>
+            <div class="ref-ig-card-body">
+              <div class="ref-ig-card-meta">
+                <span class="ref-ig-badge">مرجع</span>
+                <span class="ref-ig-sub">عبد الله الزائد — محرر جريدة البحرين</span>
+              </div>
+              <h3 class="ref-ig-card-title font-display text-foreground">جريدة البحرين — دانة عبد الله الذوادي</h3>
+              <p class="ref-ig-excerpt">سياق الذكر: أخبار عن اللؤلؤة النادرة التي اشتراها الحاج عبد الرحمن القصيبي من الشيخ عبد الله بن عيسى الذوادي :</p>
+              <details class="ref-ig-details">
+                <summary>عرض التفاصيل</summary>
+                <div class="ref-ig-fulltext ref-source-fulltext">
+<p class="mt-3 text-sm text-muted-foreground leading-7">
               <strong class="text-foreground">سياق الذكر:</strong> أخبار عن اللؤلؤة النادرة التي اشتراها
               <strong class="text-foreground">الحاج عبد الرحمن القصيبي</strong> من
               <strong class="text-foreground">الشيخ عبد الله بن عيسى الذوادي</strong>:
             </p>
             <ul class="content-list text-sm mt-3">
-              <li><strong class="text-foreground">6 رجب 1358هـ / 17 أغسطس 1939</strong> — «لؤلؤة نادرة الوجود من مغاصات البحرين… زنتها 18 قيراطاً»</li>
-              <li><strong class="text-foreground">10 شعبان 1359هـ / 12 سبتمبر 1940</strong> — ذكر بيع القصيبي لكمية لآلئ كبار على ملوك الهند</li>
-            </ul>
-            <p class="mt-3 text-xs text-muted-foreground leading-7">
-              القصة التفصيلية — من شاهد عيان (<strong class="text-foreground">محمد بن عبد الله بن عيسى</strong>) —
-              في <a href="ancestors.html#abdullah-bin-isa" class="text-accent hover:underline">سيرة النوخذة</a>.
-            </p>
-          </li>
-          <li>
-            <a href="https://www.alayam.com/Article/alayam-article/414597/Index.html" target="_blank" rel="noreferrer" class="group block border border-border rounded-sm p-6 bg-card/40 hover:bg-card transition-colors">
-              <div class="flex items-start justify-between gap-4">
-                <div>
-                  <h3 class="font-display text-xl text-foreground group-hover:text-accent transition-colors">صحيفة الأيام — مقال</h3>
-                  <p class="mt-2 text-sm text-muted-foreground leading-7"><strong class="text-foreground">سياق الذكر:</strong> مادة إعلامية بحرينية عن شأن العائلة والمجتمع — للقراءة والتحقق المحلي.</p>
-                  <span class="mt-3 inline-block text-xs text-primary font-latin break-all">alayam.com — Article 414597</span>
+              <li><strong class="text-foreground">6 رجب 1358هـ / 17 أغسطس 1939</strong> — «لؤلؤة نادرة الوجود من مغاصات البحرين… زنتها 18 قيراطاً»
                 </div>
-                <svg class="icon h-5 w-5 text-muted-foreground group-hover:text-accent transition-colors shrink-0 mt-1" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
-              </div>
-            </a>
+              </details>
+            </div>
           </li>
-          <li>
-            <a href="https://www.alayam.com/Article/courts-article/411751/Index.html" target="_blank" rel="noreferrer" class="group block border border-border rounded-sm p-6 bg-card/40 hover:bg-card transition-colors">
-              <div class="flex items-start justify-between gap-4">
-                <div>
-                  <h3 class="font-display text-xl text-foreground group-hover:text-accent transition-colors">صحيفة الأيام — محاكم وأحكام</h3>
-                  <p class="mt-2 text-sm text-muted-foreground leading-7"><strong class="text-foreground">سياق الذكر:</strong> مقال من قسم المحاكم — حضور العائلة في السياق القضائي والاجتماعي البحريني.</p>
-                  <span class="mt-3 inline-block text-xs text-primary font-latin break-all">alayam.com — courts-article 411751</span>
+          <li class="ref-ig-card ref-ig-card--source" data-search="صحيفة الأيام — مقال سياق الذكر: مادة إعلامية بحرينية عن شأن العائلة والمجتمع — للقراءة والتحقق المحلي. alayam.com — Article 414597">
+            <a href="https://www.alayam.com/Article/alayam-article/414597/Index.html" target="_blank" rel="noreferrer" class="ref-ig-thumb ref-ig-thumb--empty ref-ig-thumb--link" aria-label="فتح الرابط">
+              <span class="ref-ig-thumb-label">رابط ↗</span>
+            </a>
+            <div class="ref-ig-card-body">
+              <div class="ref-ig-card-meta">
+                <span class="ref-ig-badge">مرجع</span>
+                <a href="https://www.alayam.com/Article/alayam-article/414597/Index.html" target="_blank" rel="noreferrer" class="ref-ig-link font-latin">↗</a>
+              </div>
+              <h3 class="ref-ig-card-title font-display text-foreground">صحيفة الأيام — مقال</h3>
+              <p class="ref-ig-excerpt">سياق الذكر: مادة إعلامية بحرينية عن شأن العائلة والمجتمع — للقراءة والتحقق المحلي.</p>
+              <details class="ref-ig-details">
+                <summary>عرض التفاصيل</summary>
+                <div class="ref-ig-fulltext">
+                  <p class="ref-ig-caption-p"><strong class="text-foreground">سياق الذكر:</strong> مادة إعلامية بحرينية عن شأن العائلة والمجتمع — للقراءة والتحقق المحلي.</p>
+                  <p class="ref-ig-caption-p font-latin">alayam.com — Article 414597</p>
                 </div>
-                <svg class="icon h-5 w-5 text-muted-foreground group-hover:text-accent transition-colors shrink-0 mt-1" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
-              </div>
-            </a>
+              </details>
+            </div>
           </li>
-        </ul>
+          <li class="ref-ig-card ref-ig-card--source" data-search="صحيفة الأيام — محاكم وأحكام سياق الذكر: مقال من قسم المحاكم — حضور العائلة في السياق القضائي والاجتماعي البحريني. alayam.com — courts-article 411751">
+            <a href="https://www.alayam.com/Article/courts-article/411751/Index.html" target="_blank" rel="noreferrer" class="ref-ig-thumb ref-ig-thumb--empty ref-ig-thumb--link" aria-label="فتح الرابط">
+              <span class="ref-ig-thumb-label">رابط ↗</span>
+            </a>
+            <div class="ref-ig-card-body">
+              <div class="ref-ig-card-meta">
+                <span class="ref-ig-badge">مرجع</span>
+                <a href="https://www.alayam.com/Article/courts-article/411751/Index.html" target="_blank" rel="noreferrer" class="ref-ig-link font-latin">↗</a>
+              </div>
+              <h3 class="ref-ig-card-title font-display text-foreground">صحيفة الأيام — محاكم وأحكام</h3>
+              <p class="ref-ig-excerpt">سياق الذكر: مقال من قسم المحاكم — حضور العائلة في السياق القضائي والاجتماعي البحريني.</p>
+              <details class="ref-ig-details">
+                <summary>عرض التفاصيل</summary>
+                <div class="ref-ig-fulltext">
+                  <p class="ref-ig-caption-p"><strong class="text-foreground">سياق الذكر:</strong> مقال من قسم المحاكم — حضور العائلة في السياق القضائي والاجتماعي البحريني.</p>
+                  <p class="ref-ig-caption-p font-latin">alayam.com — courts-article 411751</p>
+                </div>
+              </details>
+            </div>
+          </li>
+          <li class="ref-ig-card ref-ig-card--source" data-search="حساب مجلس الذوادي على إنستغرام الحساب الرسمي لمجلس بيت العود — أخبار المجلس، المناسبات، والمساهمات العائلية. https://www.instagram.com/althawadi_majlis/?hl=ar">
+            <a href="https://www.instagram.com/althawadi_majlis/?hl=ar" target="_blank" rel="noreferrer" class="ref-ig-thumb ref-ig-thumb--empty ref-ig-thumb--link" aria-label="فتح الرابط">
+              <span class="ref-ig-thumb-label">رابط ↗</span>
+            </a>
+            <div class="ref-ig-card-body">
+              <div class="ref-ig-card-meta">
+                <span class="ref-ig-badge">مرجع</span>
+                <a href="https://www.instagram.com/althawadi_majlis/?hl=ar" target="_blank" rel="noreferrer" class="ref-ig-link font-latin">↗</a>
+              </div>
+              <h3 class="ref-ig-card-title font-display text-foreground">حساب مجلس الذوادي على إنستغرام</h3>
+              <p class="ref-ig-excerpt">الحساب الرسمي لمجلس بيت العود — أخبار المجلس، المناسبات، والمساهمات العائلية.</p>
+              <details class="ref-ig-details">
+                <summary>عرض التفاصيل</summary>
+                <div class="ref-ig-fulltext">
+                  <p class="ref-ig-caption-p">الحساب الرسمي لمجلس بيت العود — أخبار المجلس، المناسبات، والمساهمات العائلية.</p>
+                  <p class="ref-ig-caption-p font-latin">https://www.instagram.com/althawadi_majlis/?hl=ar</p>
+                </div>
+              </details>
+            </div>
+          </li>
 
-        <div class="ref-archive-section" id="instagram-archive">
-        <h2 class="ref-section-title">٥ — أرشيف منشورات @althawadi_majlis</h2>
-        <p class="text-sm text-muted-foreground mb-4 leading-7">
-          34 منشوراً محفوظاً محلياً — انقر على الصورة أو الفيديو للعرض بالحجم الكامل.
-        </p>
-        <div class="ref-ig-toolbar">
-          <label class="ref-ig-search-wrap">
-            <span class="sr-only">بحث في المنشورات</span>
-            <input type="search" id="ref-ig-search" class="ref-ig-search" placeholder="ابحث في المنشورات… (مثال: عبدالله، غوص، الحد)" autocomplete="off" />
-          </label>
-          <p id="ref-ig-count" class="ref-ig-count" aria-live="polite">34 منشور</p>
-        </div>
-        <p id="ref-ig-empty" class="ref-ig-empty" hidden>لا توجد نتائج مطابقة للبحث.</p>
-        <ul class="ref-ig-grid" id="ref-ig-grid">
           <li class="ref-ig-card" id="ig-DYg1frRABy6" data-search="DYg1frRABy6 وثيقة بشان قانون اصلاح الغوص وتجارة اللؤلؤ ... تم التوقيع عليها من قبل نواخذة البحرين من بينهم النوخذة عبدالله بن عيسى بن خليفة  الذوادي.
 
 وثيقة قانون إصلاح الغوص (1344 هـ / 1925 م) 
@@ -1106,7 +1292,6 @@ https://aawsat.com/home/article/30531
             </div>
           </li>
         </ul>
-        </div>
 
         <div id="ref-ig-lightbox" class="ref-ig-lightbox" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="عرض الوسائط">
           <button type="button" class="ref-ig-lightbox-backdrop" aria-label="إغلاق"></button>
@@ -1116,22 +1301,16 @@ https://aawsat.com/home/article/30531
           </div>
         </div>
 
-
-        <h2 class="ref-section-title">٦ — مجلس العائلة — تواصل رسمي</h2>
-        <ul class="space-y-6" style="list-style:none;padding:0;margin:0;">
-          <li>
-            <a href="https://www.instagram.com/althawadi_majlis/?hl=ar" target="_blank" rel="noreferrer" class="group block border border-border rounded-sm p-6 bg-card/40 hover:bg-card transition-colors">
-              <div class="flex items-start justify-between gap-4">
-                <div>
-                  <h3 class="font-display text-xl text-foreground group-hover:text-accent transition-colors">حساب مجلس الذوادي على إنستغرام</h3>
-                  <p class="mt-2 text-sm text-muted-foreground leading-7">الحساب الرسمي لمجلس بيت العود — أخبار المجلس، المناسبات، والمساهمات العائلية.</p>
-                  <span class="mt-3 inline-block text-xs text-primary font-latin break-all">https://www.instagram.com/althawadi_majlis/?hl=ar</span>
-                </div>
-                <svg class="icon h-5 w-5 text-muted-foreground group-hover:text-accent transition-colors shrink-0 mt-1" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
-              </div>
-            </a>
-          </li>
-        </ul>
+        <div id="ref-details-dialog" class="ref-details-dialog" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="ref-details-title">
+          <button type="button" class="ref-details-backdrop" aria-label="إغلاق"></button>
+          <div class="ref-details-panel">
+            <header class="ref-details-header">
+              <h2 id="ref-details-title" class="ref-details-title font-display text-foreground"></h2>
+              <button type="button" class="ref-details-close" aria-label="إغلاق">&times;</button>
+            </header>
+            <div class="ref-details-body" id="ref-details-body"></div>
+          </div>
+        </div>
 
         <div class="mt-16 border-t border-border pt-10 text-center">
           <p class="text-sm text-muted-foreground leading-8 max-w-xl mx-auto">
