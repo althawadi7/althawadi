@@ -262,9 +262,8 @@ Wikipedia - Al Thawawida
 | 1 | وثيقة قانون إصلاح الغوص ١٩٢٥ — توقيع النوخذة عبدالله بن عيسى الذوادي (رقم ٥) | [DYg1frRABy6](https://www.instagram.com/p/DYg1frRABy6/) | `DYg1frRABy6.jpg` |
 | 2 | رسالة شكر ملكية لعائلة الذواودة | [DX3tjkvgFU7](https://www.instagram.com/p/DX3tjkvgFU7/) | `DX3tjkvgFU7.jpg` |
 | 3 | كتاب بنو خالد — ذكر الذواودة والشيخ عبدالله بن عيسى | [DKSPaQot4pT](https://www.instagram.com/p/DKSPaQot4pT/) | `DKSPaQot4pT.jpg` |
-| 4 | مولود حسن بن عبدالله الذوادي | [DIb5jY-tkVi](https://www.instagram.com/p/DIb5jY-tkVi/) | `DIb5jY-tkVi.jpg` |
-| 5 | مجلس النوخذة هلال بن راشد — عيد الفطر | [DIV70GZtgNN](https://www.instagram.com/p/DIV70GZtgNN/) | `DIV70GZtgNN.jpg` |
-| 6–34 | بقية المنشورات (عائلة، تاريخ، مناسبات) | انظر JSON | انظر `assets/instagram/history/` |
+| 4 | مجلس النوخذة هلال بن راشد — عيد الفطر | [DIV70GZtgNN](https://www.instagram.com/p/DIV70GZtgNN/) | `DIV70GZtgNN.jpg` |
+| 5–33 | بقية المنشورات (عائلة، تاريخ، مناسبات) | انظر JSON | انظر `assets/instagram/history/` |
 
 **منشورات تاريخية أساسية للموقع:** (في `references.html#instagram-archive`)
 - **DYg1frRABy6** — عريضة/ختام قانون الغوص ١٩٢٥ (مرجع `references.html#petition-1925`)

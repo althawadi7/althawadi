@@ -23,7 +23,6 @@ SHORTCODES = [
     "DYg1frRABy6",
     "DX3tjkvgFU7",
     "DKSPaQot4pT",
-    "DIb5jY-tkVi",
     "DIV70GZtgNN",
     "DBetmvkRmOo",
     "DBpq9l-i3kl",
