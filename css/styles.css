@@ -666,6 +666,126 @@ button, input, textarea { font-family: inherit; }
   top: 0.35rem;
 }
 
+/* Ancestor detail blocks */
+.ancestor-detail {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+.ancestor-detail h4 {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  color: var(--foreground);
+  margin: 0 0 0.75rem;
+}
+
+.fact-grid {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .fact-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.fact-item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.875rem 1rem;
+  background: color-mix(in oklch, var(--card) 50%, var(--background));
+}
+
+.fact-item dt {
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  margin-bottom: 0.25rem;
+}
+
+.fact-item dd {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  line-height: 1.7;
+}
+
+.doc-excerpt {
+  margin-top: 1rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--border);
+  border-right: 3px solid var(--accent);
+  border-radius: var(--radius);
+  background: color-mix(in oklch, var(--card) 40%, var(--background));
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  line-height: 1.9;
+}
+
+.doc-excerpt cite {
+  display: block;
+  margin-top: 0.75rem;
+  font-size: 0.75rem;
+  color: var(--accent);
+  font-style: normal;
+}
+
+.archive-doc {
+  margin-top: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--card);
+}
+
+.archive-doc img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.archive-doc figcaption {
+  padding: 0.75rem 1rem;
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+  border-top: 1px solid var(--border);
+  line-height: 1.7;
+}
+
+.tribe-table {
+  width: 100%;
+  margin-top: 1rem;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.tribe-table th,
+.tribe-table td {
+  border: 1px solid var(--border);
+  padding: 0.625rem 0.875rem;
+  text-align: right;
+  vertical-align: top;
+}
+
+.tribe-table th {
+  background: color-mix(in oklch, var(--card) 60%, var(--background));
+  color: var(--foreground);
+  font-family: var(--font-display);
+  font-weight: normal;
+}
+
+.tribe-table td {
+  color: var(--muted-foreground);
+  line-height: 1.7;
+}
+
+.tribe-table tr.highlight td {
+  background: color-mix(in oklch, var(--accent) 6%, var(--background));
+  color: var(--foreground);
+}
+
 /* Contact page sections */
 .contact-map-section {
   margin-bottom: 0;
