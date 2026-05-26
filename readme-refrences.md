@@ -248,4 +248,29 @@ Wikipedia - Al Thawawida
 - آل قماز.
 * IOR/L/PS/20/E84/1 : J:\altahwadi\assets\E5UyU7aXEAIYjw9.jpg
 
+---
+
+## منشورات @althawadi_majlis (مرجع للموقع)
+
+المصدر الرسمي: https://www.instagram.com/althawadi_majlis/?hl=ar
+
+البيانات الكاملة (٣٤ منشوراً مختاراً): `data/instagram-history.json`  
+الصور المحلية: `assets/instagram/history/` (ملف لكل منشور: `{shortcode}.jpg`)
+
+| # | الموضوع | الرابط | الصورة |
+|---|---------|--------|--------|
+| 1 | وثيقة قانون إصلاح الغوص ١٩٢٥ — توقيع النوخذة عبدالله بن عيسى الذوادي (رقم ٥) | [DYg1frRABy6](https://www.instagram.com/p/DYg1frRABy6/) | `DYg1frRABy6.jpg` |
+| 2 | رسالة شكر ملكية لعائلة الذواودة | [DX3tjkvgFU7](https://www.instagram.com/p/DX3tjkvgFU7/) | `DX3tjkvgFU7.jpg` |
+| 3 | كتاب بنو خالد — ذكر الذواودة والشيخ عبدالله بن عيسى | [DKSPaQot4pT](https://www.instagram.com/p/DKSPaQot4pT/) | `DKSPaQot4pT.jpg` |
+| 4 | مولود حسن بن عبدالله الذوادي | [DIb5jY-tkVi](https://www.instagram.com/p/DIb5jY-tkVi/) | `DIb5jY-tkVi.jpg` |
+| 5 | مجلس النوخذة هلال بن راشد — عيد الفطر | [DIV70GZtgNN](https://www.instagram.com/p/DIV70GZtgNN/) | `DIV70GZtgNN.jpg` |
+| 6–34 | بقية المنشورات (عائلة، تاريخ، مناسبات) | انظر JSON | انظر `assets/instagram/history/` |
+
+**منشورات تاريخية أساسية للموقع:** (في `references.html#instagram-archive`)
+- **DYg1frRABy6** — عريضة/ختام قانون الغوص ١٩٢٥ (مرجع `references.html#petition-1925`)
+- **DKSPaQot4pT** — الذواودة في كتاب بنو خالد
+- **C8nBlnbtJjg** / **C8j_GlAtkLn** — تقسيم العماير ١٩١٦
+- **Bv_l0deFcq2** وما يليه — منشورات تاريخية قديمة عن النوخذة والعائلة
+
+لتحديث البيانات: `python tools/clean-history-posts.py`
 
