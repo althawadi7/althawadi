@@ -1532,10 +1532,11 @@ button, input, textarea { font-family: inherit; }
   height: 100%;
   max-width: none;
   max-height: none;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
   display: block;
   transition: transform 300ms;
+  background: hsl(var(--card));
 }
 
 .archive-doc .ref-ig-thumb {

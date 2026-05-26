@@ -72,14 +72,30 @@ def download(url: str, dest: Path) -> bool:
         return False
 
 
+def media_large_url(shortcode: str) -> str:
+    return f"https://www.instagram.com/p/{urllib.parse.quote(shortcode)}/media/?size=l"
+
+
+def download_full_image(shortcode: str, dest: Path) -> bool:
+    """Instagram public endpoint — full JPEG (not cropped thumbnail)."""
+    return download(media_large_url(shortcode), dest)
+
+
+def largest_candidate_url(candidates: list[dict]) -> str | None:
+    if not candidates:
+        return None
+    best = max(candidates, key=lambda c: (c.get("width") or 0) * (c.get("height") or 0))
+    return best.get("url")
+
+
 def best_image(item: dict) -> str | None:
     if item.get("image_versions2", {}).get("candidates"):
-        return item["image_versions2"]["candidates"][0]["url"]
+        return largest_candidate_url(item["image_versions2"]["candidates"])
     if item.get("carousel_media"):
         first = item["carousel_media"][0]
         if first.get("image_versions2", {}).get("candidates"):
-            return first["image_versions2"]["candidates"][0]["url"]
-    return item.get("thumbnail_url") or item.get("display_url")
+            return largest_candidate_url(first["image_versions2"]["candidates"])
+    return item.get("display_url") or item.get("thumbnail_url")
 
 
 def all_images(item: dict) -> list[str]:
@@ -87,13 +103,17 @@ def all_images(item: dict) -> list[str]:
     if item.get("carousel_media"):
         for slide in item["carousel_media"]:
             if slide.get("image_versions2", {}).get("candidates"):
-                urls.append(slide["image_versions2"]["candidates"][0]["url"])
+                url = largest_candidate_url(slide["image_versions2"]["candidates"])
+                if url:
+                    urls.append(url)
             elif slide.get("video_versions"):
                 urls.append(slide["video_versions"][0].get("url") or slide.get("thumbnail_url", ""))
     elif item.get("image_versions2", {}).get("candidates"):
-        urls.append(item["image_versions2"]["candidates"][0]["url"])
+        url = largest_candidate_url(item["image_versions2"]["candidates"])
+        if url:
+            urls.append(url)
     elif item.get("video_versions"):
-        thumb = item.get("thumbnail_url")
+        thumb = item.get("display_url") or item.get("thumbnail_url")
         if thumb:
             urls.append(thumb)
     return [u for u in urls if u]
@@ -182,11 +202,15 @@ def main() -> None:
 
         post = normalize_post(item, code)
         local_images = []
-        for idx, img_url in enumerate(post["images"]):
-            suffix = f"_{idx}" if idx else ""
-            dest = ASSETS / f"{code}{suffix}.jpg"
-            if download(img_url, dest):
-                local_images.append(f"assets/instagram/history/{code}{suffix}.jpg")
+        dest = ASSETS / f"{code}.jpg"
+        if download_full_image(code, dest):
+            local_images.append(f"assets/instagram/history/{code}.jpg")
+        else:
+            for idx, img_url in enumerate(post["images"]):
+                suffix = f"_{idx}" if idx else ""
+                dest = ASSETS / f"{code}{suffix}.jpg"
+                if download(img_url, dest):
+                    local_images.append(f"assets/instagram/history/{code}{suffix}.jpg")
         post["local_images"] = local_images or post["images"]
         post["cover"] = local_images[0] if local_images else (post["images"][0] if post["images"] else None)
         posts.append(post)
