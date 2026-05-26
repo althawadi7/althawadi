@@ -270,38 +270,47 @@
     {
       "shortcode": "Bv_l0deFcq2",
       "url": "https://www.instagram.com/p/Bv_l0deFcq2/?hl=ar",
-      "type": "image",
+      "type": "video",
       "timestamp": 0,
       "caption": "‏‎53 likes, 4 comments - ‎‏‏‎althawadi_majlis‎‏ في ‏‎April 8, 2019‎‏‏‏",
       "local_images": [
         "assets/instagram/history/Bv_l0deFcq2.jpg"
       ],
       "cover": "assets/instagram/history/Bv_l0deFcq2.jpg",
-      "image_count": 1
+      "image_count": 1,
+      "local_videos": [
+        "assets/instagram/history/Bv_l0deFcq2.mp4"
+      ]
     },
     {
       "shortcode": "Bv_mbFnF1tj",
       "url": "https://www.instagram.com/p/Bv_mbFnF1tj/?hl=ar",
-      "type": "image",
+      "type": "video",
       "timestamp": 0,
       "caption": "‏‎64 likes, 21 comments - ‎‏‏‎althawadi_majlis‎‏ في ‏‎April 8, 2019‎‏‏‏",
       "local_images": [
         "assets/instagram/history/Bv_mbFnF1tj.jpg"
       ],
       "cover": "assets/instagram/history/Bv_mbFnF1tj.jpg",
-      "image_count": 1
+      "image_count": 1,
+      "local_videos": [
+        "assets/instagram/history/Bv_mbFnF1tj.mp4"
+      ]
     },
     {
       "shortcode": "CHSyFQiAST7",
       "url": "https://www.instagram.com/p/CHSyFQiAST7/?hl=ar",
-      "type": "image",
+      "type": "video",
       "timestamp": 0,
       "caption": "‏‎46 likes, 1 comments - ‎‏‏‎althawadi_majlis‎‏ في ‏‎November 7, 2020‎‏‏‏",
       "local_images": [
         "assets/instagram/history/CHSyFQiAST7.jpg"
       ],
       "cover": "assets/instagram/history/CHSyFQiAST7.jpg",
-      "image_count": 1
+      "image_count": 1,
+      "local_videos": [
+        "assets/instagram/history/CHSyFQiAST7.mp4"
+      ]
     },
     {
       "shortcode": "Buw0SAGFvfs",
