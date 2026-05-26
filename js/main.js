@@ -23,16 +23,23 @@
     });
   }
 
-  /* Active nav link */
-  var path = window.location.pathname.replace(/\/$/, '') || '/';
-  var page = path.split('/').pop() || 'index.html';
-  if (page === '' || page === '/') page = 'index.html';
+  /* Active nav link (clean URLs: /althawadi/, /althawadi/about/, …) */
+  var parts = window.location.pathname.replace(/\/$/, '').split('/').filter(Boolean);
+  var page = 'home';
+  if (parts.length >= 2 && parts[0] === 'althawadi') {
+    page = parts[1] || 'home';
+  } else if (parts.length === 1 && parts[0] !== 'althawadi') {
+    page = parts[0];
+  }
 
   document.querySelectorAll('.nav-link').forEach(function (link) {
-    var href = link.getAttribute('href');
+    var href = (link.getAttribute('href') || '').replace(/\/$/, '');
     if (!href) return;
-    var linkPage = href.split('/').pop() || 'index.html';
-    if (linkPage === page || (page === 'index.html' && (linkPage === 'index.html' || href === '/' || href === './'))) {
+    var linkPage = href.split('/').filter(Boolean).pop() || 'home';
+    if (href === '.' || href === '..' || href === './' || href.endsWith('/althawadi')) {
+      linkPage = 'home';
+    }
+    if (linkPage === page) {
       link.classList.add('is-active');
     }
   });
