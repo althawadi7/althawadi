@@ -2,6 +2,76 @@
   'use strict';
 
   var SITE_HOME = '/althawadi/';
+  var PAGES = ['about', 'tree', 'ancestors', 'gallery', 'news', 'references', 'contact'];
+
+  function fileSiteRoot() {
+    var url = window.location.href.split('#')[0].split('?')[0];
+    var marker = '/althawadi/';
+    var idx = url.toLowerCase().indexOf(marker);
+    if (idx === -1) {
+      return null;
+    }
+    return url.substring(0, idx + marker.length);
+  }
+
+  function toFileHref(absPath) {
+    var root = fileSiteRoot();
+    if (!root || absPath.indexOf(SITE_HOME) !== 0) {
+      return absPath;
+    }
+    return root + absPath.slice(SITE_HOME.length);
+  }
+
+  function normalizeSiteLinks() {
+    if (window.location.protocol !== 'file:') {
+      return;
+    }
+    document.querySelectorAll('[href^="/althawadi/"], [src^="/althawadi/"]').forEach(function (el) {
+      var attr = el.hasAttribute('href') ? 'href' : 'src';
+      el.setAttribute(attr, toFileHref(el.getAttribute(attr)));
+    });
+    var root = fileSiteRoot();
+    if (!root) {
+      return;
+    }
+    document.querySelectorAll('link[href^="../css/"], script[src^="../js/"]').forEach(function (el) {
+      var attr = el.hasAttribute('href') ? 'href' : 'src';
+      el.setAttribute(attr, root + el.getAttribute(attr).replace(/^\.\.\//, ''));
+    });
+    document.querySelectorAll('link[href^="css/"], script[src^="js/"]').forEach(function (el) {
+      var attr = el.hasAttribute('href') ? 'href' : 'src';
+      el.setAttribute(attr, root + el.getAttribute(attr));
+    });
+  }
+
+  function cleanUrlBar() {
+    if (!window.location.protocol.startsWith('http')) {
+      return;
+    }
+    var path = window.location.pathname;
+    var tail = window.location.search + window.location.hash;
+
+    if (/\/index\.html$/i.test(path)) {
+      path = path.replace(/index\.html$/i, '');
+      if (!path.endsWith('/')) {
+        path += '/';
+      }
+      window.history.replaceState(null, '', path + tail);
+      return;
+    }
+
+    for (var i = 0; i < PAGES.length; i++) {
+      var p = PAGES[i];
+      var re = new RegExp('/' + p + '\\.html$', 'i');
+      if (re.test(path)) {
+        window.history.replaceState(null, '', path.replace(re, '/' + p + '/') + tail);
+        return;
+      }
+    }
+  }
+
+  normalizeSiteLinks();
+  cleanUrlBar();
 
   function siteHomeHref() {
     if (window.location.protocol === 'file:') {
@@ -19,14 +89,6 @@
   document.querySelectorAll('[data-home]').forEach(function (link) {
     link.setAttribute('href', siteHomeHref());
   });
-
-  if (window.location.protocol.startsWith('http') && /\/index\.html$/i.test(window.location.pathname)) {
-    var clean = window.location.pathname.replace(/index\.html$/i, '');
-    if (!clean.endsWith('/')) {
-      clean += '/';
-    }
-    window.history.replaceState(null, '', clean + window.location.search + window.location.hash);
-  }
 
   /* Mobile menu */
   var menuBtn = document.getElementById('menu-toggle');
