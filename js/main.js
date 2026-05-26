@@ -52,10 +52,7 @@
     var tail = window.location.search + window.location.hash;
 
     if (/\/index\.html$/i.test(path)) {
-      path = path.replace(/index\.html$/i, '');
-      if (!path.endsWith('/')) {
-        path += '/';
-      }
+      path = path.replace(/\/index\.html$/i, '/');
       window.history.replaceState(null, '', path + tail);
       return;
     }
@@ -70,8 +67,17 @@
     }
   }
 
+  function isHomePath(pathname) {
+    var p = pathname.replace(/\\/g, '/');
+    if (/\/index\.html$/i.test(p)) {
+      p = p.replace(/\/index\.html$/i, '/');
+    }
+    return /\/althawadi\/?$/i.test(p);
+  }
+
   normalizeSiteLinks();
   cleanUrlBar();
+  window.addEventListener('pageshow', cleanUrlBar);
 
   function siteHomeHref() {
     if (window.location.protocol === 'file:') {
@@ -88,6 +94,18 @@
   /* Logo + الرئيسية → /althawadi/ (not …/index.html) on GitHub Pages */
   document.querySelectorAll('[data-home]').forEach(function (link) {
     link.setAttribute('href', siteHomeHref());
+    link.addEventListener('click', function (e) {
+      if (window.location.protocol === 'file:') {
+        return;
+      }
+      e.preventDefault();
+      if (isHomePath(window.location.pathname)) {
+        cleanUrlBar();
+        window.scrollTo(0, 0);
+        return;
+      }
+      window.location.assign(SITE_HOME);
+    });
   });
 
   /* Mobile menu */
