@@ -1834,7 +1834,10 @@ body.ref-details-open {
   text-align: justify;
 }
 
-.ref-ig-caption-p:last-child {
+.ref-source-url {
+  border-top: 1px solid hsl(var(--border) / 0.6);
+  padding-top: 0.75rem;
+}
   margin-bottom: 0;
 }
 
