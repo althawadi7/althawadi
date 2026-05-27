@@ -172,4 +172,67 @@
       form.reset();
     });
   }
+
+  /* Dark mode toggle */
+  var THEME_KEY = 'althawadi-theme';
+
+  function currentTheme() {
+    return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+  }
+
+  function updateThemeToggle(btn) {
+    if (!btn) return;
+    var dark = currentTheme() === 'dark';
+    btn.setAttribute('aria-pressed', dark ? 'true' : 'false');
+    btn.setAttribute('aria-label', dark ? 'تفعيل الوضع الفاتح' : 'تفعيل الوضع الليلي');
+    btn.setAttribute('title', dark ? 'الوضع الفاتح' : 'الوضع الليلي');
+  }
+
+  function applyTheme(theme, animate) {
+    var root = document.documentElement;
+    if (animate) {
+      root.classList.add('theme-animate');
+      window.setTimeout(function () {
+        root.classList.remove('theme-animate');
+      }, 260);
+    }
+    if (theme === 'dark') {
+      root.setAttribute('data-theme', 'dark');
+    } else {
+      root.removeAttribute('data-theme');
+    }
+    try {
+      localStorage.setItem(THEME_KEY, theme);
+    } catch (e) {
+      /* ignore */
+    }
+    updateThemeToggle(document.getElementById('theme-toggle'));
+  }
+
+  function initThemeToggle() {
+    var btn = document.getElementById('theme-toggle');
+    if (!btn) {
+      var actions = document.querySelector('.site-header-inner .flex.items-center.gap-3');
+      if (!actions) return;
+      btn = document.createElement('button');
+      btn.id = 'theme-toggle';
+      btn.type = 'button';
+      btn.className = 'theme-toggle';
+      btn.innerHTML =
+        '<svg class="icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>' +
+        '<svg class="icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>';
+      var menuBtn = document.getElementById('menu-toggle');
+      if (menuBtn) {
+        actions.insertBefore(btn, menuBtn);
+      } else {
+        actions.appendChild(btn);
+      }
+    }
+    updateThemeToggle(btn);
+    btn.addEventListener('click', function () {
+      applyTheme(currentTheme() === 'dark' ? 'light' : 'dark', true);
+    });
+  }
+
+  initThemeToggle();
 })();

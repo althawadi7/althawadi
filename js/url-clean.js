@@ -1,6 +1,16 @@
 (function () {
   'use strict';
 
+  var THEME_KEY = 'althawadi-theme';
+
+  try {
+    if (localStorage.getItem(THEME_KEY) === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  } catch (e) {
+    /* ignore */
+  }
+
   var PAGES = ['about', 'tree', 'ancestors', 'gallery', 'news', 'references', 'contact'];
 
   function cleanUrlBar() {

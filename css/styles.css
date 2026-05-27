@@ -21,6 +21,101 @@
   --font-display: "Amiri", "Cormorant Garamond", serif;
   --font-body: "Noto Naskh Arabic", "Karla", system-ui, sans-serif;
   --font-latin: "Cormorant Garamond", serif;
+  color-scheme: light;
+}
+
+/* Dark mode — overrides only when user selects it; :root light theme stays default */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --background: oklch(0.13 0.014 52);
+  --foreground: oklch(0.93 0.012 80);
+  --card: oklch(0.17 0.016 50);
+  --card-foreground: oklch(0.93 0.012 80);
+  --primary: oklch(0.78 0.09 72);
+  --primary-foreground: oklch(0.16 0.014 52);
+  --secondary: oklch(0.28 0.022 55);
+  --muted: oklch(0.22 0.016 52);
+  --muted-foreground: oklch(0.72 0.022 75);
+  --accent: oklch(0.74 0.11 72);
+  --accent-foreground: oklch(0.14 0.014 52);
+  --border: oklch(0.28 0.018 55);
+  --input: oklch(0.24 0.018 54);
+  --ring: oklch(0.74 0.11 72);
+  --sand: oklch(0.19 0.016 52);
+  --gold: oklch(0.76 0.12 75);
+}
+
+[data-theme="dark"] .paper-texture {
+  background-image:
+    radial-gradient(circle at 18% 24%, oklch(0.26 0.03 65 / 0.35) 0, transparent 52%),
+    radial-gradient(circle at 82% 72%, oklch(0.22 0.025 58 / 0.28) 0, transparent 50%);
+}
+
+[data-theme="dark"] .hero-gradient {
+  background: linear-gradient(
+    to left,
+    var(--background),
+    color-mix(in oklch, var(--background) 78%, transparent),
+    color-mix(in oklch, var(--background) 28%, transparent)
+  );
+}
+
+[data-theme="dark"] .ornament {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20'><path d='M0 10h35M65 10h35' stroke='%23a68b5c' stroke-width='0.5'/><path d='M50 10l-8-6 0 12z M50 10l8-6 0 12z' fill='%23d4b76a'/></svg>");
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  background: color-mix(in oklch, var(--card) 65%, transparent);
+  color: var(--foreground);
+  cursor: pointer;
+  transition: background 160ms ease, border-color 160ms ease, color 160ms ease, box-shadow 160ms ease;
+}
+
+.theme-toggle:hover {
+  background: var(--card);
+  border-color: color-mix(in oklch, var(--accent) 40%, var(--border));
+  color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--accent) 18%, transparent);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.theme-toggle .icon {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+.theme-toggle .theme-icon-sun {
+  display: none;
+}
+
+.theme-toggle[aria-pressed="true"] .theme-icon-moon {
+  display: none;
+}
+
+.theme-toggle[aria-pressed="true"] .theme-icon-sun {
+  display: block;
+}
+
+html.theme-animate,
+html.theme-animate * {
+  transition:
+    background-color 220ms ease,
+    color 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease;
 }
 
 *, *::before, *::after { box-sizing: border-box; border-color: var(--border); }
