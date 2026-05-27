@@ -1251,6 +1251,13 @@ button, input, textarea { font-family: inherit; }
 
 #references-archive {
   scroll-margin-top: 5rem;
+  padding-top: 2.5rem;
+}
+
+@media (min-width: 640px) {
+  #references-archive {
+    padding-top: 3rem;
+  }
 }
 
 #instagram-archive {
@@ -2253,6 +2260,7 @@ body.ref-ig-lightbox-open {
   #references-archive.references-page {
     padding-left: 1rem;
     padding-right: 1rem;
+    padding-top: 2rem;
     padding-bottom: 2.5rem;
   }
 
