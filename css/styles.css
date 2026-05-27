@@ -1705,6 +1705,92 @@ a.ref-ig-thumb--card-link:hover img {
   border-radius: var(--radius);
 }
 
+.ref-thawadi-related {
+  margin: 0 0 2rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid color-mix(in oklch, var(--accent) 35%, var(--border));
+  border-radius: var(--radius);
+  background: color-mix(in oklch, var(--accent) 7%, var(--card));
+}
+
+.ref-thawadi-related-title {
+  font-family: var(--font-display, inherit);
+  font-size: 1.125rem;
+  margin: 0 0 0.75rem;
+}
+
+.ref-thawadi-related-list {
+  margin: 0;
+  padding: 0 1.25rem 0 0;
+  list-style: disc;
+}
+
+.ref-thawadi-related-list li {
+  margin: 0.35rem 0;
+}
+
+.ref-thawadi-related-note {
+  margin: 0.75rem 0 0;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+.ref-thawadi-mark {
+  background: color-mix(in oklch, var(--accent) 22%, transparent);
+  padding: 0.05em 0.3em;
+  border-radius: 0.2em;
+  font-weight: 600;
+}
+
+.ref-article-h2 {
+  font-family: var(--font-display, inherit);
+  font-size: 1.5rem;
+  margin: 2rem 0 1rem;
+  line-height: 1.4;
+}
+
+.ref-article-h3 {
+  font-family: var(--font-display, inherit);
+  font-size: 1.15rem;
+  margin: 1.75rem 0 0.75rem;
+  line-height: 1.45;
+}
+
+.ref-ship-list {
+  margin: 0.5rem 0 1.5rem;
+  padding: 0 1.25rem 0 0;
+  list-style: decimal;
+}
+
+.ref-ship-item {
+  margin: 0.35rem 0;
+  line-height: 1.75;
+}
+
+.ref-ship-item--thawadi {
+  padding: 0.35rem 0.5rem;
+  margin-right: -0.5rem;
+  border-radius: var(--radius);
+  background: color-mix(in oklch, var(--accent) 10%, transparent);
+}
+
+.ref-ship-ref {
+  font-size: 0.8125rem;
+  color: var(--muted-foreground);
+}
+
+.ref-source-list {
+  margin: 0.5rem 0 1.5rem;
+  padding: 0 1.25rem 0 0;
+  list-style: decimal;
+}
+
+.ref-article-divider {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 2rem 0;
+}
+
 .ref-detail-media {
   margin: 2rem 0 0;
   text-align: center;
