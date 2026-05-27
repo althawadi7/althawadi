@@ -40,10 +40,8 @@ def caption_body(post: dict) -> str:
 
 
 def card_html(post: dict) -> str:
-    code = post["shortcode"]
     title = html.escape(caption_title(post))
     body = html.escape(caption_body(post))
-    url = html.escape(post["url"])
     imgs = post.get("local_images") or []
     cover = html.escape(imgs[0] if imgs else "")
     image_count = len(imgs)
@@ -54,18 +52,21 @@ def card_html(post: dict) -> str:
     elif post.get("type") == "video":
         badge = "<span>فيديو</span>"
 
+    body_html = ""
+    if body and body != title:
+        body_html = f'<p class="gallery-member-text">{body}</p>'
+
     badge_html = (
-        f'<div class="mt-2 text-xs text-muted-foreground font-latin">{badge}</div>' if badge else ""
+        f'<span class="gallery-member-badge font-latin">{badge}</span>' if badge else ""
     )
 
-    return f"""          <figure class="mb-6 break-inside-avoid group overflow-hidden rounded-sm border border-border bg-card">
-            <a href="{url}" target="_blank" rel="noreferrer" class="block overflow-hidden">
-              <img src="{BASE}/{cover}" alt="{title}" loading="lazy" class="w-full h-auto object-cover group-hover:scale-[1.03] transition-transform duration-700" />
-            </a>
-            <figcaption class="p-4 border-t border-border">
-              <div class="font-display text-lg text-foreground">{title}</div>
-              <p class="text-xs text-muted-foreground mt-1">{body}</p>
-              <div class="mt-2 text-xs"><a class="text-accent hover:underline font-latin" href="{url}" target="_blank" rel="noreferrer">Instagram / {code} ↗</a></div>
+    return f"""          <figure class="gallery-member-card">
+            <div class="gallery-member-thumb">
+              <img src="{BASE}/{cover}" alt="{title}" loading="lazy" />
+            </div>
+            <figcaption class="gallery-member-caption">
+              <div class="gallery-member-title">{title}</div>
+              {body_html}
               {badge_html}
             </figcaption>
           </figure>"""
