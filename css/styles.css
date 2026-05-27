@@ -1791,6 +1791,82 @@ a.ref-ig-thumb--card-link:hover img {
   margin: 2rem 0;
 }
 
+/* Family news cards */
+.family-news-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.family-news-card {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: color-mix(in oklch, var(--card) 70%, var(--background));
+  overflow: hidden;
+}
+
+.family-news-thumb {
+  position: relative;
+  display: block;
+  min-height: 100%;
+  background: color-mix(in oklch, var(--card) 88%, black 3%);
+}
+
+.family-news-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.family-news-badge {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1;
+  padding: 0.3rem 0.45rem;
+  border-radius: 999px;
+  color: var(--accent-foreground);
+  background: color-mix(in oklch, var(--accent) 82%, black 6%);
+}
+
+.family-news-body {
+  padding: 0.85rem 1rem 1rem 0.2rem;
+}
+
+.family-news-meta {
+  margin: 0 0 0.4rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--muted-foreground);
+}
+
+.family-news-title {
+  margin: 0 0 0.45rem;
+  font-size: 1.02rem;
+  line-height: 1.55;
+}
+
+.family-news-text {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: color-mix(in oklch, var(--foreground) 86%, transparent);
+}
+
+.family-news-link {
+  display: inline-block;
+  margin-top: 0.7rem;
+  font-size: 0.84rem;
+  color: var(--accent);
+}
+
+.family-news-link:hover {
+  text-decoration: underline;
+}
+
 .ref-detail-media {
   margin: 2rem 0 0;
   text-align: center;
