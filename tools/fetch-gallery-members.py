@@ -3,6 +3,7 @@
 
 import json
 import re
+import shutil
 import time
 import urllib.error
 import urllib.parse
@@ -11,7 +12,10 @@ from html import unescape
 from datetime import date
 from pathlib import Path
 
+from gallery_members_sort import sort_posts
+
 ROOT = Path(__file__).resolve().parents[1]
+INSTAGRAM_CACHE = ROOT / "data" / "instagram.json"
 OUT = ROOT / "data" / "gallery-members.json"
 ASSETS = ROOT / "assets" / "instagram" / "gallery-members"
 HEADERS = {
