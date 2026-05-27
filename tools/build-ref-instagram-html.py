@@ -11,6 +11,60 @@ DATA = ROOT / "data" / "instagram-history.json"
 OUT = ROOT / "partials" / "ref-instagram-posts.html"
 
 
+def asset_path(rel: str) -> str:
+    if rel.startswith("../") or rel.startswith("http"):
+        return rel
+    if rel.startswith("assets/"):
+        return f"../{rel}"
+    return rel
+
+
+def thumb_html(post: dict) -> str:
+    videos = post.get("local_videos") or []
+    imgs = post.get("local_images") or ([post["cover"]] if post.get("cover") else [])
+    imgs = [asset_path(p) for p in imgs if p]
+    poster = imgs[0] if imgs else ""
+
+    if videos:
+        src = html.escape(asset_path(videos[0]))
+        thumb = html.escape(poster or asset_path(videos[0].replace(".mp4", ".jpg")))
+        return (
+            f'<button type="button" class="ref-ig-thumb ref-ig-lightbox-trigger" '
+            f'data-type="video" data-src="{src}" data-poster="{thumb}" '
+            f'aria-label="تشغيل الفيديو">'
+            f'<img src="{thumb}" alt="" loading="lazy" />'
+            f'<span class="ref-ig-play" aria-hidden="true"></span>'
+            f'<span class="ref-ig-type-badge">فيديو</span>'
+            f"</button>"
+        )
+
+    if not imgs:
+        return (
+            '<div class="ref-ig-thumb ref-ig-thumb--empty">'
+            '<span class="text-xs text-muted-foreground">بدون وسائط</span></div>'
+        )
+
+    src = html.escape(imgs[0])
+    if len(imgs) > 1:
+        images_json = html.escape(json.dumps(imgs, ensure_ascii=False), quote=True)
+        label = f"عرض {len(imgs)} صور"
+        return (
+            f'<button type="button" class="ref-ig-thumb ref-ig-lightbox-trigger" '
+            f'data-type="gallery" data-images="{images_json}" data-src="{src}" '
+            f'aria-label="{html.escape(label)}">'
+            f'<img src="{src}" alt="" loading="lazy" />'
+            f'<span class="ref-ig-type-badge">{len(imgs)} صور</span>'
+            f"</button>"
+        )
+
+    return (
+        f'<button type="button" class="ref-ig-thumb ref-ig-lightbox-trigger" '
+        f'data-type="image" data-src="{src}" aria-label="عرض الصورة بالحجم الكامل">'
+        f'<img src="{src}" alt="" loading="lazy" />'
+        f"</button>"
+    )
+
+
 def title_from_caption(caption: str) -> str:
     line = caption.strip().split("\n")[0].strip()
     line = re.sub(r'^[\s"]+|[\s"]+$', "", line)
@@ -41,39 +95,6 @@ def caption_html(caption: str) -> str:
         inner = "<br />".join(lines)
         blocks.append(f'<p class="ref-ig-caption-p">{inner}</p>')
     return "\n                ".join(blocks)
-
-
-def thumb_html(post: dict) -> str:
-    videos = post.get("local_videos") or []
-    imgs = post.get("local_images") or ([post["cover"]] if post.get("cover") else [])
-    poster = imgs[0] if imgs else ""
-
-    if videos:
-        src = html.escape(videos[0])
-        thumb = html.escape(poster or videos[0].replace(".mp4", ".jpg"))
-        return (
-            f'<button type="button" class="ref-ig-thumb ref-ig-lightbox-trigger" '
-            f'data-type="video" data-src="{src}" data-poster="{thumb}" '
-            f'aria-label="تشغيل الفيديو">'
-            f'<img src="{thumb}" alt="" loading="lazy" />'
-            f'<span class="ref-ig-play" aria-hidden="true"></span>'
-            f'<span class="ref-ig-type-badge">فيديو</span>'
-            f"</button>"
-        )
-
-    if not imgs:
-        return (
-            '<div class="ref-ig-thumb ref-ig-thumb--empty">'
-            '<span class="text-xs text-muted-foreground">بدون وسائط</span></div>'
-        )
-
-    src = html.escape(imgs[0])
-    return (
-        f'<button type="button" class="ref-ig-thumb ref-ig-lightbox-trigger" '
-        f'data-type="image" data-src="{src}" aria-label="عرض الصورة بالحجم الكامل">'
-        f'<img src="{src}" alt="" loading="lazy" />'
-        f"</button>"
-    )
 
 
 def render_post(post: dict, index: int) -> str:

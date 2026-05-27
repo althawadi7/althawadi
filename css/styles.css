@@ -1637,6 +1637,104 @@ button, input, textarea { font-family: inherit; }
   overflow: hidden;
 }
 
+.ref-ig-card-title-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.ref-ig-card-title-link:hover {
+  color: var(--accent);
+}
+
+.ref-ig-card-actions {
+  margin: 0.25rem 0 0;
+}
+
+.ref-ig-read-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.ref-ig-read-more:hover {
+  text-decoration: underline;
+}
+
+a.ref-ig-thumb--card-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+a.ref-ig-thumb--card-link:hover img {
+  opacity: 0.92;
+}
+
+/* Reference detail page */
+.ref-detail-page .ref-detail-title {
+  line-height: 1.35;
+}
+
+.ref-detail-body {
+  font-size: 0.9375rem;
+  line-height: 1.9;
+  color: var(--foreground);
+}
+
+.ref-detail-body .ref-ig-caption-p,
+.ref-detail-body p {
+  margin: 0 0 1rem;
+}
+
+.ref-detail-body .doc-excerpt {
+  margin: 1.25rem 0;
+  padding: 1rem 1.25rem;
+  border-right: 3px solid var(--accent);
+  background: color-mix(in oklch, var(--card) 80%, transparent);
+  border-radius: var(--radius);
+}
+
+.ref-detail-media {
+  margin: 2rem 0 0;
+  text-align: center;
+}
+
+.ref-detail-media img,
+.ref-detail-video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  border-radius: var(--radius);
+  background: color-mix(in oklch, black 90%, transparent);
+}
+
+.ref-detail-gallery {
+  display: grid;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.ref-detail-footer a {
+  font-size: 0.875rem;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.ref-detail-footer a:hover {
+  text-decoration: underline;
+}
+
+.ref-detail-ext-link {
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+}
+
 .ref-ig-details {
   margin-top: auto;
   font-size: 0.8125rem;
@@ -1920,6 +2018,41 @@ body.ref-ig-lightbox-open {
 
 .ref-ig-lightbox-media video.ref-ig-lightbox-full {
   background: #000;
+}
+
+.ref-ig-lightbox-gallery {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.ref-ig-lightbox-nav {
+  flex: 0 0 auto;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: 9999px;
+  background: color-mix(in oklch, var(--background) 88%, transparent);
+  color: var(--foreground);
+  font-size: 1.75rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.ref-ig-lightbox-counter {
+  position: absolute;
+  bottom: 0.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  background: color-mix(in oklch, black 65%, transparent);
+  color: #fff;
+  font-size: 0.875rem;
 }
 
 @media (max-width: 767px) {

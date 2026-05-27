@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Fetch specific Instagram posts by shortcode (caption + images)."""
 
+import hashlib
 import json
 import re
 import time
@@ -187,6 +188,55 @@ def normalize_post(item: dict, shortcode: str) -> dict:
     }
 
 
+def download_all_images(code: str, post: dict) -> list[str]:
+    """Save every slide: API carousel URLs first, then media/?img_index=N."""
+    image_urls = post.get("images") or []
+    local_images: list[str] = []
+
+    if len(image_urls) > 1:
+        for idx, img_url in enumerate(image_urls):
+            suffix = f"_{idx}" if idx else ""
+            dest = ASSETS / f"{code}{suffix}.jpg"
+            if download(img_url, dest):
+                local_images.append(f"assets/instagram/history/{code}{suffix}.jpg")
+        if local_images:
+            return local_images
+
+    seen: set[str] = set()
+    for idx in range(20):
+        n = idx + 1
+        suffix = f"_{idx}" if idx else ""
+        dest = ASSETS / f"{code}{suffix}.jpg"
+        url = f"{media_large_url(code)}&img_index={n}"
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": HEADERS["User-Agent"]})
+            data = urllib.request.urlopen(req, timeout=45).read()
+        except (urllib.error.URLError, OSError):
+            break
+        if len(data) < 5000:
+            break
+        digest = hashlib.md5(data).hexdigest()
+        if digest in seen:
+            break
+        seen.add(digest)
+        dest.write_bytes(data)
+        local_images.append(f"assets/instagram/history/{code}{suffix}.jpg")
+
+    if local_images:
+        return local_images
+
+    dest = ASSETS / f"{code}.jpg"
+    if download_full_image(code, dest):
+        return [f"assets/instagram/history/{code}.jpg"]
+
+    for idx, img_url in enumerate(image_urls):
+        suffix = f"_{idx}" if idx else ""
+        dest = ASSETS / f"{code}{suffix}.jpg"
+        if download(img_url, dest):
+            local_images.append(f"assets/instagram/history/{code}{suffix}.jpg")
+    return local_images
+
+
 def main() -> None:
     ASSETS.mkdir(parents=True, exist_ok=True)
     posts = []
@@ -201,17 +251,11 @@ def main() -> None:
             continue
 
         post = normalize_post(item, code)
-        local_images = []
-        dest = ASSETS / f"{code}.jpg"
-        if download_full_image(code, dest):
-            local_images.append(f"assets/instagram/history/{code}.jpg")
-        else:
-            for idx, img_url in enumerate(post["images"]):
-                suffix = f"_{idx}" if idx else ""
-                dest = ASSETS / f"{code}{suffix}.jpg"
-                if download(img_url, dest):
-                    local_images.append(f"assets/instagram/history/{code}{suffix}.jpg")
+        local_images = download_all_images(code, post)
         post["local_images"] = local_images or post["images"]
+        post["image_count"] = len(post["local_images"])
+        if post["image_count"] > 1 and post["type"] == "image":
+            post["type"] = "album"
         post["cover"] = local_images[0] if local_images else (post["images"][0] if post["images"] else None)
         posts.append(post)
         time.sleep(0.6)

@@ -11,7 +11,7 @@ PATH = ROOT / "references" / "index.html"
 URL_BY_TITLE = {
     "من أخبار وتاريخ بني خالد": None,
     "بنو خالد عبر القرون": None,
-    "القبائل والبيوتات المؤرخة في دولة البحرين": None,
+    "القبائل والبيوت المؤرخة في دولة البحرين": None,
     "الجمهرة في أنساب الأسر": None,
     "دليل الخليج": (
         "https://www.qdl.qa/ar/archive/81055/voyage_Persian_Gulf/voyage_Persian_Gulf-Arabic/lorimer-gulf-arabic-bahrain-ar",
