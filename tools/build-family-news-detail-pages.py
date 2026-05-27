@@ -4,9 +4,12 @@
 import html
 import json
 import re
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tools"))
+from footer_snippet import footer_contact_col, footer_nav_cols  # noqa: E402
 DATA = ROOT / "data" / "family-news.json"
 OUT_DIR = ROOT / "news" / "item"
 BASE = "/althawadi"
@@ -196,18 +199,13 @@ def page_shell(title: str, description: str, slug: str, body: str, og_image: str
     </main>
 
     <footer class="mt-24 border-t border-border bg-card/40">
-      <div class="mx-auto max-w-7xl px-6 py-14 grid gap-10 md:grid-cols-3">
-        <div>
+      <div class="mx-auto max-w-7xl px-6 py-14 footer-grid">
+        <div class="footer-brand">
           <a href="{BASE}/" data-home class="font-display text-2xl text-foreground hover:text-accent">الذواودة</a>
           <p class="mt-3 text-sm text-muted-foreground leading-7 max-w-sm">بيت من الذكريات، وصفحة من التاريخ. نوثّق هنا نسب عائلتنا، وسير أجدادنا، وصورًا تحكي مسيرتنا جيلًا بعد جيل.</p>
         </div>
-        <div>
-          <h4 class="text-xs uppercase tracking-[0.3em] text-muted-foreground font-latin">روابط</h4>
-          <ul class="mt-4 space-y-2 text-sm" style="list-style:none;padding:0;">
-            <li><a href="{BASE}/news/" class="hover:text-accent">أخبار العائلة</a></li>
-            <li><a href="{BASE}/contact/" class="hover:text-accent">تواصل</a></li>
-          </ul>
-        </div>
+{footer_nav_cols(BASE)}
+{footer_contact_col()}
       </div>
       <div class="border-t border-border/60">
         <div class="footer-bar mx-auto max-w-7xl px-4 sm:px-6 py-5 text-xs text-muted-foreground flex flex-wrap justify-between gap-3">

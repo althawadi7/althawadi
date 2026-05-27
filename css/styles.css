@@ -109,6 +109,69 @@
   display: block;
 }
 
+/* Site footer */
+.footer-grid {
+  display: grid;
+  gap: 2rem 2.25rem;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.footer-brand {
+  max-width: 22rem;
+}
+
+.footer-nav-heading {
+  margin: 0;
+  font-size: 0.68rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  font-family: var(--font-latin);
+}
+
+.footer-nav-list {
+  margin: 0.85rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.45rem;
+  font-size: 0.875rem;
+}
+
+.footer-nav-list a {
+  color: color-mix(in oklch, var(--foreground) 82%, transparent);
+  transition: color 150ms ease;
+}
+
+.footer-nav-list a:hover {
+  color: var(--accent);
+}
+
+.footer-contact-col .footer-nav-heading {
+  margin-bottom: 0;
+}
+
+@media (min-width: 640px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 1024px) {
+  .footer-grid {
+    grid-template-columns: minmax(14rem, 1.45fr) repeat(3, minmax(6.5rem, 1fr)) minmax(10rem, 1.1fr);
+    align-items: start;
+  }
+
+  .footer-brand {
+    grid-column: auto;
+  }
+}
+
 html.theme-animate,
 html.theme-animate * {
   transition:
