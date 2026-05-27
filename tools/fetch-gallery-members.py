@@ -55,7 +55,26 @@ SHORTCODES = [
     "Bf340zCANo7",
     "BgDvBebBoTx",
     "BgqlCzbA9BW",
+    "DYmffBbM3N-",
+    "DYmf5qAs4Ge",
+    "DYouivNATcR",
+    "DYoulRSA5dW",
+    "DYrBDESgx9D",
+    "DYrBY4Xg4Ik",
+    "DYtiyl5MAUi",
+    "DYtjGY6soQ4",
+    "DYyusCGATDb",
+    "DYyu6LKgX-9",
+    "DY1fYN3A6r6",
+    "DY1grV3gsR7",
 ]
+
+
+def instagram_seed() -> dict[str, dict]:
+    if not INSTAGRAM_CACHE.exists():
+        return {}
+    data = json.loads(INSTAGRAM_CACHE.read_text(encoding="utf-8"))
+    return {p["shortcode"]: p for p in data.get("recent_posts", []) if p.get("shortcode")}
 
 
 def fetch_json(url: str) -> dict:
@@ -84,6 +103,7 @@ def clean_caption_text(text: str) -> str:
     t = clean_text(text)
     t = re.sub(r"^\d+\s+likes?,\s+\d+\s+comments?\s+-\s+", "", t, flags=re.I)
     t = re.sub(r"^althawadi_majlis\s+.*?:\s*", "", t, flags=re.I)
+    t = re.sub(r"^[\d\s‏‎]+likes?.*?\"([^\"]+)\".*$", r"\1", t, flags=re.I)
     t = t.strip().strip('"').strip()
     return t
 
@@ -164,14 +184,50 @@ def media_large_url(shortcode: str) -> str:
     return f"https://www.instagram.com/p/{urllib.parse.quote(shortcode)}/media/?size=l"
 
 
+def copy_cached_image(code: str) -> list[str]:
+    dest = ASSETS / f"{code}.jpg"
+    if dest.exists():
+        return [f"assets/instagram/gallery-members/{code}.jpg"]
+    src = ROOT / "assets" / "instagram" / f"{code}.jpg"
+    if src.exists():
+        shutil.copy2(src, dest)
+        return [f"assets/instagram/gallery-members/{code}.jpg"]
+    return []
+
+
+def load_existing() -> dict[str, dict]:
+    if not OUT.exists():
+        return {}
+    data = json.loads(OUT.read_text(encoding="utf-8"))
+    return {p["shortcode"]: p for p in data.get("posts", []) if p.get("shortcode")}
+
+
 def main() -> None:
     ASSETS.mkdir(parents=True, exist_ok=True)
+    seed = instagram_seed()
+    existing = load_existing()
 
-    posts = []
-    failed = []
+    posts_by_code: dict[str, dict] = {}
+    failed: list[str] = []
+
     for i, code in enumerate(SHORTCODES, 1):
         print(f"[{i}/{len(SHORTCODES)}] {code}")
+        prior = existing.get(code)
+        if prior and prior.get("local_images"):
+            posts_by_code[code] = prior
+            print("  reuse cached entry")
+            continue
+
         item = fetch_post(code)
+        if not item and code in seed:
+            item = {
+                "caption": {"text": seed[code].get("caption", "")},
+                "media_type": 1,
+                "taken_at": seed[code].get("timestamp"),
+            }
+            if seed[code].get("display_url"):
+                item["_og_image"] = seed[code]["display_url"]
+
         if not item:
             failed.append(code)
             time.sleep(2)
@@ -195,25 +251,35 @@ def main() -> None:
             if download(item["_og_image"], dest):
                 local_images.append(f"assets/instagram/gallery-members/{code}.jpg")
 
+        if not local_images:
+            local_images = copy_cached_image(code)
+
         caption_obj = item.get("caption") or {}
         raw_caption = caption_obj.get("text") if isinstance(caption_obj, dict) else str(caption_obj or "")
         caption = clean_caption_text(raw_caption)
+        if not caption and code in seed:
+            caption = clean_caption_text(seed[code].get("caption", ""))
 
-        posts.append(
-            {
-                "shortcode": code,
-                "url": f"https://www.instagram.com/p/{code}/",
-                "type": media_type_label(item),
-                "caption": caption,
-                "first_comment": "",
-                "text": caption,
-                "local_images": local_images,
-                "local_videos": [],
-                "cover": (local_images[0] if local_images else ""),
-                "image_count": len(local_images),
-            }
-        )
+        posted_at = item.get("taken_at") or item.get("timestamp")
+        if not posted_at and code in seed:
+            posted_at = seed[code].get("timestamp")
+
+        posts_by_code[code] = {
+            "shortcode": code,
+            "url": f"https://www.instagram.com/p/{code}/",
+            "type": media_type_label(item),
+            "caption": caption,
+            "first_comment": "",
+            "text": caption,
+            "posted_at": posted_at or 0,
+            "local_images": local_images,
+            "local_videos": [],
+            "cover": (local_images[0] if local_images else ""),
+            "image_count": len(local_images),
+        }
         time.sleep(0.8)
+
+    posts = sort_posts([posts_by_code[c] for c in SHORTCODES if c in posts_by_code])
 
     out = {
         "source": "https://www.instagram.com/althawadi_majlis/?hl=ar",

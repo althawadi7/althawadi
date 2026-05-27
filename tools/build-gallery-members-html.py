@@ -4,9 +4,12 @@
 import html
 import json
 import re
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tools"))
+from gallery_members_sort import clean_display_name, sort_posts  # noqa: E402
 DATA = ROOT / "data" / "gallery-members.json"
 GALLERY = ROOT / "gallery" / "index.html"
 BASE = "/althawadi"
@@ -27,7 +30,9 @@ def normalized_text(post: dict) -> str:
     if m:
         raw = m.group(1)
     raw = re.sub(r"#\w+", "", raw)
-    return " ".join(raw.split()).strip(' .-"')
+    cleaned = " ".join(raw.split()).strip(' .-"')
+    display = clean_display_name(cleaned)
+    return display or cleaned
 
 
 def caption_title(post: dict) -> str:
@@ -74,7 +79,7 @@ def card_html(post: dict) -> str:
 
 def main() -> None:
     data = json.loads(DATA.read_text(encoding="utf-8"))
-    posts = data.get("posts", [])
+    posts = sort_posts(data.get("posts", []))
     cards = "\n".join(card_html(p) for p in posts if (p.get("local_images") or p.get("local_videos")))
     if not cards:
         cards = '<p class="text-sm text-muted-foreground">لا توجد صور متاحة حاليًا.</p>'

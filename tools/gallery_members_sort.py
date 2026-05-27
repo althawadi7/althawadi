@@ -36,7 +36,8 @@ def clean_display_name(text: str) -> str:
     t = re.sub(r"الله\s+يحفظه[^.]*", " ", t)
     t = re.sub(r"الله\s+يطول\s+بعمره[^.]*", " ", t)
     t = re.sub(r"رحمة\s+الله[^.]*", " ", t)
-    t = re.sub(r"أخ\s+الشيخ[^.]*", " ", t)
+    t = re.sub(r"أخ\s+الشيخ[^.#]*", " ", t)
+    t = re.sub(r"[\u2066-\u2069\u202a-\u202e]", "", t)
     for pat in STRIP_PREFIXES:
         t = re.sub(pat, " ", t, flags=re.I)
     t = t.replace("الذواودة", " ").replace("الذوادي", " ")
