@@ -1866,6 +1866,15 @@ a.ref-ig-thumb--card-link:hover img {
   overflow: hidden;
 }
 
+.family-news-card-title-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.family-news-card-title-link:hover {
+  color: var(--accent);
+}
+
 .family-news-text {
   margin: 0;
   font-size: 0.88rem;

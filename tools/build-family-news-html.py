@@ -9,6 +9,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data" / "family-news.json"
 NEWS = ROOT / "news" / "index.html"
+BASE = "/althawadi"
+ITEM_BASE = f"{BASE}/news/item"
 
 
 def trim_caption(text: str, limit: int = 260) -> str:
@@ -20,7 +22,7 @@ def trim_caption(text: str, limit: int = 260) -> str:
 
 def card_html(post: dict) -> str:
     code = post["shortcode"]
-    url = html.escape(post["url"])
+    detail_url = html.escape(f"{ITEM_BASE}/{code}/")
     title = html.escape(trim_caption(post.get("caption") or post.get("text") or code, 80))
     body = html.escape(trim_caption(post.get("text") or post.get("caption") or "", 240))
     kind = post.get("type", "image")
@@ -33,15 +35,15 @@ def card_html(post: dict) -> str:
         badge = '<span class="family-news-badge">فيديو</span>'
     meta = f"Instagram / {code}"
     return f"""          <article class="family-news-card">
-            <a class="family-news-thumb" href="{url}" target="_blank" rel="noreferrer">
-              <img src="/althawadi/{cover}" alt="{title}" loading="lazy" />
+            <a class="family-news-thumb" href="{detail_url}" aria-label="عرض التفاصيل">
+              <img src="{BASE}/{cover}" alt="{title}" loading="lazy" />
               {badge}
             </a>
             <div class="family-news-body">
               <p class="family-news-meta font-latin">{meta}</p>
-              <h3 class="family-news-title">{title}</h3>
+              <h3 class="family-news-title"><a href="{detail_url}" class="family-news-card-title-link">{title}</a></h3>
               <p class="family-news-text">{body}</p>
-              <a class="family-news-link" href="{url}" target="_blank" rel="noreferrer">عرض المنشور ↗</a>
+              <a class="family-news-link" href="{detail_url}">اقرأ التفاصيل ←</a>
             </div>
           </article>"""
 
