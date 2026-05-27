@@ -1794,27 +1794,37 @@ a.ref-ig-thumb--card-link:hover img {
 /* Family news cards */
 .family-news-grid {
   display: grid;
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.15rem;
 }
 
 .family-news-card {
-  display: grid;
-  grid-template-columns: 140px 1fr;
-  gap: 1rem;
+  display: flex;
+  flex-direction: column;
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: color-mix(in oklch, var(--card) 70%, var(--background));
+  border-radius: calc(var(--radius) + 2px);
+  background: color-mix(in oklch, var(--card) 82%, var(--background));
   overflow: hidden;
+  box-shadow: 0 8px 24px color-mix(in oklch, black 9%, transparent);
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+}
+
+.family-news-card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in oklch, var(--accent) 28%, var(--border));
+  box-shadow: 0 14px 30px color-mix(in oklch, black 14%, transparent);
 }
 
 .family-news-thumb {
   position: relative;
   display: block;
-  min-height: 100%;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   background: color-mix(in oklch, var(--card) 88%, black 3%);
 }
 
 .family-news-thumb img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1833,7 +1843,10 @@ a.ref-ig-thumb--card-link:hover img {
 }
 
 .family-news-body {
-  padding: 0.85rem 1rem 1rem 0.2rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 0.95rem 1rem 1rem;
 }
 
 .family-news-meta {
@@ -1844,27 +1857,42 @@ a.ref-ig-thumb--card-link:hover img {
 }
 
 .family-news-title {
-  margin: 0 0 0.45rem;
-  font-size: 1.02rem;
-  line-height: 1.55;
+  margin: 0 0 0.55rem;
+  font-size: 1rem;
+  line-height: 1.7;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .family-news-text {
   margin: 0;
-  font-size: 0.9rem;
-  line-height: 1.8;
+  font-size: 0.88rem;
+  line-height: 1.78;
   color: color-mix(in oklch, var(--foreground) 86%, transparent);
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .family-news-link {
   display: inline-block;
-  margin-top: 0.7rem;
+  margin-top: auto;
+  padding-top: 0.85rem;
   font-size: 0.84rem;
   color: var(--accent);
 }
 
 .family-news-link:hover {
   text-decoration: underline;
+}
+
+@media (max-width: 520px) {
+  .family-news-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .ref-detail-media {
