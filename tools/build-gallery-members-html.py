@@ -9,46 +9,31 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
-from gallery_members_sort import clean_display_name, sort_posts  # noqa: E402
+from gallery_members_sort import sort_posts  # noqa: E402
 DATA = ROOT / "data" / "gallery-members.json"
 GALLERY = ROOT / "gallery" / "index.html"
 BASE = "/althawadi"
 
 
-def trim_text(text: str, limit: int = 140) -> str:
-    t = " ".join((text or "").split())
-    if len(t) <= limit:
-        return t
-    return t[: limit - 1].rstrip() + "…"
-
-
 def normalized_text(post: dict) -> str:
     raw = post.get("first_comment") or post.get("caption") or post.get("text") or post["shortcode"]
     raw = html.unescape(raw)
-    raw = re.sub(r"[\u200e\u200f\u202a-\u202e]", "", raw)
+    raw = re.sub(r"[\u200e\u200f\u202a-\u202e\u2066-\u2069\t]", "", raw)
     m = re.search(r':\s*"([^"]+)"', raw)
     if m:
         raw = m.group(1)
     raw = re.sub(r"#\w+", "", raw)
-    cleaned = " ".join(raw.split()).strip(' .-"')
-    display = clean_display_name(cleaned)
-    return display or cleaned
-
-
-def caption_title(post: dict) -> str:
-    base = normalized_text(post)
-    return trim_text(base, 70)
-
-
-def caption_body(post: dict) -> str:
-    return trim_text(normalized_text(post), 120)
+    return " ".join(raw.split()).strip(' .-"')
 
 
 def card_html(post: dict) -> str:
-    title = html.escape(caption_title(post))
-    body = html.escape(caption_body(post))
+    full_name = normalized_text(post)
+    title = html.escape(full_name)
+    full_esc = html.escape(full_name, quote=True)
     imgs = post.get("local_images") or []
-    cover = html.escape(imgs[0] if imgs else "")
+    cover_path = imgs[0] if imgs else ""
+    cover = html.escape(cover_path)
+    cover_url = html.escape(f"{BASE}/{cover_path}", quote=True)
     image_count = len(imgs)
 
     badge = ""
@@ -57,21 +42,16 @@ def card_html(post: dict) -> str:
     elif post.get("type") == "video":
         badge = "<span>فيديو</span>"
 
-    body_html = ""
-    if body and body != title:
-        body_html = f'<p class="gallery-member-text">{body}</p>'
-
     badge_html = (
         f'<span class="gallery-member-badge font-latin">{badge}</span>' if badge else ""
     )
 
     return f"""          <figure class="gallery-member-card">
-            <div class="gallery-member-thumb">
+            <button type="button" class="gallery-member-thumb-btn" data-img="{cover_url}" data-title="{full_esc}" data-body="" aria-label="عرض {title}">
               <img src="{BASE}/{cover}" alt="{title}" loading="lazy" />
-            </div>
+            </button>
             <figcaption class="gallery-member-caption">
-              <div class="gallery-member-title">{title}</div>
-              {body_html}
+              <p class="gallery-member-title">{title}</p>
               {badge_html}
             </figcaption>
           </figure>"""
