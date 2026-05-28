@@ -68,11 +68,18 @@ def branch_rank(parts: list[str]) -> int:
 def member_sort_key(post: dict) -> tuple:
     raw = post.get("caption") or post.get("text") or ""
     parts = patronymic_parts(raw)
-    depth = len(parts) if parts else 99
-    branch = branch_rank(parts)
-    first = parts[0] if parts else raw[:40]
     posted = post.get("posted_at") or post.get("timestamp") or 0
-    return (depth, branch, first, posted, post.get("shortcode", ""))
+
+    if not parts:
+        return (99, ("~",), posted, post.get("shortcode", ""))
+
+    # Convert "X بن Y بن Z" into lineage path oldest -> youngest.
+    # Sorting by this path keeps relatives adjacent:
+    # - brothers share the same ancestry prefix
+    # - sons appear right after their father's branch
+    lineage = tuple(reversed(parts))
+    branch = branch_rank(parts)
+    return (branch, lineage, posted, post.get("shortcode", ""))
 
 
 def sort_posts(posts: list[dict]) -> list[dict]:

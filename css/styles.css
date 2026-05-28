@@ -24,25 +24,25 @@
   color-scheme: light;
 }
 
-/* Dark mode — warm charcoal (grey base + subtle sand/brown; light theme unchanged) */
+/* Dark mode — modern blue slate (clear, cool, readable; light theme unchanged) */
 [data-theme="dark"] {
   color-scheme: dark;
-  --background: oklch(0.25 0.009 62);
-  --foreground: oklch(0.91 0.008 78);
-  --card: oklch(0.31 0.011 62);
-  --card-foreground: oklch(0.91 0.008 78);
-  --primary: oklch(0.74 0.06 68);
-  --primary-foreground: oklch(0.22 0.01 62);
-  --secondary: oklch(0.36 0.012 60);
-  --muted: oklch(0.34 0.01 60);
-  --muted-foreground: oklch(0.69 0.014 72);
-  --accent: oklch(0.73 0.065 68);
-  --accent-foreground: oklch(0.22 0.01 62);
-  --border: oklch(0.39 0.011 60);
-  --input: oklch(0.33 0.011 60);
-  --ring: oklch(0.73 0.065 68);
-  --sand: oklch(0.30 0.009 62);
-  --gold: oklch(0.72 0.07 72);
+  --background: oklch(0.24 0.012 252);
+  --foreground: oklch(0.92 0.01 248);
+  --card: oklch(0.30 0.014 250);
+  --card-foreground: oklch(0.92 0.01 248);
+  --primary: oklch(0.76 0.06 240);
+  --primary-foreground: oklch(0.20 0.012 252);
+  --secondary: oklch(0.35 0.014 248);
+  --muted: oklch(0.33 0.012 248);
+  --muted-foreground: oklch(0.70 0.018 242);
+  --accent: oklch(0.75 0.07 232);
+  --accent-foreground: oklch(0.20 0.012 252);
+  --border: oklch(0.39 0.014 248);
+  --input: oklch(0.33 0.014 248);
+  --ring: oklch(0.75 0.07 232);
+  --sand: oklch(0.29 0.012 250);
+  --gold: oklch(0.74 0.05 235);
 }
 
 [data-theme="dark"] body {
@@ -52,8 +52,8 @@
 
 [data-theme="dark"] .paper-texture {
   background-image:
-    radial-gradient(circle at 20% 18%, oklch(0.36 0.018 68 / 0.12) 0, transparent 55%),
-    radial-gradient(circle at 82% 78%, oklch(0.33 0.012 58 / 0.08) 0, transparent 52%);
+    radial-gradient(circle at 20% 18%, oklch(0.36 0.03 236 / 0.14) 0, transparent 55%),
+    radial-gradient(circle at 82% 78%, oklch(0.33 0.022 248 / 0.1) 0, transparent 52%);
 }
 
 [data-theme="dark"] .hero-gradient {
@@ -119,15 +119,15 @@
 }
 
 [data-theme="dark"] .ornament {
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20'><path d='M0 10h35M65 10h35' stroke='%23a89880' stroke-width='0.5'/><path d='M50 10l-8-6 0 12z M50 10l8-6 0 12z' fill='%23c4b49a'/></svg>");
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20'><path d='M0 10h35M65 10h35' stroke='%238ea4c7' stroke-width='0.5'/><path d='M50 10l-8-6 0 12z M50 10l8-6 0 12z' fill='%23b8c8e3'/></svg>");
 }
 
 [data-theme="dark"] .ref-ig-card--source .ref-ig-thumb-label::before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c4b49a' stroke-width='1.35' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 19.5A2.5 2.5 0 0 1 6.5 17H20'/%3E%3Cpath d='M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z'/%3E%3Cpath d='M8 7h8M8 11h6'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23b8c8e3' stroke-width='1.35' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 19.5A2.5 2.5 0 0 1 6.5 17H20'/%3E%3Cpath d='M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z'/%3E%3Cpath d='M8 7h8M8 11h6'/%3E%3C/svg%3E");
 }
 
 [data-theme="dark"] .ref-ig-card--source .ref-ig-thumb-label {
-  color: oklch(0.82 0.04 72);
+  color: oklch(0.84 0.04 236);
 }
 
 .theme-toggle {
@@ -1820,7 +1820,7 @@ a.ref-ig-thumb--empty.ref-ig-thumb--card-link:hover .ref-ig-thumb-label::before 
 
 [data-theme="dark"] .ref-ig-thumb--empty {
   background:
-    radial-gradient(circle at 50% 38%, oklch(0.40 0.02 68 / 0.14) 0, transparent 62%),
+    radial-gradient(circle at 50% 38%, oklch(0.42 0.028 236 / 0.18) 0, transparent 62%),
     linear-gradient(
       160deg,
       color-mix(in oklch, var(--card) 92%, var(--background)),
