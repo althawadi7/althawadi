@@ -1,19 +1,10 @@
 #!/usr/bin/env python3
-"""Sort gallery member posts: older generations first, then branch (عبدالله before راشد)."""
+"""Sort gallery member posts by lineage, keeping close relatives adjacent."""
 
 from __future__ import annotations
 
 import re
 from html import unescape
-
-BRANCH_ORDER = {
-    "عبدالله": 0,
-    "راشد": 1,
-    "خليفة": 2,
-    "محمد": 3,
-    "حسن": 4,
-    "هلال": 5,
-}
 
 ROOT_ANCESTOR_TOKENS = {"عيسى"}
 
@@ -56,24 +47,12 @@ def patronymic_parts(text: str) -> list[str]:
     return [p.strip() for p in re.split(r"\s+بن\s+", name) if p.strip()]
 
 
-def branch_rank(parts: list[str]) -> int:
-    if not parts:
-        return 99
-    if parts[-1].startswith("عيسى") and len(parts) >= 2:
-        return BRANCH_ORDER.get(parts[-2], 50)
-    for part in reversed(parts):
-        if part in BRANCH_ORDER:
-            return BRANCH_ORDER[part]
-    return 50
-
-
-def member_sort_key(post: dict) -> tuple:
+def lineage_tokens(post: dict) -> tuple[str, ...]:
     raw = post.get("caption") or post.get("text") or ""
     parts = patronymic_parts(raw)
-    posted = post.get("posted_at") or post.get("timestamp") or 0
 
     if not parts:
-        return (99, ("~",), posted, post.get("shortcode", ""))
+        return ()
 
     # Convert "X بن Y بن Z" into lineage path oldest -> youngest.
     # Sorting by this path keeps relatives adjacent:
@@ -84,10 +63,31 @@ def member_sort_key(post: dict) -> tuple:
     # others omit them; trimming shared root tokens keeps close relatives adjacent.
     while lineage_list and lineage_list[0] in ROOT_ANCESTOR_TOKENS:
         lineage_list.pop(0)
-    lineage = tuple(lineage_list) if lineage_list else tuple(reversed(parts))
-    branch = branch_rank(parts)
-    return (branch, lineage, posted, post.get("shortcode", ""))
+    return tuple(lineage_list) if lineage_list else tuple(reversed(parts))
 
 
 def sort_posts(posts: list[dict]) -> list[dict]:
+    # Root branch order follows first appearance in data (instead of forcing
+    # عبدالله before راشد), which avoids pushing an entire branch to the bottom.
+    root_order: dict[str, int] = {}
+    for post in posts:
+        lineage = lineage_tokens(post)
+        root = lineage[0] if lineage else "~"
+        if root not in root_order:
+            root_order[root] = len(root_order)
+
+    def member_sort_key(post: dict) -> tuple:
+        lineage = lineage_tokens(post)
+        root = lineage[0] if lineage else "~"
+        # Fewer lineage tokens => older generation, so they should appear first.
+        generation_depth = len(lineage) if lineage else 999
+        posted = post.get("posted_at") or post.get("timestamp") or 0
+        return (
+            generation_depth,
+            root_order.get(root, 999),
+            lineage or ("~",),
+            posted,
+            post.get("shortcode", ""),
+        )
+
     return sorted(posts, key=member_sort_key)
