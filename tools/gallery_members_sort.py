@@ -15,6 +15,8 @@ BRANCH_ORDER = {
     "هلال": 5,
 }
 
+ROOT_ANCESTOR_TOKENS = {"عيسى"}
+
 STRIP_PREFIXES = (
     r"الشيخ\s+",
     r"النوخذة\s+",
@@ -77,7 +79,12 @@ def member_sort_key(post: dict) -> tuple:
     # Sorting by this path keeps relatives adjacent:
     # - brothers share the same ancestry prefix
     # - sons appear right after their father's branch
-    lineage = tuple(reversed(parts))
+    lineage_list = list(reversed(parts))
+    # Some captions include extra root ancestors (e.g. "... بن عيسى") while
+    # others omit them; trimming shared root tokens keeps close relatives adjacent.
+    while lineage_list and lineage_list[0] in ROOT_ANCESTOR_TOKENS:
+        lineage_list.pop(0)
+    lineage = tuple(lineage_list) if lineage_list else tuple(reversed(parts))
     branch = branch_rank(parts)
     return (branch, lineage, posted, post.get("shortcode", ""))
 
