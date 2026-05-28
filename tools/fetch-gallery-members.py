@@ -25,6 +25,63 @@ HEADERS = {
 }
 
 SHORTCODES = [
+    "BhuaZezAo8J",
+    "BhwpedVAU8v",
+    "Bh1ZqxgAxfy",
+    "Bh1qRauAp7K",
+    "Bh7A6_QgcSD",
+    "Bh7BEQ5A5UE",
+    "Bh7B8nBgX2y",
+    "BiAA-_Wll-U",
+    "BiCtke5FS7M",
+    "BiCtqQjlzCT",
+    "BiCyD97lx83",
+    "BiCyMVylCFy",
+    "BiEuYBKF3Bs",
+    "BiEugwYlnQp",
+    "BiEuzuYll4H",
+    "BiEu7aVFcHT",
+    "BiEvCe-libR",
+    "BiEvIGClC__",
+    "BiE3KqhFvJo",
+    "BiU27Vdl_fn",
+    "BiU3BY3l2CW",
+    "BiU3JmZFb1m",
+    "Biel2fsgFM6",
+    "Biel_C9AS_7",
+    "BieyAoug8Vu",
+    "Bi9EVmClbJs",
+    "Bi9EcRUllbQ",
+    "BjEyHmlF1AC",
+    "BjEyNWiljVK",
+    "BjM3rAYFKlW",
+    "BjM3zQ2lCJC",
+    "BjM364hlAvW",
+    "BjM4BaMlwJY",
+    "BjwoZ6Flvdx",
+    "BjwooeflbAo",
+    "Bk-YEFgA06-",
+    "BlSqUCDA4e1",
+    "BlVSBCWArp6",
+    "BlVSJLEg4oq",
+    "BldPbupgsxM",
+    "BldPiBGg5-N",
+    "BldPoiAAI12",
+    "Bli1-Y5AyVK",
+    "Bli2FZLg-cr",
+    "Bli2OROATf2",
+    "BlkcZssAIVd",
+    "Blkc0UiAgnD",
+    "BmbLO5zA3HJ",
+    "BmbLVPEAS2J",
+    "BmbLbF7AF36",
+    "BojCTaJA_VR",
+    "BojCaVmgG2E",
+    "BojCiJGADSi",
+    "BojCqF4A3DD",
+    "BojC_nhgCrp",
+    "BojC4F1gaiw",
+    "BojDQAdg-4I",
     "fs4qCrRSc_",
     "fs4-stxSde",
     "fs5mUixSew",
@@ -67,6 +124,8 @@ SHORTCODES = [
     "DYyu6LKgX-9",
     "DY1fYN3A6r6",
     "DY1grV3gsR7",
+    "DY38pUngLk6",
+    "DY38fQqACgs",
 ]
 
 
@@ -105,6 +164,14 @@ def clean_caption_text(text: str) -> str:
     t = re.sub(r"^althawadi_majlis\s+.*?:\s*", "", t, flags=re.I)
     t = re.sub(r"^[\d\s‏‎]+likes?.*?\"([^\"]+)\".*$", r"\1", t, flags=re.I)
     t = t.strip().strip('"').strip()
+    return t
+
+
+def display_name(text: str) -> str:
+    t = clean_caption_text(text)
+    t = re.sub(r"[\u200e\u200f\u202a-\u202e\u2066-\u2069\t]", "", t)
+    t = re.sub(r"#\w+", "", t)
+    t = " ".join(t.split()).strip(' .-"')
     return t
 
 
@@ -281,16 +348,35 @@ def main() -> None:
 
     posts = sort_posts([posts_by_code[c] for c in SHORTCODES if c in posts_by_code])
 
+    deduped_posts: list[dict] = []
+    seen_names: set[str] = set()
+    skipped_duplicate_names: list[str] = []
+    for post in posts:
+        name = display_name(post.get("caption") or post.get("text") or post.get("first_comment") or "")
+        if not name:
+            deduped_posts.append(post)
+            continue
+        name_key = re.sub(r"\s+", " ", name).strip().lower()
+        if name_key in seen_names:
+            skipped_duplicate_names.append(f"{post['shortcode']} ({name})")
+            continue
+        seen_names.add(name_key)
+        deduped_posts.append(post)
+
     out = {
         "source": "https://www.instagram.com/althawadi_majlis/?hl=ar",
         "fetched_at": date.today().isoformat(),
-        "posts": posts,
+        "posts": deduped_posts,
         "failed": failed,
     }
     OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"Saved {len(posts)} posts to {OUT}")
+    print(f"Saved {len(deduped_posts)} posts to {OUT}")
     if failed:
         print("Failed:", ", ".join(failed))
+    if skipped_duplicate_names:
+        print("Skipped duplicate names:")
+        for item in skipped_duplicate_names:
+            print(f"  - {item}")
 
 
 if __name__ == "__main__":
