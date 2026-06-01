@@ -613,6 +613,24 @@ button, input, textarea { font-family: inherit; }
   align-items: center;
 }
 
+.family-tree-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.family-tree-parent {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  z-index: 3;
+}
+
+.family-tree-unit--leaf {
+  display: inline-flex;
+}
+
+/* Layout only — connector lines drawn in SVG (family-tree.js) */
 .family-tree-node {
   position: relative;
   z-index: 3;
@@ -795,9 +813,8 @@ button, input, textarea { font-family: inherit; }
 
 .family-tree-lines {
   position: absolute;
-  inset: 0 auto auto 0;
-  width: 100%;
-  height: 100%;
+  top: 0;
+  left: 0;
   pointer-events: none;
   z-index: 1;
   overflow: visible;
@@ -843,6 +860,37 @@ button, input, textarea { font-family: inherit; }
 
 [data-theme="dark"] .family-tree-pat {
   color: oklch(0.78 0.02 242);
+}
+
+/* PDF export — hex/rgb only (html2canvas cannot parse oklch) */
+.family-tree-pan.family-tree-pdf-mode {
+  background-color: #e8e0d4 !important;
+  background-image: radial-gradient(circle, rgba(80, 65, 50, 0.12) 1px, transparent 1px) !important;
+}
+
+.family-tree-pdf-mode .family-tree-node {
+  background: #f0e4cc !important;
+  border-color: #c9a57a !important;
+  box-shadow: 0 2px 0 #d4c4a8 !important;
+  color: #3d3428 !important;
+}
+
+.family-tree-pdf-mode .family-tree-node.is-root,
+.family-tree-pdf-mode .family-tree-node.is-focus {
+  background: #f5ebd0 !important;
+  border-color: #b8654a !important;
+}
+
+.family-tree-pdf-mode .family-tree-given {
+  color: #3d3428 !important;
+}
+
+.family-tree-pdf-mode .family-tree-pat {
+  color: #6b5d4f !important;
+}
+
+.family-tree-pdf-mode .family-tree-lines path {
+  stroke: #b8654a !important;
 }
 
 .family-tree-hint {

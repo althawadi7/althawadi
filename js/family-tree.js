@@ -5,31 +5,44 @@
   if (!pans.length) return;
 
   var resizeTimer;
-  var layoutPending = false;
   var SVG_NS = 'http://www.w3.org/2000/svg';
 
+  function round(n) {
+    return Math.round(n * 10) / 10;
+  }
+
   function directNode(li) {
-    return li.querySelector(':scope > .family-tree-node, :scope > a.family-tree-node--link');
+    return li.querySelector(':scope > .family-tree-unit > .family-tree-node, :scope > .family-tree-unit > a.family-tree-node--link, :scope > .family-tree-unit--leaf > .family-tree-node, :scope > .family-tree-unit--leaf > a.family-tree-node--link, :scope > .family-tree-node, :scope > a.family-tree-node--link');
+  }
+
+  function parentWrap(ul) {
+    var unit = ul.parentElement;
+    if (!unit || !unit.classList.contains('family-tree-unit')) return null;
+    return unit.querySelector(':scope > .family-tree-parent');
   }
 
   function parentNode(ul) {
-    var li = ul.parentElement;
-    if (!li) return null;
-    return li.querySelector(':scope > .family-tree-node, :scope > a.family-tree-node--link');
+    var wrap = parentWrap(ul);
+    if (!wrap) return null;
+    return wrap.querySelector('.family-tree-node, .family-tree-node--link');
   }
 
-  function relBox(el, container) {
+  function relBox(el, canvas) {
     var er = el.getBoundingClientRect();
-    var cr = container.getBoundingClientRect();
+    var cr = canvas.getBoundingClientRect();
     return {
-      cx: er.left - cr.left + er.width / 2,
-      top: er.top - cr.top,
-      bottom: er.top - cr.top + er.height,
+      cx: round(er.left - cr.left + er.width / 2),
+      top: round(er.top - cr.top),
+      bottom: round(er.bottom - cr.top),
     };
   }
 
   function resetLayout(canvas) {
+    canvas.querySelectorAll('.family-tree-parent').forEach(function (wrap) {
+      wrap.style.transform = '';
+    });
     canvas.querySelectorAll('.family-tree-node, .family-tree-node--link').forEach(function (node) {
+      node.style.transform = '';
       node.style.position = '';
       node.style.left = '';
     });
@@ -38,27 +51,42 @@
     });
   }
 
+  function childCenters(canvas, ul) {
+    var items = ul.querySelectorAll(':scope > li');
+    var points = [];
+    items.forEach(function (li) {
+      var node = directNode(li);
+      if (!node) return;
+      var box = relBox(node, canvas);
+      points.push({ x: box.cx, y: box.top });
+    });
+    return points;
+  }
+
   function alignParents(canvas) {
     canvas.querySelectorAll('.family-tree-children').forEach(function (ul) {
+      var wrap = parentWrap(ul);
       var parentEl = parentNode(ul);
-      if (!parentEl) return;
+      if (!wrap || !parentEl) return;
 
-      var items = ul.querySelectorAll(':scope > li');
-      if (!items.length) return;
+      var points = childCenters(canvas, ul);
+      if (!points.length) return;
 
-      var firstNode = directNode(items[0]);
-      var lastNode = directNode(items[items.length - 1]);
-      if (!firstNode || !lastNode) return;
+      var minX = points[0].x;
+      var maxX = points[0].x;
+      points.forEach(function (pt) {
+        minX = Math.min(minX, pt.x);
+        maxX = Math.max(maxX, pt.x);
+      });
 
-      var firstCx = relBox(firstNode, canvas).cx;
-      var lastCx = relBox(lastNode, canvas).cx;
-      var targetCx = (firstCx + lastCx) / 2;
+      var targetCx = (minX + maxX) / 2;
       var parentCx = relBox(parentEl, canvas).cx;
       var shift = targetCx - parentCx;
 
       if (Math.abs(shift) > 0.5) {
-        parentEl.style.position = 'relative';
-        parentEl.style.left = shift + 'px';
+        wrap.style.transform = 'translateX(' + round(shift) + 'px)';
+      } else {
+        wrap.style.transform = '';
       }
     });
   }
@@ -69,10 +97,16 @@
       return 'M ' + parentX + ' ' + parentY + ' L ' + c.x + ' ' + c.y;
     }
 
-    var leftX = childPoints[0].x;
-    var rightX = childPoints[childPoints.length - 1].x;
+    var xs = childPoints.map(function (pt) {
+      return pt.x;
+    });
+    var minX = Math.min.apply(null, xs);
+    var maxX = Math.max.apply(null, xs);
+    var barMin = Math.min(minX, parentX);
+    var barMax = Math.max(maxX, parentX);
+
     var d = 'M ' + parentX + ' ' + parentY + ' L ' + parentX + ' ' + barY;
-    d += ' M ' + leftX + ' ' + barY + ' L ' + rightX + ' ' + barY;
+    d += ' M ' + barMin + ' ' + barY + ' L ' + barMax + ' ' + barY;
 
     childPoints.forEach(function (pt) {
       d += ' M ' + pt.x + ' ' + barY + ' L ' + pt.x + ' ' + pt.y;
@@ -94,30 +128,23 @@
     svg.setAttribute('width', String(w));
     svg.setAttribute('height', String(h));
     svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+    svg.style.width = w + 'px';
+    svg.style.height = h + 'px';
 
     canvas.querySelectorAll('.family-tree-children').forEach(function (ul) {
       var parentEl = parentNode(ul);
       if (!parentEl) return;
 
-      var items = ul.querySelectorAll(':scope > li');
-      if (!items.length) return;
+      var childPoints = childCenters(canvas, ul);
+      if (!childPoints.length) return;
 
       var parentBox = relBox(parentEl, canvas);
       var parentX = parentBox.cx;
       var parentY = parentBox.bottom;
-
-      var childPoints = [];
-      items.forEach(function (li) {
-        var node = directNode(li);
-        if (!node) return;
-        var box = relBox(node, canvas);
-        childPoints.push({ x: box.cx, y: box.top });
-      });
-
-      if (!childPoints.length) return;
-
-      var ulPad = parseFloat(getComputedStyle(ul).paddingTop) || 28;
-      var barY = parentY + ulPad * 0.5;
+      var childTop = childPoints.reduce(function (min, pt) {
+        return Math.min(min, pt.y);
+      }, childPoints[0].y);
+      var barY = round(parentY + (childTop - parentY) * 0.5);
 
       var path = document.createElementNS(SVG_NS, 'path');
       path.setAttribute('d', forkPath(parentX, parentY, barY, childPoints));
@@ -129,10 +156,15 @@
     }
   }
 
-  function centerPan(pan) {
-    var canvas = pan.querySelector('.family-tree-canvas');
-    if (!canvas) return;
+  function layoutCanvas(canvas) {
+    resetLayout(canvas);
+    alignParents(canvas);
+    drawLines(canvas);
+    alignParents(canvas);
+    drawLines(canvas);
+  }
 
+  function centerPan(pan) {
     var maxX = pan.scrollWidth - pan.clientWidth;
     pan.scrollLeft = maxX > 0 ? maxX / 2 : 0;
   }
@@ -141,38 +173,36 @@
     var canvas = pan.querySelector('.family-tree-canvas');
     if (!canvas) return;
 
-    resetLayout(canvas);
+    layoutCanvas(canvas);
 
-    requestAnimationFrame(function () {
-      alignParents(canvas);
-      drawLines(canvas);
-
-      var boxH = canvas.getBoundingClientRect().height;
-      var nextMin = Math.min(Math.max(Math.ceil(boxH + 24), 320), window.innerHeight * 0.88);
-      if (Math.abs(parseFloat(pan.style.minHeight) - nextMin) > 2) {
-        pan.style.minHeight = nextMin + 'px';
-      }
-      centerPan(pan);
-      layoutPending = false;
-    });
+    var boxH = canvas.getBoundingClientRect().height;
+    pan.style.minHeight = Math.min(Math.max(Math.ceil(boxH + 24), 320), window.innerHeight * 0.88) + 'px';
+    centerPan(pan);
   }
 
   function layoutAll() {
-    if (layoutPending) return;
-    layoutPending = true;
     pans.forEach(layoutBranch);
   }
 
   function onResize() {
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(layoutAll, 150);
+    resizeTimer = setTimeout(layoutAll, 200);
+  }
+
+  function runInitialLayout() {
+    layoutAll();
+    requestAnimationFrame(function () {
+      layoutAll();
+    });
   }
 
   if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(layoutAll);
+    document.fonts.ready.then(runInitialLayout);
+  } else {
+    runInitialLayout();
   }
 
-  window.addEventListener('load', layoutAll);
+  window.addEventListener('load', runInitialLayout);
   window.addEventListener('resize', onResize);
 
   var themeObserver = new MutationObserver(onResize);
@@ -180,17 +210,6 @@
     attributes: true,
     attributeFilter: ['data-theme'],
   });
-
-  if (typeof ResizeObserver !== 'undefined') {
-    pans.forEach(function (pan) {
-      var canvas = pan.querySelector('.family-tree-canvas');
-      if (canvas) {
-        new ResizeObserver(onResize).observe(canvas);
-      }
-    });
-  }
-
-  layoutAll();
 
   window.__familyTreeLayout = layoutAll;
 })();

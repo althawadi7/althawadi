@@ -79,16 +79,20 @@ def render_node(n: dict, indent: int, ancestors: list[str], *, is_root: bool = F
 
     path = ancestors + [n["name"]]
     if not n["children"]:
-        return f"{pad}<li>\n{inner}{pad}</li>\n"
+        return f"{pad}<li>\n{pad}  <div class=\"family-tree-unit family-tree-unit--leaf\">\n{inner}{pad}  </div>\n{pad}</li>\n"
 
     sons_label = escape(f"أبناء {given}")
     kids = "".join(render_node(c, indent + 4, path) for c in n["children"])
     return (
         f"{pad}<li>\n"
+        f'{pad}  <div class="family-tree-unit">\n'
+        f'{pad}    <div class="family-tree-parent">\n'
         f"{inner}"
-        f'{pad}  <ul class="family-tree-children" aria-label="{sons_label}">\n'
+        f'{pad}    </div>\n'
+        f'{pad}    <ul class="family-tree-children" aria-label="{sons_label}">\n'
         f"{kids}"
-        f'{pad}  </ul>\n'
+        f'{pad}    </ul>\n'
+        f"{pad}  </div>\n"
         f"{pad}</li>\n"
     )
 

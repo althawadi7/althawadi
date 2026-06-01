@@ -9,6 +9,56 @@
   var JSPDF =
     'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js';
 
+  var STYLE_PROPS = [
+    'color',
+    'backgroundColor',
+    'borderTopWidth',
+    'borderTopStyle',
+    'borderTopColor',
+    'borderRightWidth',
+    'borderRightStyle',
+    'borderRightColor',
+    'borderBottomWidth',
+    'borderBottomStyle',
+    'borderBottomColor',
+    'borderLeftWidth',
+    'borderLeftStyle',
+    'borderLeftColor',
+    'borderRadius',
+    'boxShadow',
+    'fontSize',
+    'fontFamily',
+    'fontWeight',
+    'paddingTop',
+    'paddingRight',
+    'paddingBottom',
+    'paddingLeft',
+    'marginTop',
+    'marginRight',
+    'marginBottom',
+    'marginLeft',
+    'width',
+    'height',
+    'minWidth',
+    'maxWidth',
+    'display',
+    'flexDirection',
+    'flexWrap',
+    'alignItems',
+    'justifyContent',
+    'gap',
+    'textAlign',
+    'lineHeight',
+    'boxSizing',
+    'position',
+    'transform',
+    'left',
+    'top',
+    'direction',
+    'whiteSpace',
+    'wordBreak',
+  ];
+
   function loadScript(src) {
     return new Promise(function (resolve, reject) {
       if (document.querySelector('script[src="' + src + '"]')) {
@@ -51,29 +101,92 @@
     }
   }
 
+  function inlineTreeStyles(root) {
+    var saved = [];
+    var all = [root].concat(Array.prototype.slice.call(root.querySelectorAll('*')));
+    all.forEach(function (el) {
+      saved.push({ el: el, cssText: el.style.cssText });
+      var cs = getComputedStyle(el);
+      STYLE_PROPS.forEach(function (prop) {
+        var val = cs[prop];
+        if (val) el.style[prop] = val;
+      });
+      if (cs.borderTopWidth !== '0px') {
+        el.style.border =
+          cs.borderTopWidth + ' ' + cs.borderTopStyle + ' ' + cs.borderTopColor;
+      }
+    });
+
+    root.querySelectorAll('path').forEach(function (path) {
+      saved.push({ el: path, stroke: path.getAttribute('stroke'), sw: path.getAttribute('stroke-width') });
+      var cs = getComputedStyle(path);
+      path.setAttribute('stroke', cs.stroke && cs.stroke !== 'none' ? cs.stroke : '#b8654a');
+      path.setAttribute('stroke-width', cs.strokeWidth || '3');
+      path.setAttribute('fill', 'none');
+    });
+
+    return saved;
+  }
+
+  function restoreTreeStyles(saved) {
+    saved.forEach(function (entry) {
+      if (entry.cssText !== undefined) {
+        entry.el.style.cssText = entry.cssText;
+      }
+      if (entry.stroke !== undefined) {
+        if (entry.stroke) entry.el.setAttribute('stroke', entry.stroke);
+        else entry.el.removeAttribute('stroke');
+        if (entry.sw) entry.el.setAttribute('stroke-width', entry.sw);
+        else entry.el.removeAttribute('stroke-width');
+      }
+    });
+  }
+
+  function disableStylesheets() {
+    var toggled = [];
+    document.querySelectorAll('link[rel="stylesheet"]').forEach(function (link) {
+      toggled.push({ node: link, disabled: link.disabled });
+      link.disabled = true;
+    });
+    return toggled;
+  }
+
+  function restoreStylesheets(toggled) {
+    toggled.forEach(function (entry) {
+      entry.node.disabled = entry.disabled;
+    });
+  }
+
   async function downloadPdf() {
     var canvasEl = document.querySelector('.family-tree-canvas');
     if (!canvasEl) return;
 
     setLoading(true);
+    var savedStyles = [];
+    var disabledSheets = [];
 
     try {
       await waitForLayout();
       await loadScript(HTML2CANVAS);
       await loadScript(JSPDF);
 
-      var pan = document.querySelector('.family-tree-pan');
-      var bg = pan ? getComputedStyle(pan).backgroundColor : '#ffffff';
+      savedStyles = inlineTreeStyles(canvasEl);
+      disabledSheets = disableStylesheets();
 
       var shot = await window.html2canvas(canvasEl, {
         scale: 2,
-        backgroundColor: bg,
+        backgroundColor: '#e8e0d4',
         logging: false,
         useCORS: true,
         width: canvasEl.scrollWidth,
         height: canvasEl.scrollHeight,
         windowWidth: canvasEl.scrollWidth,
         windowHeight: canvasEl.scrollHeight,
+        onclone: function (clonedDoc) {
+          clonedDoc.querySelectorAll('link[rel="stylesheet"], style').forEach(function (node) {
+            node.parentNode.removeChild(node);
+          });
+        },
       });
 
       var jsPDF = window.jspdf.jsPDF;
@@ -104,6 +217,11 @@
       console.error(err);
       window.alert('تعذّر إنشاء PDF. حاول مرة أخرى.');
     } finally {
+      restoreStylesheets(disabledSheets);
+      restoreTreeStyles(savedStyles);
+      if (typeof window.__familyTreeLayout === 'function') {
+        window.__familyTreeLayout();
+      }
       setLoading(false);
     }
   }
