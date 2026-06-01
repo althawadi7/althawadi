@@ -12,7 +12,9 @@
   }
 
   function directNode(li) {
-    return li.querySelector(':scope > .family-tree-unit > .family-tree-node, :scope > .family-tree-unit > a.family-tree-node--link, :scope > .family-tree-unit--leaf > .family-tree-node, :scope > .family-tree-unit--leaf > a.family-tree-node--link, :scope > .family-tree-node, :scope > a.family-tree-node--link');
+    return li.querySelector(
+      ':scope > .family-tree-unit > .family-tree-node, :scope > .family-tree-unit > a.family-tree-node--link, :scope > .family-tree-unit--leaf > .family-tree-node, :scope > .family-tree-unit--leaf > a.family-tree-node--link'
+    );
   }
 
   function parentWrap(ul) {
@@ -37,18 +39,122 @@
     };
   }
 
+  function rowGap(ul) {
+    var section = ul.closest('.family-tree-section');
+    var raw = section
+      ? getComputedStyle(section).getPropertyValue('--family-tree-h-gap').trim()
+      : '0.35rem';
+    if (raw.indexOf('rem') !== -1) return parseFloat(raw) * 16;
+    return parseFloat(raw) || 6;
+  }
+
+  function rowPadTop(ul) {
+    return parseFloat(getComputedStyle(ul).paddingTop) || 22;
+  }
+
   function resetLayout(canvas) {
     canvas.querySelectorAll('.family-tree-parent').forEach(function (wrap) {
       wrap.style.transform = '';
     });
-    canvas.querySelectorAll('.family-tree-node, .family-tree-node--link').forEach(function (node) {
-      node.style.transform = '';
-      node.style.position = '';
-      node.style.left = '';
+    canvas.querySelectorAll('.family-tree-unit').forEach(function (unit) {
+      unit.style.width = '';
+    });
+    canvas.querySelectorAll('.family-tree-parent').forEach(function (wrap) {
+      wrap.style.width = '';
+    });
+    canvas.querySelectorAll('.family-tree-children').forEach(function (ul) {
+      ul.style.position = '';
+      ul.style.display = '';
+      ul.style.width = '';
+      ul.style.minWidth = '';
+      ul.style.minHeight = '';
+      ul.style.height = '';
+      ul.style.marginLeft = '';
+    });
+    canvas.querySelectorAll('.family-tree-children > li').forEach(function (li) {
+      li.style.position = '';
+      li.style.left = '';
+      li.style.top = '';
+      li.style.width = '';
+      li.style.height = '';
+      li.style.transform = '';
     });
     canvas.querySelectorAll('.family-tree-lines').forEach(function (svg) {
       svg.remove();
     });
+  }
+
+  function measureNode(node) {
+    if (!node) return 72;
+    var prev = node.style.width;
+    node.style.width = 'auto';
+    var w = node.getBoundingClientRect().width;
+    node.style.width = prev;
+    return Math.ceil(w) || 72;
+  }
+
+  /** Pack sibling columns tightly — width = subtree need, not flex stretch. */
+  function compactRow(ul) {
+    var items = Array.from(ul.querySelectorAll(':scope > li'));
+    if (!items.length) {
+      ul.style.width = '0px';
+      ul.style.minHeight = '0px';
+      return { width: 0, height: 0 };
+    }
+
+    ul.style.width = 'auto';
+    ul.style.minWidth = '0';
+
+    var gap = rowGap(ul);
+    var padTop = rowPadTop(ul);
+    var x = 0;
+    var maxBottom = 0;
+
+    items.forEach(function (li) {
+      var unit = li.querySelector(':scope > .family-tree-unit');
+      if (!unit) return;
+
+      li.style.width = 'auto';
+      unit.style.width = 'auto';
+
+      var node = directNode(li);
+      var nodeW = measureNode(node);
+      var nodeH = node ? node.offsetHeight : 0;
+      var nestedUl = unit.querySelector(':scope > .family-tree-children');
+      var nestedSize = nestedUl ? compactRow(nestedUl) : { width: 0, height: 0 };
+      var slotW = Math.max(nodeW, nestedSize.width);
+
+      li.style.position = 'absolute';
+      li.style.left = x + 'px';
+      li.style.top = '0';
+      li.style.width = slotW + 'px';
+      unit.style.width = slotW + 'px';
+
+      var parentWrapEl = unit.querySelector(':scope > .family-tree-parent');
+      if (parentWrapEl) {
+        parentWrapEl.style.width = 'auto';
+        var shift = (slotW - nodeW) / 2;
+        parentWrapEl.style.transform = shift > 0.5 ? 'translateX(' + round(shift) + 'px)' : '';
+      }
+
+      if (nestedUl && nestedSize.width > 0) {
+        nestedUl.style.marginLeft = round((slotW - nestedSize.width) / 2) + 'px';
+      }
+
+      var bottom = nodeH + (nestedUl ? padTop + nestedSize.height : 0);
+      maxBottom = Math.max(maxBottom, bottom);
+      x += slotW + gap;
+    });
+
+    var totalW = Math.max(x - gap, 0);
+    ul.style.position = 'relative';
+    ul.style.display = 'block';
+    ul.style.width = totalW + 'px';
+    ul.style.minWidth = totalW + 'px';
+    ul.style.minHeight = maxBottom + 'px';
+    ul.style.height = maxBottom + 'px';
+
+    return { width: totalW, height: maxBottom };
   }
 
   function childCenters(canvas, ul) {
@@ -63,34 +169,6 @@
     return points;
   }
 
-  function alignParents(canvas) {
-    canvas.querySelectorAll('.family-tree-children').forEach(function (ul) {
-      var wrap = parentWrap(ul);
-      var parentEl = parentNode(ul);
-      if (!wrap || !parentEl) return;
-
-      var points = childCenters(canvas, ul);
-      if (!points.length) return;
-
-      var minX = points[0].x;
-      var maxX = points[0].x;
-      points.forEach(function (pt) {
-        minX = Math.min(minX, pt.x);
-        maxX = Math.max(maxX, pt.x);
-      });
-
-      var targetCx = (minX + maxX) / 2;
-      var parentCx = relBox(parentEl, canvas).cx;
-      var shift = targetCx - parentCx;
-
-      if (Math.abs(shift) > 0.5) {
-        wrap.style.transform = 'translateX(' + round(shift) + 'px)';
-      } else {
-        wrap.style.transform = '';
-      }
-    });
-  }
-
   function forkPath(parentX, parentY, barY, childPoints) {
     if (childPoints.length === 1) {
       var c = childPoints[0];
@@ -102,11 +180,9 @@
     });
     var minX = Math.min.apply(null, xs);
     var maxX = Math.max.apply(null, xs);
-    var barMin = Math.min(minX, parentX);
-    var barMax = Math.max(maxX, parentX);
 
     var d = 'M ' + parentX + ' ' + parentY + ' L ' + parentX + ' ' + barY;
-    d += ' M ' + barMin + ' ' + barY + ' L ' + barMax + ' ' + barY;
+    d += ' M ' + minX + ' ' + barY + ' L ' + maxX + ' ' + barY;
 
     childPoints.forEach(function (pt) {
       d += ' M ' + pt.x + ' ' + barY + ' L ' + pt.x + ' ' + pt.y;
@@ -158,9 +234,10 @@
 
   function layoutCanvas(canvas) {
     resetLayout(canvas);
-    alignParents(canvas);
-    drawLines(canvas);
-    alignParents(canvas);
+
+    var rootUl = canvas.querySelector('.family-tree > li > .family-tree-unit > .family-tree-children');
+    if (rootUl) compactRow(rootUl);
+
     drawLines(canvas);
   }
 

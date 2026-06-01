@@ -549,8 +549,8 @@ button, input, textarea { font-family: inherit; }
   --family-tree-line-width: 3px;
   --family-tree-card: color-mix(in oklch, var(--accent) 18%, oklch(0.93 0.05 85));
   --family-tree-card-border: color-mix(in oklch, var(--accent) 38%, var(--border));
-  --family-tree-v-gap: 1.75rem;
-  --family-tree-h-gap: 0.85rem;
+  --family-tree-v-gap: 1.25rem;
+  --family-tree-h-gap: 0.35rem;
 }
 
 .family-tree-pan {
@@ -617,12 +617,15 @@ button, input, textarea { font-family: inherit; }
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: fit-content;
+  max-width: 100%;
 }
 
 .family-tree-parent {
   display: flex;
   justify-content: center;
-  width: 100%;
+  width: auto;
+  max-width: 100%;
   z-index: 3;
 }
 
@@ -642,8 +645,8 @@ button, input, textarea { font-family: inherit; }
   box-shadow: 0 2px 0 color-mix(in oklch, var(--family-tree-card-border) 55%, transparent);
   white-space: normal;
   box-sizing: border-box;
-  min-width: 5.25rem;
-  max-width: 7.5rem;
+  min-width: 4.25rem;
+  max-width: 6.25rem;
 }
 
 .family-tree-given {
@@ -778,35 +781,21 @@ button, input, textarea { font-family: inherit; }
 
 /* Layout only — all connector lines drawn in SVG (family-tree.js) */
 .family-tree-children {
-  display: flex;
-  flex-direction: row;
+  display: block;
+  position: relative;
   flex-wrap: nowrap;
-  justify-content: center;
-  align-items: flex-start;
-  gap: var(--family-tree-h-gap);
   padding: 0;
   margin: 0;
   list-style: none;
-  position: relative;
-  width: max-content;
   padding-top: var(--family-tree-v-gap);
 }
 
-.family-tree-children::before,
-.family-tree-children::after,
-.family-tree-children > li::before,
-.family-tree-children > li::after {
-  display: none;
-  content: none;
-}
-
 .family-tree-children > li {
-  position: relative;
+  position: absolute;
+  top: 0;
   list-style: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 0 0 auto;
+  display: block;
+  flex: none;
   min-width: 0;
   padding-top: 0;
 }
@@ -925,8 +914,8 @@ button, input, textarea { font-family: inherit; }
 
 @media (min-width: 768px) {
   .family-tree-section {
-    --family-tree-v-gap: 2rem;
-    --family-tree-h-gap: 1rem;
+    --family-tree-v-gap: 1.35rem;
+    --family-tree-h-gap: 0.4rem;
   }
 
   .family-tree-node {
