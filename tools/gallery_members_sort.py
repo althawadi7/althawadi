@@ -21,7 +21,6 @@ LIVING_DUA_PATTERNS = (
     r"الله\s+يحفظ(?:هم|ه)(?:\s+و(?:ي)?ط(?:و)?ل\s+بعمر(?:هم|ه))?",
     r"الله\s+(?:ي)?ط(?:و)?ل\s+بعمر(?:هم|ه)",
     r"الله\s+بحفظ(?:هم|ه)(?:\s+و(?:ي)?ط(?:و)?ل\s+بعمر(?:هم|ه))?",
-    r"الله\s+يرحم(?:هم|ه)\s+ويغفر(?:لهم|له)",
 )
 
 
@@ -38,7 +37,7 @@ def _extract_caption_text(text: str) -> str:
 
 
 def gallery_display_name(text: str) -> str:
-    """Display label for gallery cards — name only, keep deceased honorifics."""
+    """Display label for gallery cards — name only; keep deceased honorifics."""
     t = _extract_caption_text(text)
     for pat in LIVING_DUA_PATTERNS:
         t = re.sub(pat, " ", t, flags=re.I)
