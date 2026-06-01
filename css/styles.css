@@ -758,7 +758,7 @@ button, input, textarea { font-family: inherit; }
   height: 0.9rem;
 }
 
-/* Classic orthogonal fork — like reference diagram */
+/* Layout only — all connector lines drawn in SVG (family-tree.js) */
 .family-tree-children {
   display: flex;
   flex-direction: row;
@@ -774,37 +774,12 @@ button, input, textarea { font-family: inherit; }
   padding-top: var(--family-tree-v-gap);
 }
 
-/* Vertical stem from parent card */
-.family-tree-children::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: var(--family-tree-line-width);
-  height: calc(var(--family-tree-v-gap) * 0.5);
-  background: var(--family-tree-line);
-  z-index: 1;
-}
-
-/* Horizontal bar across siblings */
-.family-tree-children::after {
-  content: '';
-  position: absolute;
-  top: calc(var(--family-tree-v-gap) * 0.5);
-  left: 0;
-  right: 0;
-  height: var(--family-tree-line-width);
-  background: var(--family-tree-line);
-  z-index: 1;
-}
-
-.family-tree-children:has(> li:only-child)::after {
+.family-tree-children::before,
+.family-tree-children::after,
+.family-tree-children > li::before,
+.family-tree-children > li::after {
   display: none;
-}
-
-.family-tree-children:has(> li:only-child)::before {
-  height: var(--family-tree-v-gap);
+  content: none;
 }
 
 .family-tree-children > li {
@@ -815,46 +790,6 @@ button, input, textarea { font-family: inherit; }
   align-items: center;
   flex: 0 0 auto;
   min-width: 0;
-  padding-top: calc(var(--family-tree-v-gap) * 0.5);
-}
-
-.family-tree-children:has(> li:only-child) > li {
-  padding-top: 0;
-}
-
-/* Vertical drop onto child card */
-.family-tree-children > li::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: var(--family-tree-line-width);
-  height: calc(var(--family-tree-v-gap) * 0.5);
-  background: var(--family-tree-line);
-  z-index: 1;
-}
-
-.family-tree-children:has(> li:only-child) > li::before {
-  display: none;
-}
-
-.family-tree-children > li::after {
-  display: none;
-}
-
-/* JS-drawn SVG lines replace pseudo-elements when wired */
-.family-tree-canvas--wired .family-tree-children::before,
-.family-tree-canvas--wired .family-tree-children::after,
-.family-tree-canvas--wired .family-tree-children > li::before {
-  display: none;
-}
-
-.family-tree-canvas--wired .family-tree-children {
-  padding-top: var(--family-tree-v-gap);
-}
-
-.family-tree-canvas--wired .family-tree-children > li {
   padding-top: 0;
 }
 
@@ -872,8 +807,8 @@ button, input, textarea { font-family: inherit; }
   stroke: var(--family-tree-line);
   stroke-width: var(--family-tree-line-width);
   fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
 }
 
 [data-theme="dark"] .family-tree-section {
