@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate family tree HTML — single unified tree with father→son arrows."""
+"""Generate family tree HTML — nested lists with CSS connector lines."""
 
 import re
 from html import escape
@@ -42,8 +42,7 @@ def father_line(ancestors: list[str]) -> str:
     return "بن " + " بن ".join(reversed(ancestors[-2:]))
 
 
-def render_node(n: dict, indent: int, ancestors: list[str], *, is_root: bool = False) -> str:
-    pad = " " * indent
+def render_person(n: dict, pad: str, ancestors: list[str], *, is_root: bool = False) -> str:
     given = display_name(n)
     pat = father_line(ancestors)
     title = f"{given} {pat}".strip() if pat else given
@@ -64,35 +63,41 @@ def render_node(n: dict, indent: int, ancestors: list[str], *, is_root: bool = F
 
     pat_html = f'\n{pad}    <span class="family-tree-pat">{pat_esc}</span>' if pat else ""
 
+    inner = (
+        f'{pad}    <span class="family-tree-given">{given_esc}</span>{pat_html}\n'
+    )
+
     if n.get("link"):
-        inner = (
-            f'{pad}  <a href="{n["link"]}" class="{cls}" title="{title_esc}">\n'
-            f'{pad}    <span class="family-tree-given">{given_esc}</span>{pat_html}\n'
+        return (
+            f'{pad}  <a href="{n["link"]}" class="{cls}" title="{title_esc}" dir="rtl">\n'
+            f"{inner}"
             f"{pad}  </a>\n"
         )
-    else:
-        inner = (
-            f'{pad}  <div class="{cls}" title="{title_esc}">\n'
-            f'{pad}    <span class="family-tree-given">{given_esc}</span>{pat_html}\n'
-            f"{pad}  </div>\n"
-        )
 
+    return (
+        f'{pad}  <span class="{cls}" title="{title_esc}" dir="rtl">\n'
+        f"{inner}"
+        f"{pad}  </span>\n"
+    )
+
+
+def render_node(n: dict, indent: int, ancestors: list[str], *, is_root: bool = False) -> str:
+    pad = " " * indent
+    person = render_person(n, pad, ancestors, is_root=is_root)
     path = ancestors + [n["name"]]
-    if not n["children"]:
-        return f"{pad}<li>\n{pad}  <div class=\"family-tree-unit family-tree-unit--leaf\">\n{inner}{pad}  </div>\n{pad}</li>\n"
 
+    if not n["children"]:
+        return f"{pad}<li>\n{person}{pad}</li>\n"
+
+    given = display_name(n)
     sons_label = escape(f"أبناء {given}")
-    kids = "".join(render_node(c, indent + 4, path) for c in n["children"])
+    kids = "".join(render_node(c, indent + 2, path) for c in n["children"])
     return (
         f"{pad}<li>\n"
-        f'{pad}  <div class="family-tree-unit">\n'
-        f'{pad}    <div class="family-tree-parent">\n'
-        f"{inner}"
-        f'{pad}    </div>\n'
-        f'{pad}    <ul class="family-tree-children" aria-label="{sons_label}">\n'
+        f"{person}"
+        f'{pad}  <ul aria-label="{sons_label}">\n'
         f"{kids}"
-        f'{pad}    </ul>\n'
-        f"{pad}  </div>\n"
+        f"{pad}  </ul>\n"
         f"{pad}</li>\n"
     )
 
@@ -100,9 +105,11 @@ def render_node(n: dict, indent: int, ancestors: list[str], *, is_root: bool = F
 def render_tree(root: dict, ancestors: list[str] | None = None) -> str:
     ancestors = ancestors or []
     return (
-        '<ul class="family-tree">\n'
+        '<div class="tree" dir="ltr">\n'
+        "  <ul>\n"
         + render_node(root, 4, ancestors, is_root=True)
-        + "</ul>"
+        + "  </ul>\n"
+        "</div>"
     )
 
 
@@ -207,7 +214,7 @@ def build_page_html() -> str:
         </div>
 
         <p class="family-tree-hint">
-          مرّر أفقيًا وعموديًا لاستكشاف الشجرة — كل بطاقة مرتبطة بأبها بخطوط منحنية.
+          مرّر أفقيًا وعموديًا لاستكشاف الشجرة — البطاقات مرتبطة بخطوط CSS من الأب إلى الأبناء.
         </p>
 
         <div class="family-tree-controls">
@@ -258,7 +265,7 @@ def inject_tree_page(content_html: str) -> None:
     text = page.read_text(encoding="utf-8")
     if "family-tree.js" not in text or "<!-- <script" in text:
         text = text.replace(
-            "  <!-- <script src=\"/althawadi/js/family-tree.js\" defer></script> -->",
+            '  <!-- <script src="/althawadi/js/family-tree.js" defer></script> -->',
             '  <script src="/althawadi/js/family-tree.js" defer></script>',
         )
     if "family-tree-pdf.js" not in text:

@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Karla:wght@300;400;500;600&display=swap');
+@import url('family-tree.css');
 
 :root {
   --radius: 0.25rem;
@@ -542,7 +543,7 @@ button, input, textarea { font-family: inherit; }
 /* Icon sizing */
 .icon { flex-shrink: 0; stroke: currentColor; fill: none; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
 
-/* Family tree — compact chart, auto-centered + scale-to-fit */
+/* Family tree — nested lists + CSS connectors (see css/family-tree.css) */
 .family-tree-section {
   max-width: 100%;
   --family-tree-line: #9a6848;
@@ -661,72 +662,10 @@ button, input, textarea { font-family: inherit; }
   border-radius: 999px;
 }
 
-.family-tree-canvas {
-  display: inline-block;
-  position: relative;
-  width: max-content;
-  margin: 0 auto;
-  padding: 0.75rem 1rem 1rem;
-  direction: rtl;
-  vertical-align: top;
-}
-
-.family-tree {
-  list-style: none;
-  margin: 0 auto;
-  padding: 0;
-  display: inline-flex;
-  justify-content: center;
-  width: max-content;
-}
-
-.family-tree > li {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.family-tree-unit {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: fit-content;
-  max-width: 100%;
-  position: relative;
-}
-
-.family-tree-canvas:has(.family-tree-lines line) .family-tree-unit > .family-tree-children::before {
-  display: none;
-}
-
-.family-tree-unit > .family-tree-children::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 0;
-  width: var(--family-tree-line-width);
-  height: calc(var(--family-tree-v-gap) * 0.48);
-  margin-top: calc(var(--family-tree-v-gap) * -0.48);
-  background: var(--family-tree-line);
-  transform: translateX(-50%);
-  z-index: 2;
-  border-radius: 1px;
-}
-
-.family-tree-parent {
-  display: flex;
-  justify-content: center;
-  width: auto;
-  max-width: 100%;
-  z-index: 3;
-}
-
-.family-tree-unit--leaf {
-  display: inline-flex;
-}
-
-/* Cards — layout lines in SVG (family-tree.js) */
-.family-tree-node {
+/* Cards — see css/family-tree.css for connector layout */
+.tree li > a.family-tree-node,
+.tree li > a.family-tree-node--link,
+.tree li > .family-tree-node {
   position: relative;
   z-index: 3;
   display: inline-block;
@@ -747,7 +686,8 @@ button, input, textarea { font-family: inherit; }
   transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
 }
 
-.family-tree-node::before {
+.tree li > .family-tree-node::before,
+.tree li > a.family-tree-node::before {
   content: '';
   position: absolute;
   top: 0;
@@ -863,16 +803,13 @@ button, input, textarea { font-family: inherit; }
   opacity: 1;
 }
 
-.family-tree-node--link {
-  display: inline-block;
-  width: fit-content;
-  max-width: 7.5rem;
+.tree li > a.family-tree-node--link {
   text-decoration: none;
   color: inherit;
   cursor: pointer;
 }
 
-.family-tree-node--link:hover {
+.tree li > a.family-tree-node--link:hover {
   transform: translateY(-2px);
   border-color: var(--family-tree-accent);
   box-shadow:
@@ -881,7 +818,7 @@ button, input, textarea { font-family: inherit; }
     0 0 0 2px color-mix(in oklch, var(--family-tree-accent) 12%, transparent);
 }
 
-.family-tree-node--link:focus-visible {
+.tree li > a.family-tree-node--link:focus-visible {
   outline: 2px solid var(--family-tree-accent);
   outline-offset: 2px;
 }
@@ -926,56 +863,6 @@ button, input, textarea { font-family: inherit; }
 .family-tree-legend-leaves .family-tree-leaf {
   width: 0.9rem;
   height: 0.9rem;
-}
-
-.family-tree-children {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-items: flex-start;
-  gap: var(--family-tree-h-gap);
-  position: relative;
-  padding: 0;
-  margin: 0 auto;
-  list-style: none;
-  padding-top: var(--family-tree-v-gap);
-  width: max-content;
-  max-width: none;
-}
-
-.family-tree-children > li {
-  position: relative;
-  flex: 0 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  list-style: none;
-  min-width: 0;
-}
-
-.family-tree-lines {
-  position: absolute;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  z-index: 2;
-  overflow: visible;
-}
-
-.family-tree-lines path,
-.family-tree-lines line {
-  stroke: var(--family-tree-line);
-  stroke-width: var(--family-tree-line-width);
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.family-tree-lines circle {
-  fill: var(--family-tree-joint);
-  stroke: color-mix(in oklch, var(--family-tree-line) 40%, white);
-  stroke-width: 1;
 }
 
 [data-theme="dark"] .family-tree-section {

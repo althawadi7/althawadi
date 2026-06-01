@@ -1,0 +1,129 @@
+/* Pure CSS family tree — nested ul/li connectors (::before / ::after) */
+
+.family-tree-canvas {
+  display: inline-block;
+  position: relative;
+  width: max-content;
+  margin: 0 auto;
+  padding: 0.75rem 1rem 1rem;
+  vertical-align: top;
+}
+
+.tree {
+  text-align: center;
+}
+
+.tree ul {
+  padding-top: 20px;
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+  padding-right: 0;
+  transition: all 0.35s ease;
+}
+
+.tree ul::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+.tree > ul {
+  padding-top: 0;
+}
+
+.tree li {
+  float: left;
+  text-align: center;
+  list-style-type: none;
+  position: relative;
+  padding: 20px 5px 0;
+  transition: all 0.35s ease;
+}
+
+.tree li::before,
+.tree li::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 50%;
+  border-top: var(--family-tree-line-width, 2px) solid var(--family-tree-line, #9a6848);
+  width: 50%;
+  height: 20px;
+}
+
+.tree li::after {
+  right: auto;
+  left: 50%;
+  border-left: var(--family-tree-line-width, 2px) solid var(--family-tree-line, #9a6848);
+}
+
+.tree li:only-child::after,
+.tree li:only-child::before {
+  display: none;
+}
+
+.tree li:only-child {
+  padding-top: 0;
+}
+
+.tree li:first-child::before,
+.tree li:last-child::after {
+  border: 0 none;
+}
+
+.tree li:last-child::before {
+  border-right: var(--family-tree-line-width, 2px) solid var(--family-tree-line, #9a6848);
+  border-radius: 0 5px 0 0;
+}
+
+.tree li:first-child::after {
+  border-radius: 5px 0 0 0;
+}
+
+.tree ul ul::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  border-left: var(--family-tree-line-width, 2px) solid var(--family-tree-line, #9a6848);
+  width: 0;
+  height: 20px;
+}
+
+.tree li > a,
+.tree li > .family-tree-node {
+  position: relative;
+  z-index: 2;
+  vertical-align: top;
+}
+
+.tree li a:hover,
+.tree li a:hover + ul li a,
+.tree li a:hover + ul li .family-tree-node,
+.tree li .family-tree-node:hover,
+.tree li .family-tree-node:hover + ul li a,
+.tree li .family-tree-node:hover + ul li .family-tree-node {
+  background: linear-gradient(168deg, #e8f4fc 0%, #d4e8f8 100%);
+  color: #1a1208;
+  border-color: #94a0b4;
+}
+
+.tree li a:hover + ul li::after,
+.tree li a:hover + ul li::before,
+.tree li a:hover + ul::before,
+.tree li a:hover + ul ul::before,
+.tree li .family-tree-node:hover + ul li::after,
+.tree li .family-tree-node:hover + ul li::before,
+.tree li .family-tree-node:hover + ul::before,
+.tree li .family-tree-node:hover + ul ul::before {
+  border-color: #94a0b4;
+}
+
+[data-theme="dark"] .tree li::before,
+[data-theme="dark"] .tree li::after,
+[data-theme="dark"] .tree li:last-child::before,
+[data-theme="dark"] .tree ul ul::before {
+  border-color: var(--family-tree-line, #d4956a);
+}

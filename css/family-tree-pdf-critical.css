@@ -21,54 +21,94 @@
   width: max-content;
   margin: 0 auto;
   padding: 0.75rem 1rem 1rem;
-  direction: rtl;
   vertical-align: top;
 }
 
-.family-tree-pdf-exporting .family-tree {
+.family-tree-pdf-exporting .tree {
+  text-align: center;
+}
+
+.family-tree-pdf-exporting .tree ul {
+  padding-top: 20px;
+  position: relative;
   list-style: none;
-  margin: 0 auto;
-  padding: 0;
-  display: inline-flex;
-  justify-content: center;
-  width: max-content;
+  margin: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
 
-.family-tree-pdf-exporting .family-tree > li {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.family-tree-pdf-exporting .tree ul::after {
+  content: '';
+  display: table;
+  clear: both;
 }
 
-.family-tree-pdf-exporting .family-tree-unit {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: fit-content;
-  max-width: 100%;
+.family-tree-pdf-exporting .tree > ul {
+  padding-top: 0;
+}
+
+.family-tree-pdf-exporting .tree li {
+  float: left;
+  text-align: center;
+  list-style-type: none;
   position: relative;
+  padding: 20px 5px 0;
 }
 
-.family-tree-pdf-exporting .family-tree-unit > .family-tree-children::before {
-  display: none !important;
+.family-tree-pdf-exporting .tree li::before,
+.family-tree-pdf-exporting .tree li::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 50%;
+  border-top: 2px solid #9a6848;
+  width: 50%;
+  height: 20px;
 }
 
-.family-tree-pdf-exporting .family-tree-parent {
-  display: flex;
-  justify-content: center;
-  width: auto;
-  max-width: 100%;
-  z-index: 3;
+.family-tree-pdf-exporting .tree li::after {
+  right: auto;
+  left: 50%;
+  border-left: 2px solid #9a6848;
 }
 
-.family-tree-pdf-exporting .family-tree-unit--leaf {
-  display: inline-flex;
+.family-tree-pdf-exporting .tree li:only-child::after,
+.family-tree-pdf-exporting .tree li:only-child::before {
+  display: none;
 }
 
-.family-tree-pdf-exporting .family-tree-node,
-.family-tree-pdf-exporting .family-tree-node--link {
+.family-tree-pdf-exporting .tree li:only-child {
+  padding-top: 0;
+}
+
+.family-tree-pdf-exporting .tree li:first-child::before,
+.family-tree-pdf-exporting .tree li:last-child::after {
+  border: 0 none;
+}
+
+.family-tree-pdf-exporting .tree li:last-child::before {
+  border-right: 2px solid #9a6848;
+  border-radius: 0 5px 0 0;
+}
+
+.family-tree-pdf-exporting .tree li:first-child::after {
+  border-radius: 5px 0 0 0;
+}
+
+.family-tree-pdf-exporting .tree ul ul::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  border-left: 2px solid #9a6848;
+  width: 0;
+  height: 20px;
+}
+
+.family-tree-pdf-exporting .tree li > a,
+.family-tree-pdf-exporting .tree li > .family-tree-node {
   position: relative;
-  z-index: 3;
+  z-index: 2;
   display: inline-block;
   width: fit-content;
   max-width: 7.5rem;
@@ -83,6 +123,7 @@
   box-sizing: border-box;
   text-decoration: none;
   color: #3d2810;
+  vertical-align: top;
 }
 
 .family-tree-pdf-exporting .family-tree-given {
@@ -105,55 +146,16 @@
   word-break: break-word;
 }
 
-.family-tree-pdf-exporting .family-tree-node.is-root {
+.family-tree-pdf-exporting .family-tree-node.is-root,
+.family-tree-pdf-exporting .tree li > .family-tree-node.is-root,
+.family-tree-pdf-exporting .tree li > a.family-tree-node.is-root {
   background: linear-gradient(168deg, #faf0d4 0%, #e8d4a0 100%) !important;
   border-color: #c9952a !important;
 }
 
-.family-tree-pdf-exporting .family-tree-node.is-focus {
+.family-tree-pdf-exporting .family-tree-node.is-focus,
+.family-tree-pdf-exporting .tree li > .family-tree-node.is-focus,
+.family-tree-pdf-exporting .tree li > a.family-tree-node.is-focus {
   background: linear-gradient(168deg, #fff8ee 0%, #f5dcc0 100%) !important;
   border-color: #b45309 !important;
-}
-
-.family-tree-pdf-exporting .family-tree-children {
-  display: flex !important;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 0.65rem;
-  position: relative;
-  padding: 0;
-  margin: 0 auto;
-  list-style: none;
-  padding-top: 2.75rem;
-  width: max-content;
-  max-width: none;
-}
-
-.family-tree-pdf-exporting .family-tree-children > li {
-  position: relative;
-  flex: 0 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  list-style: none;
-  min-width: 0;
-}
-
-.family-tree-pdf-exporting .family-tree-lines {
-  position: absolute;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  z-index: 2;
-  overflow: visible;
-}
-
-.family-tree-pdf-exporting .family-tree-lines line {
-  stroke: #9a6848;
-  stroke-width: 2.75px;
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
 }
