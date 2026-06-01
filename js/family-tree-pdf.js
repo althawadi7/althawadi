@@ -184,12 +184,12 @@
       el.style.color = PDF.pat;
     });
 
-    pan.querySelectorAll('.family-tree-lines path').forEach(function (path) {
-      remember(path);
-      path.setAttribute('stroke', PDF.line);
-      path.setAttribute('fill', 'none');
-      path.style.stroke = PDF.line;
-      path.style.fill = 'none';
+    pan.querySelectorAll('.family-tree-lines path, .family-tree-lines line').forEach(function (el) {
+      remember(el);
+      el.setAttribute('stroke', PDF.line);
+      el.setAttribute('fill', 'none');
+      el.style.stroke = PDF.line;
+      el.style.fill = 'none';
     });
 
     pan.querySelectorAll('.family-tree-lines circle').forEach(function (dot) {

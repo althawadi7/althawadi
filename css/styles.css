@@ -944,7 +944,8 @@ button, input, textarea { font-family: inherit; }
   overflow: visible;
 }
 
-.family-tree-lines path {
+.family-tree-lines path,
+.family-tree-lines line {
   stroke: var(--family-tree-line);
   stroke-width: var(--family-tree-line-width);
   fill: none;
@@ -1063,7 +1064,8 @@ button, input, textarea { font-family: inherit; }
   border-top-color: rgba(201, 165, 106, 0.45) !important;
 }
 
-.family-tree-pdf-mode .family-tree-lines path {
+.family-tree-pdf-mode .family-tree-lines path,
+.family-tree-pdf-mode .family-tree-lines line {
   stroke: #9a6848 !important;
 }
 

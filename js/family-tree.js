@@ -35,31 +35,6 @@
     };
   }
 
-  /** One continuous stem + horizontal bar, then drops to each child. */
-  function forkPath(parentX, parentY, barY, childPoints) {
-    if (childPoints.length === 1) {
-      var c = childPoints[0];
-      return 'M ' + parentX + ' ' + parentY + ' L ' + c.x + ' ' + c.y;
-    }
-
-    var xs = childPoints.map(function (pt) {
-      return pt.x;
-    });
-    var minX = Math.min.apply(null, xs);
-    var maxX = Math.max.apply(null, xs);
-
-    var d = 'M ' + parentX + ' ' + parentY;
-    d += ' L ' + parentX + ' ' + barY;
-    d += ' L ' + minX + ' ' + barY;
-    d += ' L ' + maxX + ' ' + barY;
-
-    childPoints.forEach(function (pt) {
-      d += ' M ' + pt.x + ' ' + barY + ' L ' + pt.x + ' ' + pt.y;
-    });
-
-    return d;
-  }
-
   function stemOffset() {
     var section = document.querySelector('.family-tree-section');
     var raw = section
@@ -67,6 +42,57 @@
       : '1.5rem';
     if (raw.indexOf('rem') !== -1) return parseFloat(raw) * 16;
     return parseFloat(raw) || 24;
+  }
+
+  function addSegment(svg, x1, y1, x2, y2) {
+    if (Math.abs(x1 - x2) < 0.25 && Math.abs(y1 - y2) < 0.25) return;
+    var line = document.createElementNS(SVG_NS, 'line');
+    line.setAttribute('x1', String(round(x1)));
+    line.setAttribute('y1', String(round(y1)));
+    line.setAttribute('x2', String(round(x2)));
+    line.setAttribute('y2', String(round(y2)));
+    svg.appendChild(line);
+  }
+
+  function barYFor(parentY, childTop) {
+    var gap = childTop - parentY;
+    var minStem = stemOffset();
+    if (gap < 12) gap = minStem;
+
+    /* Bar must sit clearly BETWEEN parent bottom and child tops */
+    var y = parentY + Math.max(gap * 0.42, minStem * 0.55);
+    y = Math.min(y, childTop - 10);
+    y = Math.max(y, parentY + 8);
+    return round(y);
+  }
+
+  function drawFork(svg, parentX, parentY, childPoints) {
+    if (childPoints.length === 1) {
+      var c = childPoints[0];
+      addSegment(svg, parentX, parentY, c.x, c.y);
+      return;
+    }
+
+    var xs = childPoints.map(function (pt) {
+      return pt.x;
+    });
+    var minX = Math.min.apply(null, xs);
+    var maxX = Math.max.apply(null, xs);
+    var childTop = childPoints.reduce(function (min, pt) {
+      return Math.min(min, pt.y);
+    }, childPoints[0].y);
+    var barY = barYFor(parentY, childTop);
+
+    /* 1) Father down to junction */
+    addSegment(svg, parentX, parentY, parentX, barY);
+
+    /* 2) Horizontal across all sons */
+    addSegment(svg, minX, barY, maxX, barY);
+
+    /* 3) Down into top of each card */
+    childPoints.forEach(function (pt) {
+      addSegment(svg, pt.x, barY, pt.x, pt.y);
+    });
   }
 
   function drawLines(canvas) {
@@ -85,8 +111,6 @@
     svg.style.width = w + 'px';
     svg.style.height = h + 'px';
 
-    var minStem = stemOffset();
-
     canvas.querySelectorAll('.family-tree-children').forEach(function (ul) {
       var parentEl = parentNode(ul);
       if (!parentEl) return;
@@ -96,22 +120,12 @@
         var node = directNode(li);
         if (!node) return;
         var box = relBox(node, canvas);
-        childPoints.push({ x: box.cx, y: box.top });
+        childPoints.push({ x: box.cx, y: box.top + 1 });
       });
       if (!childPoints.length) return;
 
       var parentBox = relBox(parentEl, canvas);
-      var parentX = parentBox.cx;
-      var parentY = parentBox.bottom;
-      var childTop = childPoints.reduce(function (min, pt) {
-        return Math.min(min, pt.y);
-      }, childPoints[0].y);
-      var gap = childTop - parentY;
-      var barY = round(parentY + Math.max(gap * 0.5, minStem * 0.45));
-
-      var path = document.createElementNS(SVG_NS, 'path');
-      path.setAttribute('d', forkPath(parentX, parentY, barY, childPoints));
-      svg.appendChild(path);
+      drawFork(svg, parentBox.cx, parentBox.bottom, childPoints);
     });
 
     if (svg.childNodes.length) {
