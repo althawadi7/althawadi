@@ -84,7 +84,7 @@ def build_tree() -> dict:
     jamal["children"] = [node("خالد"), node("طلال")]
 
     hakim = node("عبدالحكيم")
-    hakim["children"] = [node("البراء"), node("عبدالله")]
+    hakim["children"] = [node("عبدالله")]
 
     isa_h = node("عيسى")
     isa_h["children"] = [node("عبدالله")]
