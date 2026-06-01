@@ -220,13 +220,13 @@ def build_tree() -> dict:
         hilal_abdullah,
     ]
 
-    # --- جاسم بن راشد (مخطط: سهم ↓ = ابن، أفقي = إخوة) ---
+    # --- أبناء راشد: جاسم، هلال، حسن، أحمد، خليفة، غانم (إخوة — كلهم ابن راشد مباشرة) ---
     naif_ghanm = node("نايف")
     naif_ghanm["children"] = [node("عبدالعزيز")]
     abdullah_ghanm = node("عبدالله")
     abdullah_ghanm["children"] = [naif_ghanm]
-    ghanim = node("غانم")
-    ghanim["children"] = [abdullah_ghanm]
+    ghanim_rashid = node("غانم")
+    ghanim_rashid["children"] = [abdullah_ghanm]
 
     isa_ibrahim_hilal = node("عيسى")
     isa_ibrahim_hilal["children"] = [
@@ -249,8 +249,8 @@ def build_tree() -> dict:
         node("وائل"),
         isa_ibrahim_hilal,
     ]
-    hilal_jassim = node("هلال")
-    hilal_jassim["children"] = [ibrahim_hilal_j]
+    hilal_rashid = node("هلال")
+    hilal_rashid["children"] = [ibrahim_hilal_j]
 
     ali_hassan_j = node("علي")
     mohammed_hassan_j = node("محمد")
@@ -272,16 +272,16 @@ def build_tree() -> dict:
     mohammed2_hassan_j = node("محمد")
     mohammed2_hassan_j["children"] = [node("حسن"), node("راشد")]
 
-    hassan_jassim = node("حسن")
-    hassan_jassim["children"] = [
+    hassan_rashid = node("حسن")
+    hassan_rashid["children"] = [
         ali_hassan_j,
         rashid_hassan_j,
         abdullah_hassan_j,
         mohammed2_hassan_j,
     ]
 
-    rashid_isa_j = node("راشد")
-    rashid_isa_j["children"] = [node("أحمد")]
+    rashid_isa_ahmed = node("راشد")
+    rashid_isa_ahmed["children"] = [node("أحمد")]
 
     faisal_aref = node("فيصل")
     faisal_aref["children"] = [node("عيسى")]
@@ -302,39 +302,35 @@ def build_tree() -> dict:
         node("راشد"),
     ]
 
-    isa_ahmed_j = node("عيسى")
-    isa_ahmed_j["children"] = [
+    isa_ahmed_r = node("عيسى")
+    isa_ahmed_r["children"] = [
         node("خليفة"),
-        rashid_isa_j,
+        rashid_isa_ahmed,
         node("ناصر"),
         node("خالد"),
         yusuf_isa_j,
     ]
 
-    ibrahim_ahmed_j = node("ابراهيم")
-    ibrahim_ahmed_j["children"] = [isa_ahmed_j]
+    ibrahim_ahmed_r = node("ابراهيم")
+    ibrahim_ahmed_r["children"] = [isa_ahmed_r]
 
-    ahmed_jassim = node("أحمد")
-    ahmed_jassim["children"] = [ibrahim_ahmed_j]
+    ahmed_rashid = node("أحمد")
+    ahmed_rashid["children"] = [ibrahim_ahmed_r]
 
-    jassim = node("جاسم")
-    jassim["children"] = [
-        ghanim,
-        node("خليفة"),
-        ahmed_jassim,
-        hassan_jassim,
-        hilal_jassim,
-    ]
+    khalifa_rashid = node("خليفة")
+
+    jassim_rashid = node("جاسم")
 
     rashid = node("راشد")
     rashid["focus"] = True
     rashid["link"] = "/althawadi/ancestors/#rashid-bin-isa"
     rashid["children"] = [
-        jassim,
-        node("هلال"),
-        node("حسن"),
-        node("أحمد"),
-        node("خليفة"),
+        jassim_rashid,
+        hilal_rashid,
+        hassan_rashid,
+        ahmed_rashid,
+        khalifa_rashid,
+        ghanim_rashid,
     ]
 
     ali = node("علي")
