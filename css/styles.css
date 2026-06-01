@@ -872,8 +872,8 @@ button, input, textarea { font-family: inherit; }
   stroke: var(--family-tree-line);
   stroke-width: var(--family-tree-line-width);
   fill: none;
-  stroke-linecap: square;
-  stroke-linejoin: miter;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 [data-theme="dark"] .family-tree-section {

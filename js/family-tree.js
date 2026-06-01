@@ -6,6 +6,7 @@
 
   var resizeTimer;
   var SVG_NS = 'http://www.w3.org/2000/svg';
+  var CORNER_R = 10;
 
   function directNode(li) {
     return li.querySelector(':scope > .family-tree-node, :scope > a.family-tree-node--link');
@@ -63,6 +64,57 @@
     });
   }
 
+  function addPath(svg, d) {
+    var path = document.createElementNS(SVG_NS, 'path');
+    path.setAttribute('d', d);
+    svg.appendChild(path);
+  }
+
+  /** One continuous trunk + horizontal bar (no gaps). */
+  function trunkAndBar(parentX, parentY, barY, leftX, rightX) {
+    var minX = Math.min(leftX, rightX, parentX);
+    var maxX = Math.max(leftX, rightX, parentX);
+    var d = 'M ' + parentX + ' ' + parentY;
+    d += ' L ' + parentX + ' ' + barY;
+    if (Math.abs(minX - parentX) > 0.5) {
+      d += ' L ' + minX + ' ' + barY;
+    }
+    if (Math.abs(maxX - minX) > 0.5) {
+      d += ' L ' + maxX + ' ' + barY;
+    }
+    return d;
+  }
+
+  /** Curved drop from bar down into child card top. */
+  function curvedDrop(x, barY, childY) {
+    var drop = childY - barY;
+    var r = Math.min(CORNER_R, Math.max(4, drop * 0.35));
+    if (drop <= r * 2) {
+      return 'M ' + x + ' ' + barY + ' L ' + x + ' ' + childY;
+    }
+    return (
+      'M ' + x + ' ' + barY +
+      ' C ' + x + ' ' + (barY + r) +
+      ' ' + x + ' ' + (barY + r) +
+      ' ' + x + ' ' + (barY + r * 1.6) +
+      ' L ' + x + ' ' + childY
+    );
+  }
+
+  /** Curved link parent → single child. */
+  function parentToChild(parentX, parentY, childX, childY) {
+    if (Math.abs(parentX - childX) < 1) {
+      return 'M ' + parentX + ' ' + parentY + ' L ' + childX + ' ' + childY;
+    }
+    var midY = parentY + (childY - parentY) * 0.45;
+    return (
+      'M ' + parentX + ' ' + parentY +
+      ' C ' + parentX + ' ' + midY +
+      ' ' + childX + ' ' + midY +
+      ' ' + childX + ' ' + childY
+    );
+  }
+
   function drawLines(canvas) {
     var w = canvas.scrollWidth;
     var h = canvas.scrollHeight;
@@ -95,10 +147,10 @@
       if (!childPoints.length) return;
 
       if (childPoints.length === 1) {
-        addPath(svg, [
-          [parentX, parentY],
-          [childPoints[0].x, childPoints[0].y],
-        ]);
+        addPath(
+          svg,
+          parentToChild(parentX, parentY, childPoints[0].x, childPoints[0].y)
+        );
         return;
       }
 
@@ -107,37 +159,15 @@
       var leftX = childPoints[0].x;
       var rightX = childPoints[childPoints.length - 1].x;
 
-      addPath(svg, [
-        [parentX, parentY],
-        [parentX, barY],
-      ]);
-
-      addPath(svg, [
-        [leftX, barY],
-        [rightX, barY],
-      ]);
+      addPath(svg, trunkAndBar(parentX, parentY, barY, leftX, rightX));
 
       childPoints.forEach(function (pt) {
-        addPath(svg, [
-          [pt.x, barY],
-          [pt.x, pt.y],
-        ]);
+        addPath(svg, curvedDrop(pt.x, barY, pt.y));
       });
     });
 
     canvas.appendChild(svg);
     canvas.classList.add('family-tree-canvas--wired');
-  }
-
-  function addPath(svg, points) {
-    if (points.length < 2) return;
-    var d = 'M ' + points[0][0] + ' ' + points[0][1];
-    for (var i = 1; i < points.length; i++) {
-      d += ' L ' + points[i][0] + ' ' + points[i][1];
-    }
-    var path = document.createElementNS(SVG_NS, 'path');
-    path.setAttribute('d', d);
-    svg.appendChild(path);
   }
 
   function centerPan(pan) {
