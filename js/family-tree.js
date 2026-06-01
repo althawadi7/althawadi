@@ -1,25 +1,23 @@
 (function () {
   'use strict';
 
-  var pan = document.getElementById('family-tree-pan');
-  var canvas = document.getElementById('family-tree-canvas');
-  if (!pan || !canvas) return;
-
-  var tree = canvas.querySelector('.family-tree');
-  if (!tree) return;
+  var pans = document.querySelectorAll('.family-tree-pan, .family-tree-pan--branch');
+  if (!pans.length) return;
 
   var resizeTimer;
 
-  function centerPan() {
+  function centerPan(pan) {
+    var canvas = pan.querySelector('.family-tree-canvas');
+    if (!canvas) return;
+
     var max = pan.scrollWidth - pan.clientWidth;
-    if (max <= 0) {
-      pan.scrollLeft = 0;
-      return;
-    }
-    pan.scrollLeft = max / 2;
+    pan.scrollLeft = max > 0 ? max / 2 : 0;
   }
 
-  function layoutTree() {
+  function layoutBranch(pan) {
+    var canvas = pan.querySelector('.family-tree-canvas');
+    if (!canvas) return;
+
     canvas.style.transform = '';
     canvas.style.width = '';
     pan.style.minHeight = '';
@@ -37,25 +35,31 @@
 
     requestAnimationFrame(function () {
       pan.style.minHeight = Math.ceil(canvas.getBoundingClientRect().height + 16) + 'px';
-      centerPan();
+      centerPan(pan);
     });
+  }
+
+  function layoutAll() {
+    pans.forEach(layoutBranch);
   }
 
   function onResize() {
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(layoutTree, 120);
+    resizeTimer = setTimeout(layoutAll, 120);
   }
 
   if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(layoutTree);
+    document.fonts.ready.then(layoutAll);
   }
 
-  window.addEventListener('load', layoutTree);
+  window.addEventListener('load', layoutAll);
   window.addEventListener('resize', onResize);
 
   if (typeof ResizeObserver !== 'undefined') {
-    new ResizeObserver(onResize).observe(pan);
+    pans.forEach(function (pan) {
+      new ResizeObserver(onResize).observe(pan);
+    });
   }
 
-  layoutTree();
+  layoutAll();
 })();
