@@ -556,12 +556,14 @@ button, input, textarea { font-family: inherit; }
   overflow-x: auto;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  overscroll-behavior-x: contain;
+  overscroll-behavior: contain;
   touch-action: pan-x pan-y;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: color-mix(in oklch, var(--card) 50%, transparent);
-  padding: 0.75rem 0.5rem 1rem;
+  padding: 1rem 0.75rem 1.25rem;
+  min-height: 20rem;
+  max-height: min(85vh, 900px);
   scrollbar-width: thin;
   scrollbar-color: var(--accent) var(--border);
   direction: ltr;

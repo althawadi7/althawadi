@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate family tree HTML with clear parent labels and branch sections."""
+"""Generate family tree HTML — single unified tree with father→son arrows."""
 
 import re
 from html import escape
@@ -39,7 +39,6 @@ def father_line(ancestors: list[str]) -> str:
         return ""
     if len(ancestors) == 1:
         return f"بن {ancestors[0]}"
-    # Show father + grandfather when names repeat often in the tree
     return "بن " + " بن ".join(reversed(ancestors[-2:]))
 
 
@@ -95,27 +94,18 @@ def render_node(n: dict, indent: int, ancestors: list[str], *, is_root: bool = F
     )
 
 
-def render_branch(title: str, root: dict, ancestors: list[str] | None = None) -> str:
+def render_tree(root: dict, ancestors: list[str] | None = None) -> str:
     ancestors = ancestors or []
-    ul = '<ul class="family-tree">\n' + render_node(root, 4, ancestors, is_root=True) + "</ul>"
-    title_esc = escape(title)
-    return f"""        <article class="family-tree-branch">
-          <header class="family-tree-branch-head">
-            <h3 class="family-tree-branch-title font-display">{title_esc}</h3>
-            <p class="family-tree-branch-desc">سهم ↓ من الأب إلى كل ابن — الإخوة جنب بعض بدون خط يربطهم</p>
-          </header>
-          <div class="family-tree-pan family-tree-pan--branch" tabindex="0" aria-label="{title_esc}">
-            <div class="family-tree-canvas">
-{ul}
-            </div>
-          </div>
-        </article>"""
+    return (
+        '<ul class="family-tree">\n'
+        + render_node(root, 4, ancestors, is_root=True)
+        + "</ul>"
+    )
 
 
-def build_sections() -> list[tuple[str, dict, list[str]]]:
-    """Return (title, subtree_root, ancestor_path_before_root)."""
+def build_tree() -> dict:
+    """Single tree: حسن → … → خليفة → علي / عيسى → all descendants."""
 
-    # --- Detailed branches (built first) ---
     hilal_abdullah = node("هلال")
     hilal_abdullah["focus"] = True
 
@@ -176,62 +166,31 @@ def build_sections() -> list[tuple[str, dict, list[str]]]:
         node("خليفه"),
     ]
 
-    ali_branch = node("علي")
-    ali_branch["children"] = [node("محمد"), node("علي")]
+    ali = node("علي")
+    ali["children"] = [node("محمد"), node("علي")]
 
-    isa_sons = node("عيسى", lineage=True)
-    isa_sons["children"] = [
+    isa = node("عيسى", lineage=True)
+    isa["children"] = [
         node("محمد"),
         node("هلال"),
-        node("راشد", focus=True, link="/althawadi/ancestors/#rashid-bin-isa"),
-        node("عبدالله", focus=True, link="/althawadi/ancestors/#abdullah-bin-isa"),
+        rashid,
+        abdullah,
     ]
 
-    # Overview: ancestors only, sons of خليفة without grandchildren
-    isa_overview = node("عيسى", lineage=True)
-    ali_overview = node("علي")
-    khalifa_overview = node("خليفة", lineage=True)
-    khalifa_overview["children"] = [ali_overview, isa_overview]
-    hilal_overview = node("هلال", lineage=True)
-    hilal_overview["children"] = [khalifa_overview]
-    root_overview = node("حسن", lineage=True)
-    root_overview["children"] = [hilal_overview]
+    khalifa = node("خليفة", lineage=True)
+    khalifa["children"] = [ali, isa]
 
-    ancestors_to_khalifa = ["حسن", "هلال", "خليفة"]
+    hilal = node("هلال", lineage=True)
+    hilal["children"] = [khalifa]
 
-    return [
-        (
-            "١ — خط النسب: حسن → هلال → خليفة → علي وعيسى",
-            root_overview,
-            [],
-        ),
-        (
-            "٢ — فرع علي بن خليفة",
-            ali_branch,
-            ancestors_to_khalifa,
-        ),
-        (
-            "٣ — أبناء عيسى بن خليفة (محمد، هلال، راشد، عبدالله)",
-            isa_sons,
-            ancestors_to_khalifa,
-        ),
-        (
-            "٤ — تفصيل فرع راشد بن عيسى",
-            rashid,
-            ancestors_to_khalifa + ["عيسى"],
-        ),
-        (
-            "٥ — تفصيل فرع عبدالله بن عيسى (ومنهم هلال وأحفاده)",
-            abdullah,
-            ancestors_to_khalifa + ["عيسى"],
-        ),
-    ]
+    root = node("حسن", lineage=True)
+    root["children"] = [hilal]
+
+    return root
 
 
 def build_page_html() -> str:
-    branches = "\n".join(
-        render_branch(title, root, ancestors) for title, root, ancestors in build_sections()
-    )
+    tree_ul = render_tree(build_tree())
     return f"""        <div class="family-tree-lineage max-w-3xl mx-auto mb-8 text-center" dir="rtl">
           <p class="text-[11px] uppercase tracking-[0.35em] text-accent font-latin mb-3">خط النسب</p>
           <p class="font-display text-lg md:text-xl text-foreground leading-relaxed">
@@ -245,14 +204,16 @@ def build_page_html() -> str:
         </div>
 
         <p class="family-tree-hint">
-          مثل الشجرة المرجعية: <strong class="text-foreground">سهم أزرق ↓</strong> من الأب إلى كل ابن على حدة. الإخوة يظهرون بجانب بعض — بدون خط أفقي بينهم.
+          شجرة واحدة متصلة: <strong class="text-foreground">سهم أزرق ↓</strong> من الأب إلى كل ابن — الإخوة بجانب بعض بدون خط أفقي.
         </p>
 
-        <div class="family-tree-branches" id="family-tree-branches">
-{branches}
+        <div class="family-tree-pan" id="family-tree-pan" tabindex="0" aria-label="شجرة العائلة">
+          <div class="family-tree-canvas">
+{tree_ul}
+          </div>
         </div>
 
-        <p class="family-tree-pan-hint">مرّر أفقيًا داخل كل قسم لاستكشاف الفرع</p>
+        <p class="family-tree-pan-hint">مرّر أفقيًا وعموديًا لاستكشاف الشجرة</p>
         <div class="mt-8 notice-box max-w-2xl mx-auto w-full">
           <p class="text-sm text-muted-foreground leading-8" style="margin:0;">
             مسودة عمل — تُكمَّل بالمراجعة.
@@ -282,11 +243,11 @@ def inject_tree_page(content_html: str) -> None:
 
 
 def main() -> None:
-    content = build_page_html()
+    tree_ul = render_tree(build_tree())
     TREE_HTML.parent.mkdir(parents=True, exist_ok=True)
-    TREE_HTML.write_text(content, encoding="utf-8")
+    TREE_HTML.write_text(tree_ul + "\n", encoding="utf-8")
     print(f"Wrote {TREE_HTML}")
-    inject_tree_page(content)
+    inject_tree_page(build_page_html())
 
 
 if __name__ == "__main__":
