@@ -1,11 +1,12 @@
-/* Pure CSS family tree — nested ul/li connectors (::before / ::after) */
+/* Pure CSS family tree — compact vertical siblings (narrow width, taller height) */
 
 .family-tree-canvas {
   display: inline-block;
   position: relative;
   width: max-content;
+  max-width: min(100%, 22rem);
   margin: 0 auto;
-  padding: 0.75rem 1rem 1rem;
+  padding: 0.5rem 0.75rem 1rem;
   vertical-align: top;
 }
 
@@ -14,19 +15,20 @@
 }
 
 .tree ul {
-  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--tree-sibling-gap, 0.4rem);
+  padding-top: var(--tree-level-gap, 0.85rem);
   position: relative;
   list-style: none;
   margin: 0;
   padding-left: 0;
   padding-right: 0;
-  transition: all 0.35s ease;
 }
 
 .tree ul::after {
-  content: '';
-  display: table;
-  clear: both;
+  content: none;
 }
 
 .tree > ul {
@@ -34,62 +36,63 @@
 }
 
 .tree li {
-  float: left;
+  float: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
   list-style-type: none;
   position: relative;
-  padding: 20px 5px 0;
-  transition: all 0.35s ease;
+  padding: 0;
+  width: 100%;
+  max-width: 6.75rem;
 }
 
+/* Disable horizontal float connectors */
 .tree li::before,
 .tree li::after {
+  display: none;
+  border: none;
+}
+
+/* Stem from parent card down to children list */
+.tree li > ul::before {
   content: '';
   position: absolute;
   top: 0;
-  right: 50%;
-  border-top: var(--family-tree-line-width, 2px) solid var(--family-tree-line, #9a6848);
-  width: 50%;
-  height: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: var(--family-tree-line-width, 2px) solid var(--family-tree-line, #9a6848);
+  width: 0;
+  height: var(--tree-level-gap, 0.85rem);
 }
 
-.tree li::after {
+.tree li > ul {
+  width: 100%;
+  padding-top: calc(var(--tree-level-gap, 0.85rem) + 0.15rem);
+}
+
+/* Short tick above each child card (sibling group) */
+.tree li > ul > li::before {
+  display: block;
+  content: '';
+  position: relative;
+  top: auto;
   right: auto;
-  left: 50%;
+  left: auto;
+  width: 0;
+  height: 0.55rem;
+  margin: 0 auto;
+  border: none;
   border-left: var(--family-tree-line-width, 2px) solid var(--family-tree-line, #9a6848);
 }
 
-.tree li:only-child::after,
-.tree li:only-child::before {
+.tree li > ul > li:only-child::before {
   display: none;
 }
 
-.tree li:only-child {
-  padding-top: 0;
-}
-
-.tree li:first-child::before,
-.tree li:last-child::after {
-  border: 0 none;
-}
-
-.tree li:last-child::before {
-  border-right: var(--family-tree-line-width, 2px) solid var(--family-tree-line, #9a6848);
-  border-radius: 0 5px 0 0;
-}
-
-.tree li:first-child::after {
-  border-radius: 5px 0 0 0;
-}
-
-.tree ul ul::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  border-left: var(--family-tree-line-width, 2px) solid var(--family-tree-line, #9a6848);
-  width: 0;
-  height: 20px;
+.tree li:only-child > ul::before {
+  display: block;
 }
 
 .tree li > a,
@@ -97,9 +100,10 @@
   position: relative;
   z-index: 2;
   vertical-align: top;
+  width: 100%;
+  max-width: 6.75rem;
 }
 
-/* Keep عبدالله and similar names from breaking in LTR layout */
 .tree .family-tree-given,
 .tree .family-tree-pat {
   unicode-bidi: isolate;
@@ -117,20 +121,29 @@
   border-color: #94a0b4;
 }
 
-.tree li a:hover + ul li::after,
-.tree li a:hover + ul li::before,
 .tree li a:hover + ul::before,
-.tree li a:hover + ul ul::before,
-.tree li .family-tree-node:hover + ul li::after,
-.tree li .family-tree-node:hover + ul li::before,
+.tree li a:hover + ul > li::before,
 .tree li .family-tree-node:hover + ul::before,
-.tree li .family-tree-node:hover + ul ul::before {
+.tree li .family-tree-node:hover + ul > li::before {
   border-color: #94a0b4;
 }
 
-[data-theme="dark"] .tree li::before,
-[data-theme="dark"] .tree li::after,
-[data-theme="dark"] .tree li:last-child::before,
-[data-theme="dark"] .tree ul ul::before {
+[data-theme="dark"] .tree li > ul::before,
+[data-theme="dark"] .tree li > ul > li::before {
   border-color: var(--family-tree-line, #d4956a);
+}
+
+@media (min-width: 640px) {
+  .family-tree-canvas {
+    max-width: min(100%, 26rem);
+  }
+
+  .tree li {
+    max-width: 7.25rem;
+  }
+
+  .tree li > a,
+  .tree li > .family-tree-node {
+    max-width: 7.25rem;
+  }
 }

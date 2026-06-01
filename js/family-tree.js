@@ -4,10 +4,35 @@
   var pans = document.querySelectorAll('.family-tree-pan');
   if (!pans.length) return;
 
+  var MEMBER_SELECTOR =
+    '.tree li > .family-tree-node, .tree li > a.family-tree-node, .tree li > a.family-tree-node--link';
+
+  function countTreeMembers() {
+    var tree = document.querySelector('.tree');
+    if (!tree) return 0;
+    return tree.querySelectorAll(MEMBER_SELECTOR).length;
+  }
+
+  function updateMemberCount() {
+    var wrap = document.getElementById('family-tree-member-count');
+    if (!wrap) return;
+
+    var total = countTreeMembers();
+    var numEl = wrap.querySelector('.family-tree-member-count-num');
+    if (numEl) {
+      numEl.textContent = total.toLocaleString('ar');
+    }
+    wrap.setAttribute('aria-label', 'إجمالي الأفراد في الشجرة: ' + total);
+  }
+
+  window.__familyTreeCountMembers = countTreeMembers;
+  window.__familyTreeUpdateMemberCount = updateMemberCount;
+
   function centerPan(pan) {
     var maxX = pan.scrollWidth - pan.clientWidth;
+    var maxY = pan.scrollHeight - pan.clientHeight;
     pan.scrollLeft = maxX > 0 ? maxX / 2 : 0;
-    pan.scrollTop = 0;
+    pan.scrollTop = maxY > 0 ? 0 : 0;
   }
 
   function layoutAll() {
@@ -26,8 +51,10 @@
   }
 
   function runInitial() {
+    updateMemberCount();
     layoutAll();
     requestAnimationFrame(function () {
+      updateMemberCount();
       layoutAll();
     });
   }

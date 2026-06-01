@@ -113,6 +113,10 @@ def render_tree(root: dict, ancestors: list[str] | None = None) -> str:
     )
 
 
+def count_nodes(n: dict) -> int:
+    return 1 + sum(count_nodes(c) for c in n.get("children", []))
+
+
 def build_tree() -> dict:
     """Single tree: حسن → … → خليفة → علي / عيسى → all descendants."""
 
@@ -375,6 +379,10 @@ def build_page_html() -> str:
         </p>
 
         <div class="family-tree-controls">
+          <p class="family-tree-member-count" id="family-tree-member-count" dir="rtl" aria-live="polite">
+            <span class="family-tree-member-count-label">إجمالي الأفراد في الشجرة:</span>
+            <strong class="family-tree-member-count-num">—</strong>
+          </p>
           <div class="family-tree-legend" aria-label="دليل البطاقات">
             <span class="family-tree-legend-item">
               <span class="family-tree-legend-swatch family-tree-legend-swatch--root" aria-hidden="true"></span>
@@ -442,10 +450,12 @@ def inject_tree_page(content_html: str) -> None:
 
 
 def main() -> None:
-    tree_ul = render_tree(build_tree())
+    root = build_tree()
+    total = count_nodes(root)
+    tree_ul = render_tree(root)
     TREE_HTML.parent.mkdir(parents=True, exist_ok=True)
     TREE_HTML.write_text(tree_ul + "\n", encoding="utf-8")
-    print(f"Wrote {TREE_HTML}")
+    print(f"Wrote {TREE_HTML} ({total} members)")
     inject_tree_page(build_page_html())
 
 
