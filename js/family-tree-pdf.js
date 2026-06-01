@@ -213,6 +213,54 @@
     });
   }
 
+  /** Scale tree image to fit one A4 landscape page; returns draw box in mm. */
+  function pageDrawBox(shot, pageW, pageH, margin) {
+    var usableW = pageW - margin * 2;
+    var usableH = pageH - margin * 2;
+    var drawW = usableW;
+    var drawH = (shot.height * drawW) / shot.width;
+
+    if (drawH > usableH) {
+      drawH = usableH;
+      drawW = (shot.width * drawH) / shot.height;
+    }
+
+    return {
+      x: (pageW - drawW) / 2,
+      y: (pageH - drawH) / 2,
+      w: drawW,
+      h: drawH,
+      usableH: usableH,
+    };
+  }
+
+  function addImagePages(pdf, imgData, shot, margin) {
+    var pageW = pdf.internal.pageSize.getWidth();
+    var pageH = pdf.internal.pageSize.getHeight();
+    var box = pageDrawBox(shot, pageW, pageH, margin);
+
+    if (box.h <= box.usableH + 0.5) {
+      pdf.addImage(imgData, 'JPEG', box.x, box.y, box.w, box.h);
+      return;
+    }
+
+    var usableW = pageW - margin * 2;
+    var drawW = usableW;
+    var drawH = (shot.height * drawW) / shot.width;
+    var heightLeft = drawH;
+    var y = margin;
+
+    pdf.addImage(imgData, 'JPEG', margin, y, drawW, drawH);
+    heightLeft -= box.usableH;
+
+    while (heightLeft > 0) {
+      y = margin - (drawH - heightLeft);
+      pdf.addPage('a4', 'landscape');
+      pdf.addImage(imgData, 'JPEG', margin, y, drawW, drawH);
+      heightLeft -= box.usableH;
+    }
+  }
+
   function clearInlinePaint(root) {
     root.querySelectorAll('[style]').forEach(function (el) {
       if (
@@ -284,33 +332,27 @@
         windowHeight: capH,
         onclone: function (clonedDoc) {
           clonedDoc.querySelectorAll('link[rel="stylesheet"]').forEach(function (node) {
+            if (node.id === 'family-tree-pdf-critical-link') return;
             node.disabled = true;
           });
+          var tree = clonedDoc.querySelector('.family-tree-pdf-exporting .tree');
+          if (tree) {
+            tree.style.transform = 'scaleX(-1)';
+            tree.style.transformOrigin = 'center top';
+          }
+          clonedDoc
+            .querySelectorAll('.family-tree-pdf-exporting .tree li > a, .family-tree-pdf-exporting .tree li > .family-tree-node')
+            .forEach(function (card) {
+              card.style.transform = 'scaleX(-1)';
+            });
         },
       });
 
       var pdf = new JsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
-      var pageW = pdf.internal.pageSize.getWidth();
-      var pageH = pdf.internal.pageSize.getHeight();
-      var margin = 10;
-      var usableW = pageW - margin * 2;
-      var usableH = pageH - margin * 2;
-
+      var margin = 8;
       var imgData = shot.toDataURL('image/jpeg', 0.92);
-      var pdfImgH = (shot.height * usableW) / shot.width;
-      var heightLeft = pdfImgH;
-      var y = margin;
 
-      pdf.addImage(imgData, 'JPEG', margin, y, usableW, pdfImgH);
-      heightLeft -= usableH;
-
-      while (heightLeft > 0) {
-        y = margin - (pdfImgH - heightLeft);
-        pdf.addPage('a4', 'landscape');
-        pdf.addImage(imgData, 'JPEG', margin, y, usableW, pdfImgH);
-        heightLeft -= usableH;
-      }
-
+      addImagePages(pdf, imgData, shot, margin);
       pdf.save('shajarat-al-thawadi.pdf');
     } catch (err) {
       console.error(err);

@@ -24,8 +24,11 @@
   vertical-align: top;
 }
 
+/* Mirror layout for RTL print (cards counter-flipped so Arabic stays readable) */
 .family-tree-pdf-exporting .tree {
   text-align: center;
+  transform: scaleX(-1);
+  transform-origin: center top;
 }
 
 .family-tree-pdf-exporting .tree ul {
@@ -107,6 +110,7 @@
 
 .family-tree-pdf-exporting .tree li > a,
 .family-tree-pdf-exporting .tree li > .family-tree-node {
+  transform: scaleX(-1);
   position: relative;
   z-index: 2;
   display: inline-block;

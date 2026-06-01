@@ -155,11 +155,19 @@ def build_tree() -> dict:
         isa_h,
     ]
 
+    mohammed_1 = node("محمد", suffix="(١)")
+    mohammed_1["children"] = [
+        node("عبدالله"),
+        node("عيسى"),
+        node("أحمد"),
+        node("علي"),
+    ]
+
     abdullah = node("عبدالله")
     abdullah["focus"] = True
     abdullah["link"] = "/althawadi/ancestors/#abdullah-bin-isa"
     abdullah["children"] = [
-        node("محمد", suffix="(١)"),
+        mohammed_1,
         node("أحمد"),
         node("محمد", suffix="(٢)"),
         hilal_abdullah,
