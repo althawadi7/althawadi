@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  var pans = document.querySelectorAll('.family-tree-pan, .family-tree-pan--branch');
+  var pans = document.querySelectorAll('.family-tree-pan');
   if (!pans.length) return;
 
   var resizeTimer;
@@ -10,8 +10,8 @@
     var canvas = pan.querySelector('.family-tree-canvas');
     if (!canvas) return;
 
-    var max = pan.scrollWidth - pan.clientWidth;
-    pan.scrollLeft = max > 0 ? max / 2 : 0;
+    var maxX = pan.scrollWidth - pan.clientWidth;
+    pan.scrollLeft = maxX > 0 ? maxX / 2 : 0;
   }
 
   function layoutBranch(pan) {
@@ -22,19 +22,9 @@
     canvas.style.width = '';
     pan.style.minHeight = '';
 
-    var contentWidth = canvas.scrollWidth;
-    var panWidth = pan.clientWidth;
-    var available = Math.max(panWidth - 32, 200);
-
-    if (contentWidth > available) {
-      var scale = available / contentWidth;
-      scale = Math.max(0.35, Math.min(1, scale));
-      canvas.style.transform = 'scale(' + scale + ')';
-      canvas.style.transformOrigin = 'top center';
-    }
-
     requestAnimationFrame(function () {
-      pan.style.minHeight = Math.ceil(canvas.getBoundingClientRect().height + 16) + 'px';
+      var h = Math.ceil(canvas.getBoundingClientRect().height + 24);
+      pan.style.minHeight = Math.min(Math.max(h, 320), window.innerHeight * 0.85) + 'px';
       centerPan(pan);
     });
   }

@@ -86,9 +86,7 @@ def render_node(n: dict, indent: int, ancestors: list[str], *, is_root: bool = F
     return (
         f"{pad}<li>\n"
         f"{inner}"
-        f'{pad}  <p class="family-tree-sons-label">{sons_label}</p>\n'
-        f'{pad}  <div class="family-tree-connector" aria-hidden="true"></div>\n'
-        f'{pad}  <ul class="family-tree-children">\n'
+        f'{pad}  <ul class="family-tree-children" aria-label="{sons_label}">\n'
         f"{kids}"
         f'{pad}  </ul>\n'
         f"{pad}</li>\n"
@@ -200,12 +198,12 @@ def build_page_html() -> str:
             <strong class="text-accent">عبدالله وراشد</strong>
           </p>
           <p class="mt-3 text-xs text-muted-foreground leading-7">
-            سهم ↓ أزرق من الأب إلى كل ابن. تحت الاسم <strong class="text-foreground">بن …</strong> لبيان النسب.
+            خطوط متصلة من الأب إلى الأبناء — الاسم و<strong class="text-foreground">بن …</strong> داخل كل بطاقة.
           </p>
         </div>
 
         <p class="family-tree-hint">
-          سهم متصل ↓ من الأب إلى كل ابن. الخط الأفقي يربط التفرّعات فقط — لا يربط الإخوة ببعض.
+          مرّر أفقيًا وعموديًا — كل بطاقة متصلة بأبها بخطوط زاوية مثل المخطط المرجعي.
         </p>
 
         <div class="family-tree-pan" id="family-tree-pan" tabindex="0" aria-label="شجرة العائلة">

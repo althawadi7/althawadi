@@ -76,12 +76,12 @@
             <strong class="text-accent">عبدالله وراشد</strong>
           </p>
           <p class="mt-3 text-xs text-muted-foreground leading-7">
-            سهم ↓ أزرق من الأب إلى كل ابن. تحت الاسم <strong class="text-foreground">بن …</strong> لبيان النسب.
+            خطوط متصلة من الأب إلى الأبناء — الاسم و<strong class="text-foreground">بن …</strong> داخل كل بطاقة.
           </p>
         </div>
 
         <p class="family-tree-hint">
-          سهم متصل ↓ من الأب إلى كل ابن. الخط الأفقي يربط التفرّعات فقط — لا يربط الإخوة ببعض.
+          مرّر أفقيًا وعموديًا — كل بطاقة متصلة بأبها بخطوط زاوية مثل المخطط المرجعي.
         </p>
 
         <div class="family-tree-pan" id="family-tree-pan" tabindex="0" aria-label="شجرة العائلة">
@@ -91,33 +91,25 @@
       <div class="family-tree-node is-root is-lineage" title="حسن">
         <span class="family-tree-given">حسن</span>
       </div>
-      <p class="family-tree-sons-label">أبناء حسن</p>
-      <div class="family-tree-connector" aria-hidden="true"></div>
-      <ul class="family-tree-children">
+      <ul class="family-tree-children" aria-label="أبناء حسن">
         <li>
           <div class="family-tree-node is-lineage" title="هلال بن حسن">
             <span class="family-tree-given">هلال</span>
             <span class="family-tree-pat">بن حسن</span>
           </div>
-          <p class="family-tree-sons-label">أبناء هلال</p>
-          <div class="family-tree-connector" aria-hidden="true"></div>
-          <ul class="family-tree-children">
+          <ul class="family-tree-children" aria-label="أبناء هلال">
             <li>
               <div class="family-tree-node is-lineage" title="خليفة بن هلال بن حسن">
                 <span class="family-tree-given">خليفة</span>
                 <span class="family-tree-pat">بن هلال بن حسن</span>
               </div>
-              <p class="family-tree-sons-label">أبناء خليفة</p>
-              <div class="family-tree-connector" aria-hidden="true"></div>
-              <ul class="family-tree-children">
+              <ul class="family-tree-children" aria-label="أبناء خليفة">
                 <li>
                   <div class="family-tree-node" title="علي بن خليفة بن هلال">
                     <span class="family-tree-given">علي</span>
                     <span class="family-tree-pat">بن خليفة بن هلال</span>
                   </div>
-                  <p class="family-tree-sons-label">أبناء علي</p>
-                  <div class="family-tree-connector" aria-hidden="true"></div>
-                  <ul class="family-tree-children">
+                  <ul class="family-tree-children" aria-label="أبناء علي">
                     <li>
                       <div class="family-tree-node" title="محمد بن علي بن خليفة">
                         <span class="family-tree-given">محمد</span>
@@ -137,9 +129,7 @@
                     <span class="family-tree-given">عيسى</span>
                     <span class="family-tree-pat">بن خليفة بن هلال</span>
                   </div>
-                  <p class="family-tree-sons-label">أبناء عيسى</p>
-                  <div class="family-tree-connector" aria-hidden="true"></div>
-                  <ul class="family-tree-children">
+                  <ul class="family-tree-children" aria-label="أبناء عيسى">
                     <li>
                       <div class="family-tree-node" title="محمد بن عيسى بن خليفة">
                         <span class="family-tree-given">محمد</span>
@@ -157,9 +147,7 @@
                         <span class="family-tree-given">راشد</span>
                         <span class="family-tree-pat">بن عيسى بن خليفة</span>
                       </a>
-                      <p class="family-tree-sons-label">أبناء راشد</p>
-                      <div class="family-tree-connector" aria-hidden="true"></div>
-                      <ul class="family-tree-children">
+                      <ul class="family-tree-children" aria-label="أبناء راشد">
                         <li>
                           <div class="family-tree-node" title="جاسم بن راشد بن عيسى">
                             <span class="family-tree-given">جاسم</span>
@@ -197,9 +185,7 @@
                         <span class="family-tree-given">عبدالله</span>
                         <span class="family-tree-pat">بن عيسى بن خليفة</span>
                       </a>
-                      <p class="family-tree-sons-label">أبناء عبدالله</p>
-                      <div class="family-tree-connector" aria-hidden="true"></div>
-                      <ul class="family-tree-children">
+                      <ul class="family-tree-children" aria-label="أبناء عبدالله">
                         <li>
                           <div class="family-tree-node" title="محمد (١) بن عبدالله بن عيسى">
                             <span class="family-tree-given">محمد (١)</span>
@@ -223,25 +209,19 @@
                             <span class="family-tree-given">هلال</span>
                             <span class="family-tree-pat">بن عبدالله بن عيسى</span>
                           </div>
-                          <p class="family-tree-sons-label">أبناء هلال</p>
-                          <div class="family-tree-connector" aria-hidden="true"></div>
-                          <ul class="family-tree-children">
+                          <ul class="family-tree-children" aria-label="أبناء هلال">
                             <li>
                               <div class="family-tree-node" title="حسن بن هلال بن عبدالله">
                                 <span class="family-tree-given">حسن</span>
                                 <span class="family-tree-pat">بن هلال بن عبدالله</span>
                               </div>
-                              <p class="family-tree-sons-label">أبناء حسن</p>
-                              <div class="family-tree-connector" aria-hidden="true"></div>
-                              <ul class="family-tree-children">
+                              <ul class="family-tree-children" aria-label="أبناء حسن">
                                 <li>
                                   <div class="family-tree-node" title="ابراهيم بن حسن بن هلال">
                                     <span class="family-tree-given">ابراهيم</span>
                                     <span class="family-tree-pat">بن حسن بن هلال</span>
                                   </div>
-                                  <p class="family-tree-sons-label">أبناء ابراهيم</p>
-                                  <div class="family-tree-connector" aria-hidden="true"></div>
-                                  <ul class="family-tree-children">
+                                  <ul class="family-tree-children" aria-label="أبناء ابراهيم">
                                     <li>
                                       <div class="family-tree-node" title="حسن بن ابراهيم بن حسن">
                                         <span class="family-tree-given">حسن</span>
@@ -275,9 +255,7 @@
                                 <span class="family-tree-given">أحمد</span>
                                 <span class="family-tree-pat">بن هلال بن عبدالله</span>
                               </div>
-                              <p class="family-tree-sons-label">أبناء أحمد</p>
-                              <div class="family-tree-connector" aria-hidden="true"></div>
-                              <ul class="family-tree-children">
+                              <ul class="family-tree-children" aria-label="أبناء أحمد">
                                 <li>
                                   <div class="family-tree-node" title="سلطان بن أحمد بن هلال">
                                     <span class="family-tree-given">سلطان</span>
@@ -291,9 +269,7 @@
                                 <span class="family-tree-given">عبدالله</span>
                                 <span class="family-tree-pat">بن هلال بن عبدالله</span>
                               </div>
-                              <p class="family-tree-sons-label">أبناء عبدالله</p>
-                              <div class="family-tree-connector" aria-hidden="true"></div>
-                              <ul class="family-tree-children">
+                              <ul class="family-tree-children" aria-label="أبناء عبدالله">
                                 <li>
                                   <div class="family-tree-node" title="هلال بن عبدالله بن هلال">
                                     <span class="family-tree-given">هلال</span>
@@ -331,9 +307,7 @@
                                 <span class="family-tree-given">جمال</span>
                                 <span class="family-tree-pat">بن هلال بن عبدالله</span>
                               </div>
-                              <p class="family-tree-sons-label">أبناء جمال</p>
-                              <div class="family-tree-connector" aria-hidden="true"></div>
-                              <ul class="family-tree-children">
+                              <ul class="family-tree-children" aria-label="أبناء جمال">
                                 <li>
                                   <div class="family-tree-node" title="خالد بن جمال بن هلال">
                                     <span class="family-tree-given">خالد</span>
@@ -353,9 +327,7 @@
                                 <span class="family-tree-given">عبدالحكيم</span>
                                 <span class="family-tree-pat">بن هلال بن عبدالله</span>
                               </div>
-                              <p class="family-tree-sons-label">أبناء عبدالحكيم</p>
-                              <div class="family-tree-connector" aria-hidden="true"></div>
-                              <ul class="family-tree-children">
+                              <ul class="family-tree-children" aria-label="أبناء عبدالحكيم">
                                 <li>
                                   <div class="family-tree-node" title="عبدالله بن عبدالحكيم بن هلال">
                                     <span class="family-tree-given">عبدالله</span>
@@ -369,9 +341,7 @@
                                 <span class="family-tree-given">عيسى</span>
                                 <span class="family-tree-pat">بن هلال بن عبدالله</span>
                               </div>
-                              <p class="family-tree-sons-label">أبناء عيسى</p>
-                              <div class="family-tree-connector" aria-hidden="true"></div>
-                              <ul class="family-tree-children">
+                              <ul class="family-tree-children" aria-label="أبناء عيسى">
                                 <li>
                                   <div class="family-tree-node" title="عبدالله بن عيسى بن هلال">
                                     <span class="family-tree-given">عبدالله</span>
