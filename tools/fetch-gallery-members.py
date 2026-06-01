@@ -59,7 +59,7 @@ SHORTCODES = [
     "BjM364hlAvW",
     "BjM4BaMlwJY",
     "BjwoZ6Flvdx",
-    "BjwooeflbAo",
+    "DY7FtW_gqSk",
     "Bk-YEFgA06-",
     "BlSqUCDA4e1",
     "BlVSBCWArp6",
@@ -126,6 +126,10 @@ SHORTCODES = [
     "DY1grV3gsR7",
     "DY38pUngLk6",
     "DY38fQqACgs",
+    "DY9SmFwAn1B",
+    "DY9Svb8gEmF",
+    "DY_vwSEgWgs",
+    "DY_wAUlgt82",
 ]
 
 
