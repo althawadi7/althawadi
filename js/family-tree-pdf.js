@@ -4,11 +4,6 @@
   var btn = document.getElementById('family-tree-pdf-btn');
   if (!btn) return;
 
-  var HTML2CANVAS =
-    'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
-  var JSPDF =
-    'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js';
-
   var PDF = {
     panBg: '#f0e8dc',
     dot: 'rgba(90, 70, 50, 0.1)',
@@ -39,20 +34,64 @@
     'stroke',
   ];
 
-  function loadScript(src) {
-    return new Promise(function (resolve, reject) {
-      if (document.querySelector('script[src="' + src + '"]')) {
-        resolve();
-        return;
+  var HTML2CANVAS_SRCS = [
+    'js/vendor/html2canvas.min.js',
+    'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js',
+    'https://unpkg.com/html2canvas@1.4.1/dist/html2canvas.min.js',
+  ];
+
+  var JSPDF_SRCS = [
+    'js/vendor/jspdf.umd.min.js',
+    'https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js',
+    'https://unpkg.com/jspdf@2.5.2/dist/jspdf.umd.min.js',
+  ];
+
+  function assetBase() {
+    if (window.__althawadiBase) return window.__althawadiBase;
+    if (location.pathname.indexOf('/althawadi/') !== -1) return '/althawadi/';
+    return '../';
+  }
+
+  function resolveUrl(path) {
+    return path.indexOf('://') !== -1 ? path : assetBase() + path;
+  }
+
+  function loadLib(urls, isReady) {
+    if (isReady()) return Promise.resolve();
+
+    function tryIndex(i) {
+      if (isReady()) return Promise.resolve();
+      if (i >= urls.length) {
+        return Promise.reject(new Error('تعذّر تحميل المكتبة المطلوبة للـ PDF'));
       }
-      var script = document.createElement('script');
-      script.src = src;
-      script.onload = resolve;
-      script.onerror = function () {
-        reject(new Error('Failed to load ' + src));
-      };
-      document.head.appendChild(script);
-    });
+
+      var url = resolveUrl(urls[i]);
+      return new Promise(function (resolve, reject) {
+        var tag = document.createElement('script');
+        tag.src = url;
+        tag.async = true;
+        tag.onload = function () {
+          if (isReady()) resolve();
+          else {
+            tag.remove();
+            tryIndex(i + 1).then(resolve).catch(reject);
+          }
+        };
+        tag.onerror = function () {
+          tag.remove();
+          tryIndex(i + 1).then(resolve).catch(reject);
+        };
+        document.head.appendChild(tag);
+      });
+    }
+
+    return tryIndex(0);
+  }
+
+  function getJsPDF() {
+    if (window.jspdf && window.jspdf.jsPDF) return window.jspdf.jsPDF;
+    if (typeof window.jsPDF === 'function') return window.jsPDF;
+    return null;
   }
 
   function waitForLayout() {
@@ -106,9 +145,7 @@
       if (!hasUnsafeColor(value)) return value;
       if (prop === 'boxShadow') return '0 2px 0 ' + PDF.cardShadow;
       if (prop === 'backgroundImage') {
-        return (
-          'radial-gradient(circle, ' + PDF.dot + ' 1px, transparent 1px)'
-        );
+        return 'radial-gradient(circle, ' + PDF.dot + ' 1px, transparent 1px)';
       }
       return toSafeColor(value, PDF.panBg);
     }
@@ -240,8 +277,18 @@
 
     try {
       await waitForLayout();
-      await loadScript(HTML2CANVAS);
-      await loadScript(JSPDF);
+
+      await loadLib(HTML2CANVAS_SRCS, function () {
+        return typeof window.html2canvas === 'function';
+      });
+      await loadLib(JSPDF_SRCS, function () {
+        return !!getJsPDF();
+      });
+
+      var JsPDF = getJsPDF();
+      if (!JsPDF) {
+        throw new Error('jsPDF unavailable');
+      }
 
       savedPaint = applyPdfPaint(pan);
       detachedSheets = detachStylesheets();
@@ -264,8 +311,7 @@
         },
       });
 
-      var jsPDF = window.jspdf.jsPDF;
-      var pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+      var pdf = new JsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
       var pageW = pdf.internal.pageSize.getWidth();
       var pageH = pdf.internal.pageSize.getHeight();
       var margin = 8;
@@ -290,7 +336,7 @@
       pdf.save('shajarat-al-thawadi.pdf');
     } catch (err) {
       console.error(err);
-      window.alert('تعذّر إنشاء PDF. حاول مرة أخرى.');
+      window.alert('تعذّر إنشاء PDF. تأكد من الاتصال أو حدّث الصفحة وحاول مرة أخرى.');
     } finally {
       restoreStylesheets(detachedSheets);
       restorePdfPaint(savedPaint);
