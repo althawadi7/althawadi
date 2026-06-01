@@ -917,6 +917,21 @@ button, input, textarea { font-family: inherit; }
   margin-bottom: 0.5rem;
 }
 
+.family-tree-toolbar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.family-tree-pdf-btn .icon {
+  flex-shrink: 0;
+}
+
+.family-tree-pdf-btn[disabled] {
+  opacity: 0.65;
+  cursor: wait;
+}
+
 .family-tree-pan-hint {
   text-align: center;
   font-size: 0.65rem;

@@ -223,4 +223,6 @@
   }
 
   layoutAll();
+
+  window.__familyTreeLayout = layoutAll;
 })();

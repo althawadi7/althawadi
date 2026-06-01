@@ -206,6 +206,17 @@ def build_page_html() -> str:
           مرّر أفقيًا وعموديًا — كل بطاقة متصلة بأبها بخطوط زاوية مثل المخطط المرجعي.
         </p>
 
+        <div class="family-tree-toolbar">
+          <button type="button" id="family-tree-pdf-btn" class="family-tree-pdf-btn map-btn map-btn--primary">
+            <svg class="icon h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+              <path d="M12 3v12"/>
+              <path d="m7 10 5 5 5-5"/>
+              <path d="M5 21h14"/>
+            </svg>
+            <span class="family-tree-pdf-label">تحميل PDF</span>
+          </button>
+        </div>
+
         <div class="family-tree-pan" id="family-tree-pan" tabindex="0" aria-label="شجرة العائلة">
           <div class="family-tree-canvas">
 {tree_ul}
@@ -229,6 +240,11 @@ def inject_tree_page(content_html: str) -> None:
         text = text.replace(
             "  <!-- <script src=\"/althawadi/js/family-tree.js\" defer></script> -->",
             '  <script src="/althawadi/js/family-tree.js" defer></script>',
+        )
+    if "family-tree-pdf.js" not in text:
+        text = text.replace(
+            '  <script src="/althawadi/js/family-tree.js" defer></script>',
+            '  <script src="/althawadi/js/family-tree.js" defer></script>\n  <script src="/althawadi/js/family-tree-pdf.js" defer></script>',
         )
     block = f"      <section class=\"family-tree-section mx-auto max-w-7xl w-full px-4 sm:px-6 py-12 md:py-20\">\n{content_html}\n      </section>"
     text = re.sub(
