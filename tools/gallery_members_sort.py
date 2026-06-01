@@ -23,6 +23,10 @@ LIVING_DUA_PATTERNS = (
     r"الله\s+بحفظ(?:هم|ه)(?:\s+و(?:ي)?ط(?:و)?ل\s+بعمر(?:هم|ه))?",
 )
 
+DISPLAY_STRIP_PREFIXES = (
+    r"ابن\s+عمي\s+الغالي\s+",
+)
+
 
 def _extract_caption_text(text: str) -> str:
     t = unescape(text or "")
@@ -40,6 +44,8 @@ def gallery_display_name(text: str) -> str:
     """Display label for gallery cards — name only; keep deceased honorifics."""
     t = _extract_caption_text(text)
     for pat in LIVING_DUA_PATTERNS:
+        t = re.sub(pat, " ", t, flags=re.I)
+    for pat in DISPLAY_STRIP_PREFIXES:
         t = re.sub(pat, " ", t, flags=re.I)
     t = " ".join(t.split()).strip(" .،\"'")
     return t
