@@ -102,7 +102,7 @@ def render_branch(title: str, root: dict, ancestors: list[str] | None = None) ->
     return f"""        <article class="family-tree-branch">
           <header class="family-tree-branch-head">
             <h3 class="family-tree-branch-title font-display">{title_esc}</h3>
-            <p class="family-tree-branch-desc">من في الأعلى = الأب — «أبناء …» ثم من تحتهم = أولاده (إخوة)</p>
+            <p class="family-tree-branch-desc">سهم ↓ من الأب إلى كل ابن — الإخوة جنب بعض بدون خط يربطهم</p>
           </header>
           <div class="family-tree-pan family-tree-pan--branch" tabindex="0" aria-label="{title_esc}">
             <div class="family-tree-canvas">
@@ -240,12 +240,12 @@ def build_page_html() -> str:
             <strong class="text-accent">عبدالله وراشد</strong>
           </p>
           <p class="mt-3 text-xs text-muted-foreground leading-7">
-            الشجرة مقسّمة حسب الفروع. تحت كل اسم يظهر <strong class="text-foreground">بن …</strong> لبيان الأب مباشرة.
+            سهم ↓ أزرق من الأب إلى كل ابن. تحت الاسم <strong class="text-foreground">بن …</strong> لبيان النسب.
           </p>
         </div>
 
         <p class="family-tree-hint">
-          كل بطاقة: الاسم في الأعلى، و«بن …» = نسبة للأب. بين الأب والأبناء تظهر عبارة «أبناء …» — من تحتها إخوة لنفس الأب.
+          مثل الشجرة المرجعية: <strong class="text-foreground">سهم أزرق ↓</strong> من الأب إلى كل ابن على حدة. الإخوة يظهرون بجانب بعض — بدون خط أفقي بينهم.
         </p>
 
         <div class="family-tree-branches" id="family-tree-branches">
