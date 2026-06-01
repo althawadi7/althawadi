@@ -99,6 +99,13 @@
   vertical-align: top;
 }
 
+/* Keep عبدالله and similar names from breaking in LTR layout */
+.tree .family-tree-given,
+.tree .family-tree-pat {
+  unicode-bidi: isolate;
+  direction: rtl;
+}
+
 .tree li a:hover,
 .tree li a:hover + ul li a,
 .tree li a:hover + ul li .family-tree-node,

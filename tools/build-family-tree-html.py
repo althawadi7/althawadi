@@ -199,9 +199,9 @@ def build_tree() -> dict:
     naif["children"] = [node("عبدالعزيز")]
     abdullah_j = node("عبدالله")
     abdullah_j["children"] = [naif]
-    aqeel = node("عقيل")
-    aqeel["children"] = [abdullah_j]
-    jassim["children"] = [aqeel]
+    ghanim = node("غانم")
+    ghanim["children"] = [abdullah_j]
+    jassim["children"] = [ghanim]
 
     hilal_rashid = node("هلال")
     ibrahim_r = node("ابراهيم")

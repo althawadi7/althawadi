@@ -136,6 +136,8 @@
   line-height: 1.35;
   font-weight: 700;
   color: #3d2810;
+  unicode-bidi: isolate;
+  direction: rtl;
 }
 
 .family-tree-pdf-exporting .family-tree-pat {
@@ -148,6 +150,8 @@
   font-weight: 500;
   color: #6b5344;
   word-break: break-word;
+  unicode-bidi: isolate;
+  direction: rtl;
 }
 
 .family-tree-pdf-exporting .family-tree-node.is-root,
