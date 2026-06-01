@@ -17,22 +17,7 @@
     text: '#3d2810',
     pat: '#6b5344',
     line: '#9a6848',
-    joint: '#b87850',
   };
-
-  var COLOR_PROPS = [
-    'color',
-    'backgroundColor',
-    'borderColor',
-    'borderTopColor',
-    'borderRightColor',
-    'borderBottomColor',
-    'borderLeftColor',
-    'outlineColor',
-    'textDecorationColor',
-    'fill',
-    'stroke',
-  ];
 
   var HTML2CANVAS_SRCS = [
     'js/vendor/html2canvas.min.js',
@@ -120,78 +105,78 @@
     }
   }
 
-  function hasUnsafeColor(val) {
-    if (!val || val === 'none' || val === 'transparent' || val === 'inherit') return false;
-    return /oklch|color-mix|color\(/i.test(val);
-  }
-
-  function toSafeColor(value, fallback) {
-    if (!value || value === 'none') return fallback || 'transparent';
-    if (!hasUnsafeColor(value)) return value;
-    var probe = document.createElement('span');
-    probe.style.cssText =
-      'position:absolute;visibility:hidden;pointer-events:none;left:-99999px;top:0;';
-    probe.style.color = fallback || '#000000';
-    probe.style.color = value;
-    document.body.appendChild(probe);
-    var rgb = getComputedStyle(probe).color;
-    document.body.removeChild(probe);
-    return rgb && rgb !== 'rgba(0, 0, 0, 0)' ? rgb : fallback || '#000000';
-  }
-
-  function sanitizeStyleValue(prop, value) {
-    if (!value) return value;
-    if (prop === 'boxShadow' || prop === 'background' || prop === 'backgroundImage') {
-      if (!hasUnsafeColor(value)) return value;
-      if (prop === 'boxShadow') return '0 2px 0 ' + PDF.cardShadow;
-      if (prop === 'backgroundImage') {
-        return 'radial-gradient(circle, ' + PDF.dot + ' 1px, transparent 1px)';
-      }
-      return toSafeColor(value, PDF.panBg);
-    }
-    if (COLOR_PROPS.indexOf(prop) !== -1 || hasUnsafeColor(value)) {
-      return toSafeColor(value, PDF.text);
-    }
-    return value;
-  }
-
-  function detachStylesheets() {
+  function disableMainStylesheets() {
     var saved = [];
-    document.querySelectorAll('link[rel="stylesheet"], style').forEach(function (node) {
-      saved.push({ node: node, parent: node.parentNode, next: node.nextSibling });
-      node.parentNode.removeChild(node);
+    document.querySelectorAll('link[rel="stylesheet"]').forEach(function (link) {
+      saved.push({ link: link, disabled: link.disabled });
+      link.disabled = true;
     });
     return saved;
   }
 
-  function restoreStylesheets(saved) {
+  function restoreMainStylesheets(saved) {
     saved.forEach(function (entry) {
-      if (!entry.parent) return;
-      if (entry.next && entry.next.parentNode === entry.parent) {
-        entry.parent.insertBefore(entry.node, entry.next);
-      } else {
-        entry.parent.appendChild(entry.node);
-      }
+      entry.link.disabled = entry.disabled;
     });
   }
 
-  function applyPdfPaint(pan) {
-    var saved = [];
+  function injectCriticalCss() {
+    var id = 'family-tree-pdf-critical-link';
+    var existing = document.getElementById(id);
+    if (existing) return Promise.resolve();
 
-    function remember(el) {
-      saved.push({ el: el, cssText: el.style.cssText });
-    }
+    return new Promise(function (resolve, reject) {
+      var link = document.createElement('link');
+      link.id = id;
+      link.rel = 'stylesheet';
+      link.href = resolveUrl('css/family-tree-pdf-critical.css');
+      link.onload = function () {
+        resolve();
+      };
+      link.onerror = function () {
+        reject(new Error('PDF layout CSS failed'));
+      };
+      document.head.appendChild(link);
+    });
+  }
 
-    remember(pan);
-    saved[saved.length - 1].hadPdfClass = pan.classList.contains('family-tree-pdf-mode');
-    pan.classList.add('family-tree-pdf-mode');
-    pan.style.backgroundColor = PDF.panBg;
-    pan.style.backgroundImage =
-      'radial-gradient(circle, ' + PDF.dot + ' 1px, transparent 1px)';
-    pan.style.backgroundSize = '18px 18px';
+  function removeCriticalCss() {
+    var link = document.getElementById('family-tree-pdf-critical-link');
+    if (link && link.parentNode) link.parentNode.removeChild(link);
+  }
 
-    pan.querySelectorAll('.family-tree-node, .family-tree-node--link').forEach(function (node) {
-      remember(node);
+  function beginExportMode(pan) {
+    return {
+      panClass: pan.classList.contains('family-tree-pdf-exporting'),
+      scrollLeft: pan.scrollLeft,
+      scrollTop: pan.scrollTop,
+      overflow: pan.style.overflow,
+      maxHeight: pan.style.maxHeight,
+      height: pan.style.height,
+      minHeight: pan.style.minHeight,
+      width: pan.style.width,
+    };
+  }
+
+  function applyExportMode(pan) {
+    pan.classList.add('family-tree-pdf-exporting');
+    pan.scrollLeft = 0;
+    pan.scrollTop = 0;
+  }
+
+  function endExportMode(pan, saved) {
+    pan.classList.remove('family-tree-pdf-exporting');
+    pan.scrollLeft = saved.scrollLeft;
+    pan.scrollTop = saved.scrollTop;
+    pan.style.overflow = saved.overflow;
+    pan.style.maxHeight = saved.maxHeight;
+    pan.style.height = saved.height;
+    pan.style.minHeight = saved.minHeight;
+    pan.style.width = saved.width;
+  }
+
+  function paintNodesForPdf(root) {
+    root.querySelectorAll('.family-tree-node, .family-tree-node--link').forEach(function (node) {
       var isRoot = node.classList.contains('is-root');
       var isFocus = node.classList.contains('is-focus');
       node.style.background = isRoot
@@ -209,71 +194,50 @@
       node.style.borderRadius = '10px';
       node.style.boxShadow = '0 2px 6px ' + PDF.cardShadow;
       node.style.color = PDF.text;
+      node.style.display = 'inline-block';
+      node.style.width = 'fit-content';
+      node.style.maxWidth = '7.5rem';
     });
 
-    pan.querySelectorAll('.family-tree-given').forEach(function (el) {
-      remember(el);
+    root.querySelectorAll('.family-tree-given').forEach(function (el) {
       el.style.color = PDF.text;
     });
 
-    pan.querySelectorAll('.family-tree-pat').forEach(function (el) {
-      remember(el);
+    root.querySelectorAll('.family-tree-pat').forEach(function (el) {
       el.style.color = PDF.pat;
     });
 
-    pan.querySelectorAll('.family-tree-lines path, .family-tree-lines line').forEach(function (el) {
-      remember(el);
-      el.setAttribute('stroke', PDF.line);
-      el.setAttribute('fill', 'none');
-      el.style.stroke = PDF.line;
-      el.style.fill = 'none';
-    });
-
-    pan.querySelectorAll('.family-tree-lines circle').forEach(function (dot) {
-      remember(dot);
-      dot.setAttribute('fill', PDF.joint);
-      dot.style.fill = PDF.joint;
-    });
-
-    return saved;
-  }
-
-  function restorePdfPaint(saved) {
-    saved.forEach(function (entry) {
-      entry.el.style.cssText = entry.cssText;
-      if (entry.el.classList.contains('family-tree-pdf-mode') && !entry.hadPdfClass) {
-        entry.el.classList.remove('family-tree-pdf-mode');
-      }
+    root.querySelectorAll('.family-tree-lines line').forEach(function (line) {
+      line.setAttribute('stroke', PDF.line);
+      line.style.stroke = PDF.line;
     });
   }
 
-  function sanitizeCloneTree(root) {
-    root.querySelectorAll('*').forEach(function (el) {
-      if (!el.style) return;
-      var i;
-      for (i = 0; i < el.style.length; i += 1) {
-        var prop = el.style[i];
-        var val = el.style.getPropertyValue(prop);
-        if (hasUnsafeColor(val)) {
-          el.style.setProperty(prop, sanitizeStyleValue(prop, val));
-        }
+  function clearInlinePaint(root) {
+    root.querySelectorAll('[style]').forEach(function (el) {
+      if (
+        el.classList.contains('family-tree-node') ||
+        el.classList.contains('family-tree-node--link') ||
+        el.classList.contains('family-tree-given') ||
+        el.classList.contains('family-tree-pat') ||
+        el.classList.contains('family-tree-lines')
+      ) {
+        el.removeAttribute('style');
       }
-      if (el.hasAttribute('stroke') && hasUnsafeColor(el.getAttribute('stroke'))) {
-        el.setAttribute('stroke', PDF.line);
-      }
-      if (el.hasAttribute('fill') && hasUnsafeColor(el.getAttribute('fill'))) {
-        el.setAttribute('fill', 'none');
-      }
+    });
+    root.querySelectorAll('.family-tree-lines line').forEach(function (line) {
+      line.removeAttribute('stroke');
     });
   }
 
   async function downloadPdf() {
     var pan = document.querySelector('.family-tree-pan');
-    if (!pan) return;
+    var canvas = pan && pan.querySelector('.family-tree-canvas');
+    if (!pan || !canvas) return;
 
     setLoading(true);
-    var savedPaint = [];
-    var detachedSheets = [];
+    var exportState = null;
+    var disabledLinks = [];
 
     try {
       await waitForLayout();
@@ -286,35 +250,49 @@
       });
 
       var JsPDF = getJsPDF();
-      if (!JsPDF) {
-        throw new Error('jsPDF unavailable');
+      if (!JsPDF) throw new Error('jsPDF unavailable');
+
+      exportState = beginExportMode(pan);
+      disabledLinks = disableMainStylesheets();
+      await injectCriticalCss();
+      applyExportMode(pan);
+
+      paintNodesForPdf(pan);
+
+      if (typeof window.__familyTreeLayout === 'function') {
+        window.__familyTreeLayout();
       }
+      await new Promise(function (r) {
+        requestAnimationFrame(function () {
+          requestAnimationFrame(r);
+        });
+      });
 
-      savedPaint = applyPdfPaint(pan);
-      detachedSheets = detachStylesheets();
+      var capW = Math.ceil(canvas.scrollWidth);
+      var capH = Math.ceil(canvas.scrollHeight);
 
-      var shot = await window.html2canvas(pan, {
+      var shot = await window.html2canvas(canvas, {
         scale: 2,
         backgroundColor: PDF.panBg,
         logging: false,
         useCORS: true,
-        width: pan.scrollWidth,
-        height: pan.scrollHeight,
-        windowWidth: pan.scrollWidth,
-        windowHeight: pan.scrollHeight,
+        scrollX: 0,
+        scrollY: 0,
+        width: capW,
+        height: capH,
+        windowWidth: capW,
+        windowHeight: capH,
         onclone: function (clonedDoc) {
-          clonedDoc.querySelectorAll('link[rel="stylesheet"], style').forEach(function (node) {
-            if (node.parentNode) node.parentNode.removeChild(node);
+          clonedDoc.querySelectorAll('link[rel="stylesheet"]').forEach(function (node) {
+            node.disabled = true;
           });
-          var clonePan = clonedDoc.querySelector('.family-tree-pan');
-          if (clonePan) sanitizeCloneTree(clonePan);
         },
       });
 
       var pdf = new JsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
       var pageW = pdf.internal.pageSize.getWidth();
       var pageH = pdf.internal.pageSize.getHeight();
-      var margin = 8;
+      var margin = 10;
       var usableW = pageW - margin * 2;
       var usableH = pageH - margin * 2;
 
@@ -336,10 +314,14 @@
       pdf.save('shajarat-al-thawadi.pdf');
     } catch (err) {
       console.error(err);
-      window.alert('تعذّر إنشاء PDF. تأكد من الاتصال أو حدّث الصفحة وحاول مرة أخرى.');
+      window.alert('تعذّر إنشاء PDF. حدّث الصفحة وحاول مرة أخرى.');
     } finally {
-      restoreStylesheets(detachedSheets);
-      restorePdfPaint(savedPaint);
+      if (pan && exportState) {
+        clearInlinePaint(pan);
+        endExportMode(pan, exportState);
+      }
+      removeCriticalCss();
+      restoreMainStylesheets(disabledLinks);
       if (typeof window.__familyTreeLayout === 'function') {
         window.__familyTreeLayout();
       }

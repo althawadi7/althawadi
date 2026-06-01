@@ -1,0 +1,159 @@
+/* PDF export only — hex/rgb layout when main stylesheet is disabled for html2canvas */
+
+.family-tree-pan.family-tree-pdf-exporting {
+  overflow: visible !important;
+  max-height: none !important;
+  height: auto !important;
+  min-height: auto !important;
+  width: max-content !important;
+  max-width: none !important;
+  background-color: #f0e8dc !important;
+  background-image: radial-gradient(circle, rgba(90, 70, 50, 0.1) 1px, transparent 1px) !important;
+  background-size: 18px 18px !important;
+  box-shadow: none !important;
+  border: none !important;
+  padding: 1.25rem !important;
+}
+
+.family-tree-pdf-exporting .family-tree-canvas {
+  display: inline-block;
+  position: relative;
+  width: max-content;
+  margin: 0 auto;
+  padding: 0.75rem 1rem 1rem;
+  direction: rtl;
+  vertical-align: top;
+}
+
+.family-tree-pdf-exporting .family-tree {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  display: inline-flex;
+  justify-content: center;
+  width: max-content;
+}
+
+.family-tree-pdf-exporting .family-tree > li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.family-tree-pdf-exporting .family-tree-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  position: relative;
+}
+
+.family-tree-pdf-exporting .family-tree-unit > .family-tree-children::before {
+  display: none !important;
+}
+
+.family-tree-pdf-exporting .family-tree-parent {
+  display: flex;
+  justify-content: center;
+  width: auto;
+  max-width: 100%;
+  z-index: 3;
+}
+
+.family-tree-pdf-exporting .family-tree-unit--leaf {
+  display: inline-flex;
+}
+
+.family-tree-pdf-exporting .family-tree-node,
+.family-tree-pdf-exporting .family-tree-node--link {
+  position: relative;
+  z-index: 3;
+  display: inline-block;
+  width: fit-content;
+  max-width: 7.5rem;
+  min-width: 4.5rem;
+  border-radius: 10px;
+  border: 1px solid #c9a56a;
+  padding: 0.55rem 0.7rem 0.6rem;
+  text-align: center;
+  background: linear-gradient(168deg, #faf6ee 0%, #ede3cf 100%);
+  box-shadow: 0 2px 6px rgba(80, 55, 30, 0.12);
+  white-space: normal;
+  box-sizing: border-box;
+  text-decoration: none;
+  color: #3d2810;
+}
+
+.family-tree-pdf-exporting .family-tree-given {
+  display: block;
+  font-size: 0.875rem;
+  line-height: 1.35;
+  font-weight: 700;
+  color: #3d2810;
+}
+
+.family-tree-pdf-exporting .family-tree-pat {
+  display: block;
+  margin-top: 0.28rem;
+  padding-top: 0.28rem;
+  border-top: 1px solid rgba(201, 165, 106, 0.45);
+  font-size: 0.625rem;
+  line-height: 1.45;
+  font-weight: 500;
+  color: #6b5344;
+  word-break: break-word;
+}
+
+.family-tree-pdf-exporting .family-tree-node.is-root {
+  background: linear-gradient(168deg, #faf0d4 0%, #e8d4a0 100%) !important;
+  border-color: #c9952a !important;
+}
+
+.family-tree-pdf-exporting .family-tree-node.is-focus {
+  background: linear-gradient(168deg, #fff8ee 0%, #f5dcc0 100%) !important;
+  border-color: #b45309 !important;
+}
+
+.family-tree-pdf-exporting .family-tree-children {
+  display: flex !important;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0.65rem;
+  position: relative;
+  padding: 0;
+  margin: 0 auto;
+  list-style: none;
+  padding-top: 2.75rem;
+  width: max-content;
+  max-width: none;
+}
+
+.family-tree-pdf-exporting .family-tree-children > li {
+  position: relative;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  list-style: none;
+  min-width: 0;
+}
+
+.family-tree-pdf-exporting .family-tree-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 2;
+  overflow: visible;
+}
+
+.family-tree-pdf-exporting .family-tree-lines line {
+  stroke: #9a6848;
+  stroke-width: 2.75px;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}

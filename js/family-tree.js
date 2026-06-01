@@ -5,6 +5,7 @@
   if (!pans.length) return;
 
   var resizeTimer;
+  var scrollTimer;
   var SVG_NS = 'http://www.w3.org/2000/svg';
 
   function round(n) {
@@ -25,13 +26,18 @@
     return wrap.querySelector('.family-tree-node, .family-tree-node--link');
   }
 
+  /** Position inside canvas content (accounts for pan scroll). */
   function relBox(el, canvas) {
+    var pan = canvas.closest('.family-tree-pan');
+    var scrollX = pan ? pan.scrollLeft : 0;
+    var scrollY = pan ? pan.scrollTop : 0;
     var er = el.getBoundingClientRect();
     var cr = canvas.getBoundingClientRect();
+
     return {
-      cx: round(er.left - cr.left + er.width / 2),
-      top: round(er.top - cr.top),
-      bottom: round(er.bottom - cr.top),
+      cx: round(er.left - cr.left + scrollX + er.width / 2),
+      top: round(er.top - cr.top + scrollY),
+      bottom: round(er.bottom - cr.top + scrollY),
     };
   }
 
@@ -57,12 +63,11 @@
   function barYFor(parentY, childTop) {
     var gap = childTop - parentY;
     var minStem = stemOffset();
-    if (gap < 12) gap = minStem;
+    if (gap < 16) gap = minStem + 16;
 
-    /* Bar must sit clearly BETWEEN parent bottom and child tops */
-    var y = parentY + Math.max(gap * 0.42, minStem * 0.55);
-    y = Math.min(y, childTop - 10);
-    y = Math.max(y, parentY + 8);
+    var y = parentY + gap * 0.5;
+    y = Math.min(y, childTop - 8);
+    y = Math.max(y, parentY + 10);
     return round(y);
   }
 
@@ -83,13 +88,8 @@
     }, childPoints[0].y);
     var barY = barYFor(parentY, childTop);
 
-    /* 1) Father down to junction */
     addSegment(svg, parentX, parentY, parentX, barY);
-
-    /* 2) Horizontal across all sons */
     addSegment(svg, minX, barY, maxX, barY);
-
-    /* 3) Down into top of each card */
     childPoints.forEach(function (pt) {
       addSegment(svg, pt.x, barY, pt.x, pt.y);
     });
@@ -120,7 +120,7 @@
         var node = directNode(li);
         if (!node) return;
         var box = relBox(node, canvas);
-        childPoints.push({ x: box.cx, y: box.top + 1 });
+        childPoints.push({ x: box.cx, y: box.top });
       });
       if (!childPoints.length) return;
 
@@ -137,14 +137,14 @@
     canvas.querySelectorAll('.family-tree-lines').forEach(function (svg) {
       svg.remove();
     });
-    canvas.querySelectorAll('.family-tree-parent').forEach(function (wrap) {
-      wrap.style.transform = '';
-    });
   }
 
-  function layoutCanvas(canvas) {
+  function layoutCanvas(canvas, pan) {
     clearLines(canvas);
     drawLines(canvas);
+
+    var fullH = canvas.scrollHeight;
+    pan.style.minHeight = Math.max(fullH + 56, 520) + 'px';
   }
 
   function centerPan(pan) {
@@ -157,12 +157,8 @@
     var canvas = pan.querySelector('.family-tree-canvas');
     if (!canvas) return;
 
-    layoutCanvas(canvas);
-
-    var boxH = canvas.getBoundingClientRect().height;
-    pan.style.minHeight =
-      Math.min(Math.max(Math.ceil(boxH + 48), 480), window.innerHeight * 0.92) + 'px';
     centerPan(pan);
+    layoutCanvas(canvas, pan);
   }
 
   function layoutAll() {
@@ -173,6 +169,20 @@
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(layoutAll, 200);
   }
+
+  function onPanScroll(ev) {
+    var pan = ev.currentTarget;
+    var canvas = pan.querySelector('.family-tree-canvas');
+    if (!canvas) return;
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(function () {
+      drawLines(canvas);
+    }, 40);
+  }
+
+  pans.forEach(function (pan) {
+    pan.addEventListener('scroll', onPanScroll, { passive: true });
+  });
 
   function runInitialLayout() {
     layoutAll();

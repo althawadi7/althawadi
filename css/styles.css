@@ -640,7 +640,7 @@ button, input, textarea { font-family: inherit; }
   background-position: center, center;
   padding: 2rem 1.25rem 2.5rem;
   min-height: 28rem;
-  max-height: min(92vh, 1200px);
+  max-height: min(94vh, 1400px);
   scrollbar-width: thin;
   scrollbar-color: var(--family-tree-accent) color-mix(in oklch, var(--border) 60%, transparent);
   direction: ltr;
@@ -692,6 +692,25 @@ button, input, textarea { font-family: inherit; }
   align-items: center;
   width: fit-content;
   max-width: 100%;
+  position: relative;
+}
+
+.family-tree-canvas:has(.family-tree-lines line) .family-tree-unit > .family-tree-children::before {
+  display: none;
+}
+
+.family-tree-unit > .family-tree-children::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: var(--family-tree-line-width);
+  height: calc(var(--family-tree-v-gap) * 0.48);
+  margin-top: calc(var(--family-tree-v-gap) * -0.48);
+  background: var(--family-tree-line);
+  transform: translateX(-50%);
+  z-index: 2;
+  border-radius: 1px;
 }
 
 .family-tree-parent {
@@ -940,7 +959,7 @@ button, input, textarea { font-family: inherit; }
   top: 0;
   left: 0;
   pointer-events: none;
-  z-index: 1;
+  z-index: 2;
   overflow: visible;
 }
 
