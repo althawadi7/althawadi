@@ -117,63 +117,60 @@ def count_nodes(n: dict) -> int:
     return 1 + sum(count_nodes(c) for c in n.get("children", []))
 
 
-def build_tree() -> dict:
-    """Single tree: حسن → … → خليفة → علي / عيسى → all descendants."""
+def set_sons(parent: dict, *children: dict) -> dict:
+    """Direct sons of parent — same row in the tree (brothers under one father)."""
+    parent["children"] = list(children)
+    return parent
 
-    hilal_abdullah = node("هلال")
-    hilal_abdullah["focus"] = True
 
-    hassan_h = node("حسن")
-    ibrahim = node("ابراهيم")
-    ibrahim["children"] = [node("حسن"), node("خالد")]
-    hassan_h["children"] = [ibrahim, node("أحمد")]
+def validate_direct_sons(parent: dict, ancestors: list[str]) -> None:
+    """Ensure each child's patronymic names this parent (catches nested-by-mistake)."""
+    parent_name = parent["name"]
+    path = ancestors + [parent_name]
+    for child in parent.get("children", []):
+        pat = father_line(path)
+        if pat and not pat.startswith(f"بن {parent_name}"):
+            raise ValueError(
+                f"{display_name(child)} should be son of {parent_name}, got {pat}"
+            )
+        validate_direct_sons(child, path)
 
-    abdullah_h = node("عبدالله")
-    abdullah_h["children"] = [
+
+def build_hilal_abdullah_branch() -> dict:
+    """§7 — سبعة أبناء هلال بن عبدالله (إخوة مباشرون)."""
+    hassan_h = set_sons(
+        node("حسن"),
+        set_sons(node("ابراهيم"), node("حسن"), node("خالد")),
+        node("أحمد"),
+    )
+    abdullah_h = set_sons(
+        node("عبدالله"),
         node("هلال"),
         node("أحمد"),
         node("محمد"),
         node("فهد"),
         node("عيسى"),
-    ]
-
-    jamal = node("جمال")
-    jamal["children"] = [node("خالد"), node("طلال")]
-
-    hakim = node("عبدالحكيم")
-    hakim["children"] = [node("عبدالله")]
-
-    isa_h = node("عيسى")
-    isa_h["children"] = [node("عبدالله")]
-
-    ahmed_h = node("أحمد")
-    ahmed_h["children"] = [node("سلطان")]
-
-    hilal_abdullah["children"] = [
+    )
+    hilal = node("هلال")
+    hilal["focus"] = True
+    return set_sons(
+        hilal,
         hassan_h,
         node("عبدالعزيز"),
-        ahmed_h,
+        set_sons(node("أحمد"), node("سلطان")),
         abdullah_h,
-        jamal,
-        hakim,
-        isa_h,
-    ]
+        set_sons(node("جمال"), node("خالد"), node("طلال")),
+        set_sons(node("عبدالحكيم"), node("عبدالله")),
+        set_sons(node("عيسى"), node("عبدالله")),
+    )
 
-    mohammed_1 = node("محمد", suffix="(١)")
-    mohammed_1["children"] = [
-        node("عبدالله"),
-        node("عيسى"),
-        node("أحمد"),
-        node("علي"),
-    ]
 
-    # محمد (٢): سهم = ابن، قوائم أفقية = إخوة
-    m2_mohammed_line = node("محمد")
-    m2_mohammed_line["children"] = [node("عبدالله")]
-    m2_yusuf = node("يوسف")
-    m2_yusuf["children"] = [node("أحمد")]
-    mohammed_2 = node("محمد", suffix="(٢)")
-    mohammed_2["children"] = [
+def build_mohammed_2_branch() -> dict:
+    """محمد (٢) — كل القوائم الأفقية في المخطط = إخوة تحت محمد (٢)."""
+    m2_mohammed_line = set_sons(node("محمد"), node("عبدالله"))
+    m2_yusuf = set_sons(node("يوسف"), node("أحمد"))
+    return set_sons(
+        node("محمد", suffix="(٢)"),
         m2_mohammed_line,
         node("عبدالله"),
         node("سعيد"),
@@ -182,62 +179,65 @@ def build_tree() -> dict:
         node("محمد"),
         node("سلطان"),
         node("علي"),
-    ]
+    )
 
-    # أحمد بن عبدالله → يوسف → (أحمد | عبدالناصر | محمد | خالد) إخوة
-    ahmed_abdullah = node("أحمد")
-    ahmed_bin_yusuf = node("أحمد")
-    ahmed_bin_yusuf["children"] = [
-        node("يوسف"),
-        node("راشد"),
-        node("فهد"),
-    ]
-    abdulnasr_bin_yusuf = node("عبدالناصر")
-    abdulnasr_bin_yusuf["children"] = [node("يوسف")]
-    mohammed_bin_yusuf = node("محمد")
-    mohammed_bin_yusuf["children"] = [
-        node("جاسم"),
-        node("عبدالعزيز"),
-        node("يوسف"),
-    ]
-    khalid_bin_yusuf = node("خالد")
-    yusuf_bin_ahmed = node("يوسف")
-    yusuf_bin_ahmed["children"] = [
-        ahmed_bin_yusuf,
-        abdulnasr_bin_yusuf,
-        mohammed_bin_yusuf,
-        khalid_bin_yusuf,
-    ]
-    ahmed_abdullah["children"] = [yusuf_bin_ahmed]
 
+def build_ahmed_abdullah_branch() -> dict:
+    """أحمد بن عبدالله → يوسف → أربعة إخوة."""
+    yusuf = set_sons(
+        node("يوسف"),
+        set_sons(node("أحمد"), node("يوسف"), node("راشد"), node("فهد")),
+        set_sons(node("عبدالناصر"), node("يوسف")),
+        set_sons(
+            node("محمد"),
+            node("جاسم"),
+            node("عبدالعزيز"),
+            node("يوسف"),
+        ),
+        node("خالد"),
+    )
+    return set_sons(node("أحمد"), yusuf)
+
+
+def build_abdullah_bin_isa_branch() -> dict:
+    """§6 — أربعة أبناء عبدالله بن عيسى (إخوة)."""
+    mohammed_1 = set_sons(
+        node("محمد", suffix="(١)"),
+        node("عبدالله"),
+        node("عيسى"),
+        node("أحمد"),
+        node("علي"),
+    )
     abdullah = node("عبدالله")
     abdullah["focus"] = True
     abdullah["link"] = "/althawadi/ancestors/#abdullah-bin-isa"
-    abdullah["children"] = [
+    return set_sons(
+        abdullah,
         mohammed_1,
-        ahmed_abdullah,
-        mohammed_2,
-        hilal_abdullah,
-    ]
+        build_ahmed_abdullah_branch(),
+        build_mohammed_2_branch(),
+        build_hilal_abdullah_branch(),
+    )
 
-    # --- أبناء راشد: جاسم، هلال، حسن، أحمد، خليفة، غانم (إخوة — كلهم ابن راشد مباشرة) ---
-    naif_ghanm = node("نايف")
-    naif_ghanm["children"] = [node("عبدالعزيز")]
-    abdullah_ghanm = node("عبدالله")
-    abdullah_ghanm["children"] = [naif_ghanm]
-    ghanim_rashid = node("غانم")
-    ghanim_rashid["children"] = [abdullah_ghanm]
 
-    isa_ibrahim_hilal = node("عيسى")
-    isa_ibrahim_hilal["children"] = [
+def build_ghanim_bin_rashid() -> dict:
+    return set_sons(
+        node("غانم"),
+        set_sons(node("عبدالله"), set_sons(node("نايف"), node("عبدالعزيز"))),
+    )
+
+
+def build_hilal_bin_rashid() -> dict:
+    isa_ibrahim = set_sons(
+        node("عيسى"),
         node("عبدالله"),
         node("هلال"),
         node("راشد"),
         node("عمر"),
         node("بدر"),
-    ]
-    ibrahim_hilal_j = node("ابراهيم")
-    ibrahim_hilal_j["children"] = [
+    )
+    ibrahim = set_sons(
+        node("ابراهيم"),
         node("فيصل"),
         node("سليمان"),
         node("عبدالرحمن"),
@@ -247,112 +247,86 @@ def build_tree() -> dict:
         node("طارق"),
         node("محمد"),
         node("وائل"),
-        isa_ibrahim_hilal,
-    ]
-    hilal_rashid = node("هلال")
-    hilal_rashid["children"] = [ibrahim_hilal_j]
+        isa_ibrahim,
+    )
+    return set_sons(node("هلال"), ibrahim)
 
-    ali_hassan_j = node("علي")
-    mohammed_hassan_j = node("محمد")
-    mohammed_hassan_j["children"] = [node("حسن"), node("راشد")]
-    ali_hassan_j["children"] = [mohammed_hassan_j, node("حسن")]
 
-    rashid_hassan_j = node("راشد")
-    rashid_hassan_j["children"] = [
+def build_hassan_bin_rashid() -> dict:
+    """حسن بن راشد — علي، راشد، عبدالله، محمد (أربعة أبناء مباشرون)."""
+    ali = set_sons(
+        node("علي"),
+        set_sons(node("محمد"), node("حسن"), node("راشد")),
+        node("حسن"),
+    )
+    rashid_h = set_sons(
+        node("راشد"),
         node("عيسى"),
         node("حسن"),
         node("محمد"),
         node("عصام"),
         node("عبدالرحمن"),
-    ]
+    )
+    abdullah_h = set_sons(node("عبدالله"), node("علي"), node("حسن"))
+    mohammed_h = set_sons(node("محمد"), node("حسن"), node("راشد"))
+    return set_sons(node("حسن"), ali, rashid_h, abdullah_h, mohammed_h)
 
-    abdullah_hassan_j = node("عبدالله")
-    abdullah_hassan_j["children"] = [node("علي"), node("حسن")]
 
-    mohammed2_hassan_j = node("محمد")
-    mohammed2_hassan_j["children"] = [node("حسن"), node("راشد")]
-
-    hassan_rashid = node("حسن")
-    hassan_rashid["children"] = [
-        ali_hassan_j,
-        rashid_hassan_j,
-        abdullah_hassan_j,
-        mohammed2_hassan_j,
-    ]
-
-    rashid_isa_ahmed = node("راشد")
-    rashid_isa_ahmed["children"] = [node("أحمد")]
-
-    faisal_aref = node("فيصل")
-    faisal_aref["children"] = [node("عيسى")]
-    aref_j = node("عارف")
-    aref_j["children"] = [faisal_aref]
-
-    faisal_moh_j = node("فيصل")
-    faisal_moh_j["children"] = [node("عبدالله")]
-    mohammed_aref_j = node("محمد")
-    mohammed_aref_j["children"] = [faisal_moh_j]
-
-    yusuf_isa_j = node("يوسف")
-    yusuf_isa_j["children"] = [
-        aref_j,
-        mohammed_aref_j,
+def build_ahmed_bin_rashid() -> dict:
+    yusuf = set_sons(
+        node("يوسف"),
+        set_sons(node("عارف"), set_sons(node("فيصل"), node("عيسى"))),
+        set_sons(node("محمد"), set_sons(node("فيصل"), node("عبدالله"))),
         node("أحمد"),
         node("عبدالله"),
         node("راشد"),
-    ]
-
-    isa_ahmed_r = node("عيسى")
-    isa_ahmed_r["children"] = [
+    )
+    isa = set_sons(
+        node("عيسى"),
         node("خليفة"),
-        rashid_isa_ahmed,
+        set_sons(node("راشد"), node("أحمد")),
         node("ناصر"),
         node("خالد"),
-        yusuf_isa_j,
-    ]
+        yusuf,
+    )
+    ibrahim = set_sons(node("ابراهيم"), isa)
+    return set_sons(node("أحمد"), ibrahim)
 
-    ibrahim_ahmed_r = node("ابراهيم")
-    ibrahim_ahmed_r["children"] = [isa_ahmed_r]
 
-    ahmed_rashid = node("أحمد")
-    ahmed_rashid["children"] = [ibrahim_ahmed_r]
-
-    khalifa_rashid = node("خليفة")
-
-    jassim_rashid = node("جاسم")
-
+def build_rashid_branch() -> dict:
+    """§5 — ستة أبناء راشد (إخوة — كلهم ابن راشد مباشرة، لا تحت جاسم)."""
     rashid = node("راشد")
     rashid["focus"] = True
     rashid["link"] = "/althawadi/ancestors/#rashid-bin-isa"
-    rashid["children"] = [
-        jassim_rashid,
-        hilal_rashid,
-        hassan_rashid,
-        ahmed_rashid,
-        khalifa_rashid,
-        ghanim_rashid,
-    ]
+    return set_sons(
+        rashid,
+        node("جاسم"),
+        build_hilal_bin_rashid(),
+        build_hassan_bin_rashid(),
+        build_ahmed_bin_rashid(),
+        node("خليفة"),
+        build_ghanim_bin_rashid(),
+    )
 
-    ali = node("علي")
-    ali["children"] = [node("محمد"), node("علي")]
 
-    isa = node("عيسى", lineage=True)
-    isa["children"] = [
+def build_isa_bin_khalifa_branch() -> dict:
+    """أبناء عيسى بن خليفة — محمد، هلال، راشد، عبدالله (إخوة)."""
+    return set_sons(
+        node("عيسى", lineage=True),
         node("محمد"),
         node("هلال"),
-        rashid,
-        abdullah,
-    ]
+        build_rashid_branch(),
+        build_abdullah_bin_isa_branch(),
+    )
 
-    khalifa = node("خليفة", lineage=True)
-    khalifa["children"] = [ali, isa]
 
-    hilal = node("هلال", lineage=True)
-    hilal["children"] = [khalifa]
-
-    root = node("حسن", lineage=True)
-    root["children"] = [hilal]
-
+def build_tree() -> dict:
+    """Single tree: حسن → … → خليفة → علي / عيسى → all descendants."""
+    ali = set_sons(node("علي"), node("محمد"), node("علي"))
+    khalifa = set_sons(node("خليفة", lineage=True), ali, build_isa_bin_khalifa_branch())
+    hilal = set_sons(node("هلال", lineage=True), khalifa)
+    root = set_sons(node("حسن", lineage=True), hilal)
+    validate_direct_sons(root, [])
     return root
 
 
