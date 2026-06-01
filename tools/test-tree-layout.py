@@ -31,9 +31,19 @@ def main():
         browser = p.chromium.launch()
         page = browser.new_page(viewport={"width": 1400, "height": 900})
         page.goto("http://127.0.0.1:8765/tree/index.html", wait_until="networkidle")
+        page.evaluate(
+            """
+            () => {
+              document.querySelectorAll('link[rel=\"stylesheet\"]').forEach((link) => {
+                link.href = link.href.replace('/althawadi/', '/');
+              });
+            }
+            """
+        )
+        page.reload(wait_until="networkidle")
         before = page.evaluate(EVAL)
 
-        page.add_script_tag(url="http://127.0.0.1:8765/js/family-tree.js")
+        page.add_script_tag(url="http://127.0.0.1:8765/js/family-tree.js?v=2")
         page.wait_for_timeout(800)
         page.evaluate("() => { if (window.__familyTreeLayout) window.__familyTreeLayout(); }")
         page.wait_for_timeout(400)

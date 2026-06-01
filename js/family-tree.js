@@ -57,6 +57,9 @@
       wrap.style.transform = '';
       wrap.style.width = '';
     });
+    canvas.querySelectorAll('.family-tree-unit').forEach(function (unit) {
+      unit.style.width = '';
+    });
     canvas.querySelectorAll('.family-tree-children').forEach(function (ul) {
       ul.style.position = '';
       ul.style.display = '';
@@ -81,10 +84,13 @@
 
   function measureNode(node) {
     if (!node) return 72;
-    var prev = node.style.width;
-    node.style.width = 'auto';
-    var w = node.getBoundingClientRect().width;
-    node.style.width = prev;
+    var clone = node.cloneNode(true);
+    clone.style.cssText =
+      'position:absolute;visibility:hidden;pointer-events:none;' +
+      'width:auto;height:auto;display:inline-block;left:-99999px;top:0;';
+    document.body.appendChild(clone);
+    var w = clone.getBoundingClientRect().width;
+    document.body.removeChild(clone);
     return Math.ceil(w) || 72;
   }
 
