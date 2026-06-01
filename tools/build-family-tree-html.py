@@ -322,7 +322,7 @@ def build_isa_bin_khalifa_branch() -> dict:
 
 def build_tree() -> dict:
     """Single tree: حسن → … → خليفة → علي / عيسى → all descendants."""
-    ali = set_sons(node("علي"), node("محمد"), node("علي"))
+    ali = set_sons(node("علي"), set_sons(node("محمد"), node("علي")))
     khalifa = set_sons(node("خليفة", lineage=True), ali, build_isa_bin_khalifa_branch())
     hilal = set_sons(node("هلال", lineage=True), khalifa)
     root = set_sons(node("حسن", lineage=True), hilal)
