@@ -163,24 +163,80 @@ def build_tree() -> dict:
         node("علي"),
     ]
 
+    mohammed_2 = node("محمد", suffix="(٢)")
+    mohammed_2["children"] = [
+        node("سعيد"),
+        node("عيسى"),
+        node("أحمد"),
+        node("سلطان"),
+    ]
+
+    ahmed_abdullah = node("أحمد")
+    ahmed_y = node("أحمد")
+    ahmed_y["children"] = [
+        node("راشد"),
+        node("فهد"),
+        node("عبدالناصر"),
+        node("جاسم"),
+        node("عبدالعزيز"),
+    ]
+    youssef = node("يوسف")
+    youssef["children"] = [ahmed_y]
+    ahmed_abdullah["children"] = [youssef]
+
     abdullah = node("عبدالله")
     abdullah["focus"] = True
     abdullah["link"] = "/althawadi/ancestors/#abdullah-bin-isa"
     abdullah["children"] = [
         mohammed_1,
-        node("أحمد"),
-        node("محمد", suffix="(٢)"),
+        ahmed_abdullah,
+        mohammed_2,
         hilal_abdullah,
     ]
+
+    jassim = node("جاسم")
+    naif = node("نايف")
+    naif["children"] = [node("عبدالعزيز")]
+    abdullah_j = node("عبدالله")
+    abdullah_j["children"] = [naif]
+    aqeel = node("عقيل")
+    aqeel["children"] = [abdullah_j]
+    jassim["children"] = [aqeel]
+
+    hilal_rashid = node("هلال")
+    ibrahim_r = node("ابراهيم")
+    ibrahim_r["children"] = [
+        node("عبدالعزيز"),
+        node("عبدالله"),
+        node("عبدالرحمن"),
+        node("فيصل"),
+        node("سليمان"),
+        node("هلال"),
+        node("طارق"),
+        node("محمد"),
+        node("وائل"),
+    ]
+    hilal_rashid["children"] = [ibrahim_r]
+
+    ahmed_rashid = node("أحمد")
+    ibrahim_a = node("ابراهيم")
+    ibrahim_a["children"] = [
+        node("يوسف"),
+        node("عارف"),
+        node("محمد"),
+        node("عبدالله"),
+        node("راشد"),
+    ]
+    ahmed_rashid["children"] = [ibrahim_a]
 
     rashid = node("راشد")
     rashid["focus"] = True
     rashid["link"] = "/althawadi/ancestors/#rashid-bin-isa"
     rashid["children"] = [
-        node("جاسم"),
-        node("هلال"),
+        jassim,
+        hilal_rashid,
         node("حسن"),
-        node("أحمد"),
+        ahmed_rashid,
         node("خليفه"),
     ]
 
