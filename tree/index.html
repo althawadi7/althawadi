@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="/althawadi/css/styles.css" />
   <script src="/althawadi/js/url-clean.js"></script>
   <script src="/althawadi/js/main.js" defer></script>
-  <!-- <script src="/althawadi/js/family-tree.js" defer></script> -->
+  <script src="/althawadi/js/family-tree.js" defer></script>
 </head>
 <body>
   <div class="min-h-screen flex flex-col">
@@ -68,146 +68,261 @@
       </section>
 
       <section class="family-tree-section mx-auto max-w-7xl w-full max-w-full px-4 sm:px-6 py-12 md:py-20">
-        <div class="notice-box max-w-2xl mx-auto w-full text-center">
-          <p class="font-display text-xl md:text-2xl text-foreground" style="margin:0 0 0.75rem;">نعمل حالياً على شجرة العائلة</p>
-          <p class="text-sm text-muted-foreground leading-8" style="margin:0;">
-            نُحدّث الشجرة ونراجع الأسماء — سيتمّ نشرها قريباً.
-          </p>
-        </div>
-
-        <!--
         <div class="family-tree-lineage max-w-3xl mx-auto mb-10 text-center" dir="rtl">
-          <p class="text-[11px] uppercase tracking-[0.35em] text-accent font-latin mb-3">خط النسب الموثّق</p>
+          <p class="text-[11px] uppercase tracking-[0.35em] text-accent font-latin mb-3">خط النسب</p>
           <p class="font-display text-lg md:text-xl text-foreground leading-relaxed">
-            حسن الذوادي
+            بني خالد — العماير
             <span class="text-muted-foreground mx-1" aria-hidden="true">←</span>
-            هلال بن حسن
+            حسن
             <span class="text-muted-foreground mx-1" aria-hidden="true">←</span>
-            خليفة بن هلال
+            هلال
             <span class="text-muted-foreground mx-1" aria-hidden="true">←</span>
-            عيسى بن خليفة
+            خليفة
+            <span class="text-muted-foreground mx-1" aria-hidden="true">←</span>
+            عيسى
             <span class="text-muted-foreground mx-1" aria-hidden="true">←</span>
             <strong class="text-accent">عبدالله وراشد</strong>
           </p>
           <p class="mt-3 text-xs text-muted-foreground leading-7">
-            الأسماء مستخرجة من
-            <a href="/althawadi/references/" class="text-accent hover:underline">أرشيف المراجع والمنشورات</a>
-            و<a href="/althawadi/ancestors/" class="text-accent hover:underline">سير الأجداد</a>.
+            مسودة عمل — تُكمَّل بالمراجعة. الأسماء من مشجرة العائلة قيد التحديث.
           </p>
         </div>
 
         <p class="family-tree-hint">
-          الاسم الأول فقط — الأب هو البطاقة فوقه
-          <span class="family-tree-legend-leaves" aria-hidden="true">
-            <svg class="family-tree-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
-          </span>
-          = بنات.
+          الاسم الأول فقط — الأب هو البطاقة فوقه. قرّب أو بعّد الشاشة، أو اسحب لاستكشاف الشجرة.
         </p>
         <div class="family-tree-pan" id="family-tree-pan" tabindex="0" aria-label="شجرة العائلة">
           <div class="family-tree-canvas" id="family-tree-canvas">
           <ul class="family-tree">
             <li>
-              <div class="family-tree-node is-root" title="حسن الذوادي">
+              <div class="family-tree-node is-root is-lineage" title="حسن">
                 <span class="family-tree-given">حسن</span>
               </div>
               <ul class="family-tree-children">
                 <li>
-                  <div class="family-tree-node is-lineage" title="هلال بن حسن الذوادي">
+                  <div class="family-tree-node is-lineage" title="هلال">
                     <span class="family-tree-given">هلال</span>
                   </div>
                   <ul class="family-tree-children">
                     <li>
-                      <div class="family-tree-node is-lineage" title="خليفة بن هلال بن حسن الذوادي">
+                      <div class="family-tree-node is-lineage" title="خليفة">
                         <span class="family-tree-given">خليفة</span>
                       </div>
                       <ul class="family-tree-children">
                         <li>
-                          <div class="family-tree-node is-lineage" title="عيسى بن خليفة بن هلال بن حسن الذوادي">
+                          <div class="family-tree-node" title="علي">
+                            <span class="family-tree-given">علي</span>
+                          </div>
+                          <ul class="family-tree-children">
+                            <li>
+                              <div class="family-tree-node" title="محمد">
+                                <span class="family-tree-given">محمد</span>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="family-tree-node" title="علي">
+                                <span class="family-tree-given">علي</span>
+                              </div>
+                            </li>
+                          </ul>
+                        </li>
+                        <li>
+                          <div class="family-tree-node is-lineage" title="عيسى">
                             <span class="family-tree-given">عيسى</span>
                           </div>
                           <ul class="family-tree-children">
                             <li>
-                              <a href="/althawadi/ancestors/#abdullah-bin-isa" class="family-tree-node is-focus family-tree-node--link" title="عبد الله بن عيسى بن خليفة بن هلال بن حسن الذوادي">
-                                <span class="family-tree-given">عبد الله</span>
+                              <div class="family-tree-node" title="محمد">
+                                <span class="family-tree-given">محمد</span>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="family-tree-node" title="هلال">
+                                <span class="family-tree-given">هلال</span>
+                              </div>
+                            </li>
+                            <li>
+                              <a href="/althawadi/ancestors/#rashid-bin-isa" class="family-tree-node is-focus family-tree-node--link" title="راشد">
+                                <span class="family-tree-given">راشد</span>
                               </a>
                               <ul class="family-tree-children">
                                 <li>
-                                  <div class="family-tree-node" title="أحمد بن عبد الله بن عيسى الذوادي">
+                                  <div class="family-tree-node" title="جاسم">
+                                    <span class="family-tree-given">جاسم</span>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="family-tree-node" title="هلال">
+                                    <span class="family-tree-given">هلال</span>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="family-tree-node" title="حسن">
+                                    <span class="family-tree-given">حسن</span>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="family-tree-node" title="أحمد">
                                     <span class="family-tree-given">أحمد</span>
                                   </div>
                                 </li>
                                 <li>
-                                  <div class="family-tree-node" title="محمد بن عبد الله بن عيسى الذوادي">
-                                    <span class="family-tree-given">محمد</span>
-                                  </div>
-                                  <ul class="family-tree-children">
-                                    <li>
-                                      <div class="family-tree-node" title="عبد الله بن محمد بن عبد الله بن عيسى الذوادي">
-                                        <span class="family-tree-given">عبد الله</span>
-                                      </div>
-                                    </li>
-                                    <li>
-                                      <div class="family-tree-node" title="عيسى بن محمد بن عبد الله بن عيسى الذوادي">
-                                        <span class="family-tree-given">عيسى</span>
-                                      </div>
-                                    </li>
-                                    <li>
-                                      <div class="family-tree-node" title="أحمد بن محمد بن عبد الله بن عيسى الذوادي">
-                                        <span class="family-tree-given">أحمد</span>
-                                      </div>
-                                    </li>
-                                    <li>
-                                      <div class="family-tree-node" title="علي بن محمد بن عبد الله بن عيسى الذوادي">
-                                        <span class="family-tree-given">علي</span>
-                                      </div>
-                                    </li>
-                                  </ul>
-                                </li>
-                                <li>
-                                  <div class="family-tree-node" title="هلال بن عبد الله بن عيسى الذوادي">
-                                    <span class="family-tree-given">هلال</span>
+                                  <div class="family-tree-node" title="خليفه">
+                                    <span class="family-tree-given">خليفه</span>
                                   </div>
                                 </li>
                               </ul>
                             </li>
                             <li>
-                              <a href="/althawadi/ancestors/#rashid-bin-isa" class="family-tree-node is-focus family-tree-node--link" title="راشد بن عيسى بن خليفة بن هلال بن حسن الذوادي">
-                                <span class="family-tree-given">راشد</span>
+                              <a href="/althawadi/ancestors/#abdullah-bin-isa" class="family-tree-node is-focus family-tree-node--link" title="عبدالله">
+                                <span class="family-tree-given">عبدالله</span>
                               </a>
                               <ul class="family-tree-children">
                                 <li>
-                                  <div class="family-tree-node" title="خليفة بن راشد بن عيسى الذوادي">
-                                    <span class="family-tree-given">خليفة</span>
+                                  <div class="family-tree-node" title="محمد">
+                                    <span class="family-tree-given">محمد</span>
                                   </div>
                                 </li>
                                 <li>
-                                  <div class="family-tree-node" title="أحمد بن راشد بن عيسى الذوادي">
+                                  <div class="family-tree-node" title="أحمد">
                                     <span class="family-tree-given">أحمد</span>
                                   </div>
                                 </li>
                                 <li>
-                                  <div class="family-tree-node" title="حسن بن راشد بن عيسى الذوادي">
-                                    <span class="family-tree-given">حسن</span>
+                                  <div class="family-tree-node" title="محمد">
+                                    <span class="family-tree-given">محمد</span>
                                   </div>
                                 </li>
                                 <li>
-                                  <div class="family-tree-node" title="هلال بن راشد بن عيسى الذوادي">
+                                  <div class="family-tree-node is-focus" title="هلال">
                                     <span class="family-tree-given">هلال</span>
                                   </div>
-                                </li>
-                                <li>
-                                  <div class="family-tree-node" title="جاسم بن راشد بن عيسى الذوادي">
-                                    <span class="family-tree-given">جاسم</span>
-                                  </div>
-                                </li>
-                                <li>
-                                  <div class="family-tree-node family-tree-node--daughters" title="بنات" aria-label="بنات">
-                                    <span class="family-tree-daughters-icons" aria-hidden="true">
-                                      <svg class="family-tree-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
-                                      <svg class="family-tree-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
-                                      <svg class="family-tree-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
-                                    </span>
-                                  </div>
+                                  <ul class="family-tree-children">
+                                    <li>
+                                      <div class="family-tree-node" title="حسن">
+                                        <span class="family-tree-given">حسن</span>
+                                      </div>
+                                      <ul class="family-tree-children">
+                                        <li>
+                                          <div class="family-tree-node" title="ابراهيم">
+                                            <span class="family-tree-given">ابراهيم</span>
+                                          </div>
+                                          <ul class="family-tree-children">
+                                            <li>
+                                              <div class="family-tree-node" title="حسن">
+                                                <span class="family-tree-given">حسن</span>
+                                              </div>
+                                            </li>
+                                            <li>
+                                              <div class="family-tree-node" title="خالد">
+                                                <span class="family-tree-given">خالد</span>
+                                              </div>
+                                            </li>
+                                          </ul>
+                                        </li>
+                                        <li>
+                                          <div class="family-tree-node" title="أحمد">
+                                            <span class="family-tree-given">أحمد</span>
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </li>
+                                    <li>
+                                      <div class="family-tree-node" title="عبدالعزيز">
+                                        <span class="family-tree-given">عبدالعزيز</span>
+                                      </div>
+                                    </li>
+                                    <li>
+                                      <div class="family-tree-node" title="أحمد">
+                                        <span class="family-tree-given">أحمد</span>
+                                      </div>
+                                      <ul class="family-tree-children">
+                                        <li>
+                                          <div class="family-tree-node" title="سلطان">
+                                            <span class="family-tree-given">سلطان</span>
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </li>
+                                    <li>
+                                      <div class="family-tree-node" title="عبدالله">
+                                        <span class="family-tree-given">عبدالله</span>
+                                      </div>
+                                      <ul class="family-tree-children">
+                                        <li>
+                                          <div class="family-tree-node" title="هلال">
+                                            <span class="family-tree-given">هلال</span>
+                                          </div>
+                                        </li>
+                                        <li>
+                                          <div class="family-tree-node" title="أحمد">
+                                            <span class="family-tree-given">أحمد</span>
+                                          </div>
+                                        </li>
+                                        <li>
+                                          <div class="family-tree-node" title="محمد">
+                                            <span class="family-tree-given">محمد</span>
+                                          </div>
+                                        </li>
+                                        <li>
+                                          <div class="family-tree-node" title="فهد">
+                                            <span class="family-tree-given">فهد</span>
+                                          </div>
+                                        </li>
+                                        <li>
+                                          <div class="family-tree-node" title="عيسى">
+                                            <span class="family-tree-given">عيسى</span>
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </li>
+                                    <li>
+                                      <div class="family-tree-node" title="جمال">
+                                        <span class="family-tree-given">جمال</span>
+                                      </div>
+                                      <ul class="family-tree-children">
+                                        <li>
+                                          <div class="family-tree-node" title="خالد">
+                                            <span class="family-tree-given">خالد</span>
+                                          </div>
+                                        </li>
+                                        <li>
+                                          <div class="family-tree-node" title="طلال">
+                                            <span class="family-tree-given">طلال</span>
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </li>
+                                    <li>
+                                      <div class="family-tree-node" title="عبدالحكيم">
+                                        <span class="family-tree-given">عبدالحكيم</span>
+                                      </div>
+                                      <ul class="family-tree-children">
+                                        <li>
+                                          <div class="family-tree-node" title="البراء">
+                                            <span class="family-tree-given">البراء</span>
+                                          </div>
+                                        </li>
+                                        <li>
+                                          <div class="family-tree-node" title="عبدالله">
+                                            <span class="family-tree-given">عبدالله</span>
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </li>
+                                    <li>
+                                      <div class="family-tree-node" title="عيسى">
+                                        <span class="family-tree-given">عيسى</span>
+                                      </div>
+                                      <ul class="family-tree-children">
+                                        <li>
+                                          <div class="family-tree-node" title="عبدالله">
+                                            <span class="family-tree-given">عبدالله</span>
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </li>
+                                  </ul>
                                 </li>
                               </ul>
                             </li>
@@ -227,12 +342,10 @@
           <p class="text-sm text-muted-foreground leading-8" style="margin:0;">
             هذا الموقع يوثّق <strong class="text-foreground">ذرية عبدالله وراشد</strong> أبناء
             <strong class="text-foreground">عيسى بن خليفة بن هلال بن حسن الذوادي</strong>.
-            الأسماء الواردة أعلاه من المراجع والمصادر في
-            <a href="/althawadi/references/" class="text-accent hover:underline">صفحة المراجع</a>؛
-            تُكمَّل الأجيال اللاحقة بالمشجرات الشرعية بعد المراجعة.
+            للمراجع: <a href="/althawadi/references/" class="text-accent hover:underline">صفحة المراجع</a>
+            — <a href="/althawadi/ancestors/" class="text-accent hover:underline">سير الأجداد</a>.
           </p>
         </div>
-        -->
       </section>
     </main>
 
