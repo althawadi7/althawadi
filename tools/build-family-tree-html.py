@@ -300,7 +300,7 @@ def build_tree() -> dict:
 
     isa_ahmed_j = node("عيسى")
     isa_ahmed_j["children"] = [
-        node("خليفه"),
+        node("خليفة"),
         rashid_isa_j,
         node("ناصر"),
         node("خالد"),
@@ -316,7 +316,7 @@ def build_tree() -> dict:
     jassim = node("جاسم")
     jassim["children"] = [
         ghanim,
-        node("خليفه"),
+        node("خليفة"),
         ahmed_jassim,
         hassan_jassim,
         hilal_jassim,
@@ -330,7 +330,7 @@ def build_tree() -> dict:
         node("هلال"),
         node("حسن"),
         node("أحمد"),
-        node("خليفه"),
+        node("خليفة"),
     ]
 
     ali = node("علي")
