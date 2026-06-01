@@ -693,8 +693,8 @@ button, input, textarea { font-family: inherit; }
   position: relative;
   z-index: 3;
   display: inline-block;
-  width: 100%;
-  max-width: 6.75rem;
+  width: fit-content;
+  max-width: 6.25rem;
   border-radius: 8px;
   border: 1px solid var(--family-tree-card-border);
   padding: 0.42rem 0.5rem 0.48rem;

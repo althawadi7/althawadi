@@ -19,7 +19,7 @@
   display: inline-block;
   position: relative;
   width: max-content;
-  max-width: 26rem;
+  max-width: none;
   margin: 0 auto;
   padding: 0.5rem 0.75rem 1rem;
   vertical-align: top;
@@ -32,11 +32,7 @@
 }
 
 .family-tree-pdf-exporting .tree ul {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.4rem;
-  padding-top: 0.85rem;
+  padding-top: 14px;
   position: relative;
   list-style: none;
   margin: 0;
@@ -44,57 +40,72 @@
   padding-right: 0;
 }
 
+.family-tree-pdf-exporting .tree ul::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
 .family-tree-pdf-exporting .tree > ul {
   padding-top: 0;
 }
 
 .family-tree-pdf-exporting .tree li {
-  float: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  float: left;
   text-align: center;
   list-style-type: none;
   position: relative;
-  padding: 0;
-  width: 100%;
-  max-width: 7.25rem;
+  padding: 14px 3px 0;
 }
 
 .family-tree-pdf-exporting .tree li::before,
 .family-tree-pdf-exporting .tree li::after {
-  display: none;
-  border: none;
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 50%;
+  border-top: 2px solid #9a6848;
+  width: 50%;
+  height: 14px;
 }
 
-.family-tree-pdf-exporting .tree li > ul::before {
+.family-tree-pdf-exporting .tree li::after {
+  right: auto;
+  left: 50%;
+  border-left: 2px solid #9a6848;
+}
+
+.family-tree-pdf-exporting .tree li:only-child::after,
+.family-tree-pdf-exporting .tree li:only-child::before {
+  display: none;
+}
+
+.family-tree-pdf-exporting .tree li:only-child {
+  padding-top: 0;
+}
+
+.family-tree-pdf-exporting .tree li:first-child::before,
+.family-tree-pdf-exporting .tree li:last-child::after {
+  border: 0 none;
+}
+
+.family-tree-pdf-exporting .tree li:last-child::before {
+  border-right: 2px solid #9a6848;
+  border-radius: 0 5px 0 0;
+}
+
+.family-tree-pdf-exporting .tree li:first-child::after {
+  border-radius: 5px 0 0 0;
+}
+
+.family-tree-pdf-exporting .tree ul ul::before {
   content: '';
   position: absolute;
   top: 0;
   left: 50%;
-  transform: translateX(-50%);
   border-left: 2px solid #9a6848;
   width: 0;
-  height: 0.85rem;
-}
-
-.family-tree-pdf-exporting .tree li > ul {
-  width: 100%;
-  padding-top: 1rem;
-}
-
-.family-tree-pdf-exporting .tree li > ul > li::before {
-  display: block;
-  content: '';
-  position: relative;
-  width: 0;
-  height: 0.55rem;
-  margin: 0 auto;
-  border-left: 2px solid #9a6848;
-}
-
-.family-tree-pdf-exporting .tree li > ul > li:only-child::before {
-  display: none;
+  height: 14px;
 }
 
 .family-tree-pdf-exporting .tree li > a,
@@ -103,8 +114,8 @@
   position: relative;
   z-index: 2;
   display: inline-block;
-  width: 100%;
-  max-width: 7.25rem;
+  width: fit-content;
+  max-width: 6.25rem;
   min-width: 4.25rem;
   border-radius: 8px;
   border: 1px solid #c9a56a;
@@ -131,11 +142,11 @@
 
 .family-tree-pdf-exporting .family-tree-pat {
   display: block;
-  margin-top: 0.28rem;
-  padding-top: 0.28rem;
+  margin-top: 0.2rem;
+  padding-top: 0.2rem;
   border-top: 1px solid rgba(201, 165, 106, 0.45);
-  font-size: 0.625rem;
-  line-height: 1.45;
+  font-size: 0.5625rem;
+  line-height: 1.4;
   font-weight: 500;
   color: #6b5344;
   word-break: break-word;
