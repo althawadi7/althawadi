@@ -23,12 +23,12 @@ TEMPLATE = """<!DOCTYPE html>
 
 def main() -> None:
     for page in PAGES:
-        target = f"/althawadi/{page}/"
+        target = f"/{page}/"
         path = ROOT / f"{page}.html"
         path.write_text(TEMPLATE.format(target=target), encoding="utf-8")
         print("created", path.name)
 
-    # index.html at root stays; optional redirect from /althawadi/index.html handled in JS
+    # index.html at root stays; optional redirect from /index.html handled in JS
 
 
 if __name__ == "__main__":

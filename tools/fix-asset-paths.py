@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""Use absolute /althawadi/ paths for CSS, JS, images — fixes styling on subpages."""
+"""Use absolute / paths for CSS, JS, images — fixes styling on subpages."""
 from pathlib import Path
 
+from site_paths import page
+
 ROOT = Path(__file__).resolve().parents[1]
-PREFIX = "/althawadi/"
+PREFIX = "/"
 PAGES = ("about", "tree", "ancestors", "gallery", "news", "references", "contact")
 
 
@@ -22,8 +24,8 @@ def fix_content(html: str) -> str:
     # internal nav (relative clean URLs)
     html = html.replace('href="./"', f'href="{PREFIX}"')
     for p in PAGES:
-        html = html.replace(f'href="{p}/"', f'href="{PREFIX}{p}/"')
-        html = html.replace(f"href='{p}/", f"href='{PREFIX}{p}/")
+        html = html.replace(f'href="{p}/"', f'href="{page(p)}"')
+        html = html.replace(f"href='{p}/", f"href='{page(p)}")
     return html
 
 

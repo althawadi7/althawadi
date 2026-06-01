@@ -1,32 +1,36 @@
 (function () {
   'use strict';
 
-  var SITE_HOME = '/althawadi/';
+  var SITE_HOME = '/';
+  var LEGACY_PREFIX = '/althawadi/';
   var PAGES = ['about', 'tree', 'ancestors', 'gallery', 'news', 'references', 'contact'];
 
   function fileSiteRoot() {
     var url = window.location.href.split('#')[0].split('?')[0];
-    var marker = '/althawadi/';
-    var idx = url.toLowerCase().indexOf(marker);
-    if (idx === -1) {
-      return null;
+    var idx = url.toLowerCase().indexOf(LEGACY_PREFIX);
+    if (idx !== -1) {
+      return url.substring(0, idx + LEGACY_PREFIX.length);
     }
-    return url.substring(0, idx + marker.length);
+    var slash = url.lastIndexOf('/');
+    return slash === -1 ? url + '/' : url.substring(0, slash + 1);
   }
 
   function toFileHref(absPath) {
     var root = fileSiteRoot();
-    if (!root || absPath.indexOf(SITE_HOME) !== 0) {
+    if (!root) {
       return absPath;
     }
-    return root + absPath.slice(SITE_HOME.length);
+    if (absPath.charAt(0) === '/') {
+      return root + absPath.slice(1);
+    }
+    return absPath;
   }
 
   function normalizeSiteLinks() {
     if (window.location.protocol !== 'file:') {
       return;
     }
-    document.querySelectorAll('[href^="/althawadi/"], [src^="/althawadi/"]').forEach(function (el) {
+    document.querySelectorAll('[href^="/"], [src^="/"]').forEach(function (el) {
       var attr = el.hasAttribute('href') ? 'href' : 'src';
       el.setAttribute(attr, toFileHref(el.getAttribute(attr)));
     });
@@ -72,7 +76,7 @@
     if (/\/index\.html$/i.test(p)) {
       p = p.replace(/\/index\.html$/i, '/');
     }
-    return /\/althawadi\/?$/i.test(p);
+    return p === '/' || /\/althawadi\/?$/i.test(p);
   }
 
   normalizeSiteLinks();
@@ -82,16 +86,15 @@
   function siteHomeHref() {
     if (window.location.protocol === 'file:') {
       var url = window.location.href.split('#')[0].split('?')[0];
-      var marker = '/altahwadi/';
-      var idx = url.toLowerCase().indexOf(marker);
+      var idx = url.toLowerCase().indexOf(LEGACY_PREFIX);
       if (idx !== -1) {
-        return url.substring(0, idx + marker.length) + 'index.html';
+        return url.substring(0, idx + LEGACY_PREFIX.length) + 'index.html';
       }
     }
     return SITE_HOME;
   }
 
-  /* Logo + الرئيسية → /althawadi/ (not …/index.html) on GitHub Pages */
+  /* Logo + الرئيسية → / (not …/index.html) on GitHub Pages */
   document.querySelectorAll('[data-home]').forEach(function (link) {
     link.setAttribute('href', siteHomeHref());
     link.addEventListener('click', function (e) {

@@ -19,7 +19,7 @@ def main():
             """
             () => {
               document.querySelectorAll('link[rel=\"stylesheet\"]').forEach((link) => {
-                link.href = link.href.replace('/althawadi/', '/');
+                link.href = link.href.replace('/', '/');
               });
             }
             """

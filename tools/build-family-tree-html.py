@@ -210,7 +210,7 @@ def build_abdullah_bin_isa_branch() -> dict:
     )
     abdullah = node("عبدالله")
     abdullah["focus"] = True
-    abdullah["link"] = "/althawadi/ancestors/#abdullah-bin-isa"
+    abdullah["link"] = "/ancestors/#abdullah-bin-isa"
     return set_sons(
         abdullah,
         mohammed_1,
@@ -297,7 +297,7 @@ def build_rashid_branch() -> dict:
     """§5 — ستة أبناء راشد (إخوة — كلهم ابن راشد مباشرة، لا تحت جاسم)."""
     rashid = node("راشد")
     rashid["focus"] = True
-    rashid["link"] = "/althawadi/ancestors/#rashid-bin-isa"
+    rashid["link"] = "/ancestors/#rashid-bin-isa"
     return set_sons(
         rashid,
         node("جاسم"),
@@ -389,8 +389,8 @@ def build_page_html() -> str:
         <div class="mt-8 notice-box max-w-2xl mx-auto w-full">
           <p class="text-sm text-muted-foreground leading-8" style="margin:0;">
             مسودة عمل — تُكمَّل بالمراجعة.
-            <a href="/althawadi/references/" class="text-accent hover:underline">المراجع</a>
-            · <a href="/althawadi/ancestors/" class="text-accent hover:underline">الأجداد</a>
+            <a href="/references/" class="text-accent hover:underline">المراجع</a>
+            · <a href="/ancestors/" class="text-accent hover:underline">الأجداد</a>
           </p>
         </div>"""
 
@@ -400,13 +400,13 @@ def inject_tree_page(content_html: str) -> None:
     text = page.read_text(encoding="utf-8")
     if "family-tree.js" not in text or "<!-- <script" in text:
         text = text.replace(
-            '  <!-- <script src="/althawadi/js/family-tree.js" defer></script> -->',
-            '  <script src="/althawadi/js/family-tree.js" defer></script>',
+            '  <!-- <script src="/js/family-tree.js" defer></script> -->',
+            '  <script src="/js/family-tree.js" defer></script>',
         )
     if "family-tree-pdf.js" not in text:
         text = text.replace(
-            '  <script src="/althawadi/js/family-tree.js" defer></script>',
-            '  <script src="/althawadi/js/family-tree.js" defer></script>\n  <script src="/althawadi/js/family-tree-pdf.js" defer></script>',
+            '  <script src="/js/family-tree.js" defer></script>',
+            '  <script src="/js/family-tree.js" defer></script>\n  <script src="/js/family-tree-pdf.js" defer></script>',
         )
     block = f"      <section class=\"family-tree-section mx-auto max-w-7xl w-full px-4 sm:px-6 py-12 md:py-20\">\n{content_html}\n      </section>"
     text = re.sub(

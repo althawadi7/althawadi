@@ -9,7 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data" / "family-news.json"
 NEWS = ROOT / "news" / "index.html"
-BASE = "/althawadi"
+BASE = ""
 ITEM_BASE = f"{BASE}/news/item"
 
 

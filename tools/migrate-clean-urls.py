@@ -6,7 +6,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-BASE_HREF = "/althawadi/"
+BASE_HREF = "/"
 PAGES = ("about", "tree", "ancestors", "gallery", "news", "references", "contact")
 KEEP_ROOT = ("index.html", "404.html")
 

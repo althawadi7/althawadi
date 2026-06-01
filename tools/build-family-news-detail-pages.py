@@ -12,7 +12,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 from footer_snippet import footer_contact_col, footer_nav_cols  # noqa: E402
 DATA = ROOT / "data" / "family-news.json"
 OUT_DIR = ROOT / "news" / "item"
-BASE = "/althawadi"
+BASE = ""
 ITEM_BASE = f"{BASE}/news/item"
 
 

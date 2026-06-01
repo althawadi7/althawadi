@@ -33,8 +33,7 @@
 
   function assetBase() {
     if (window.__althawadiBase) return window.__althawadiBase;
-    if (location.pathname.indexOf('/althawadi/') !== -1) return '/althawadi/';
-    return '../';
+    return '/';
   }
 
   function resolveUrl(path) {

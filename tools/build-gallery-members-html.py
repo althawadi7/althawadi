@@ -12,7 +12,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 from gallery_members_sort import gallery_display_name, sort_posts  # noqa: E402
 DATA = ROOT / "data" / "gallery-members.json"
 GALLERY = ROOT / "gallery" / "index.html"
-BASE = "/althawadi"
+BASE = ""
 
 
 def normalized_text(post: dict) -> str:

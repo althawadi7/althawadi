@@ -15,7 +15,7 @@ OUT_DIR = ROOT / "references" / "item"
 MANIFEST = ROOT / "data" / "references-manifest.json"
 CARDS_DATA = ROOT / "data" / "references-cards.json"
 IG_DATA = ROOT / "data" / "instagram-history.json"
-BASE = "/althawadi"
+BASE = ""
 ITEM_BASE = f"{BASE}/references/item"
 
 

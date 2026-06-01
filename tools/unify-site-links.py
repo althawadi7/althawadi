@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""All internal links → /althawadi/... for reliable GitHub Pages navigation."""
+"""All internal links → /... for reliable GitHub Pages navigation."""
 import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SITE = "/althawadi/"
+SITE = "/"
 PAGES = ("about", "tree", "ancestors", "gallery", "news", "references", "contact")
 
 
@@ -12,19 +12,19 @@ def fix_html(html: str) -> str:
     for p in PAGES:
         # page/#anchor (any prefix)
         html = re.sub(
-            rf'href="(?:\.\./)*(?:/althawadi/)?{p}/(#[^"]+)"',
+            rf'href="(?:\.\./)*(?:/)?{p}/(#[^"]+)"',
             rf'href="{SITE}{p}/\1"',
             html,
         )
         html = re.sub(
-            rf'href="(?:\.\./)*(?:/althawadi/)?{p}/"',
+            rf'href="(?:\.\./)*(?:/)?{p}/"',
             f'href="{SITE}{p}/"',
             html,
         )
-    html = html.replace('href="../css/', 'href="/althawadi/css/')
-    html = html.replace('src="../js/', 'src="/althawadi/js/')
-    html = html.replace('href="css/', 'href="/althawadi/css/')
-    html = html.replace('src="js/', 'src="/althawadi/js/')
+    html = html.replace('href="../css/', 'href="/css/')
+    html = html.replace('src="../js/', 'src="/js/')
+    html = html.replace('href="css/', 'href="/css/')
+    html = html.replace('src="js/', 'src="/js/')
     return html
 
 

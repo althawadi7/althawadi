@@ -3,17 +3,17 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
-BRAND = '<a href="/althawadi/" data-home class="font-display text-2xl text-foreground hover:text-accent">الذواودة</a>'
+BRAND = '<a href="/" data-home class="font-display text-2xl text-foreground hover:text-accent">الذواودة</a>'
 
 LINKS = """<ul class="mt-4 space-y-2 text-sm" style="list-style:none;padding:0;">
-            <li><a href="/althawadi/" data-home class="hover:text-accent">الرئيسية</a></li>
-            <li><a href="/althawadi/about/" class="hover:text-accent">عن العائلة</a></li>
-            <li><a href="/althawadi/tree/" class="hover:text-accent">شجرة العائلة</a></li>
-            <li><a href="/althawadi/ancestors/" class="hover:text-accent">الأجداد</a></li>
-            <li><a href="/althawadi/gallery/" class="hover:text-accent">الصور</a></li>
-            <li><a href="/althawadi/news/" class="hover:text-accent">أخبار المجلس</a></li>
-            <li><a href="/althawadi/references/" class="hover:text-accent">مراجع ومصادر</a></li>
-            <li><a href="/althawadi/contact/" class="hover:text-accent">تواصل</a></li>
+            <li><a href="/" data-home class="hover:text-accent">الرئيسية</a></li>
+            <li><a href="/about/" class="hover:text-accent">عن العائلة</a></li>
+            <li><a href="/tree/" class="hover:text-accent">شجرة العائلة</a></li>
+            <li><a href="/ancestors/" class="hover:text-accent">الأجداد</a></li>
+            <li><a href="/gallery/" class="hover:text-accent">الصور</a></li>
+            <li><a href="/news/" class="hover:text-accent">أخبار المجلس</a></li>
+            <li><a href="/references/" class="hover:text-accent">مراجع ومصادر</a></li>
+            <li><a href="/contact/" class="hover:text-accent">تواصل</a></li>
           </ul>"""
 
 
