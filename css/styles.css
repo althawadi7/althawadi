@@ -606,7 +606,7 @@ button, input, textarea { font-family: inherit; }
 
 .family-tree-node {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   border-radius: calc(var(--radius) - 2px);
   border: 1px solid var(--border);
   padding: 0.35rem 0.45rem;
@@ -626,20 +626,6 @@ button, input, textarea { font-family: inherit; }
   line-height: 1.3;
   color: var(--foreground);
   font-weight: 600;
-}
-
-.family-tree-sons-label {
-  position: relative;
-  z-index: 2;
-  margin: 0.1rem 0 0.2rem;
-  padding: 0.05rem 0.45rem;
-  font-size: 0.5625rem;
-  line-height: 1.4;
-  color: var(--muted-foreground);
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  text-align: center;
-  white-space: nowrap;
 }
 
 .family-tree-pat {
@@ -762,27 +748,65 @@ button, input, textarea { font-family: inherit; }
   height: 0.9rem;
 }
 
-/* Sons row — each child gets its own vertical arrow (no horizontal sibling bar) */
+/* Sons row — connected fork: parent ↓ spine → vertical drop to each son */
+.family-tree-connector {
+  width: var(--family-tree-arrow-width);
+  height: 0.55rem;
+  background: var(--family-tree-arrow);
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+
 .family-tree-children {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: center;
   align-items: flex-start;
-  gap: 0.45rem;
+  gap: 0.5rem;
   padding: 0;
   margin: 0;
   list-style: none;
   position: relative;
   width: max-content;
+  padding-top: 1.35rem;
 }
 
-.family-tree-children::before,
+/* Vertical stem from connector into the fork */
+.family-tree-children::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--family-tree-arrow-width);
+  height: 0.7rem;
+  background: var(--family-tree-arrow);
+  border-radius: 1px;
+  z-index: 1;
+}
+
+/* Horizontal spine — links vertical drops only, not the brother cards */
 .family-tree-children::after {
+  content: '';
+  position: absolute;
+  top: 0.7rem;
+  left: 0;
+  right: 0;
+  height: var(--family-tree-arrow-width);
+  background: var(--family-tree-arrow);
+  z-index: 1;
+}
+
+.family-tree-children:has(> li:only-child)::after {
   display: none;
 }
 
-/* Each son column: arrow ↓ then name card */
+.family-tree-children:has(> li:only-child)::before {
+  height: 1.35rem;
+}
+
+/* Each son column */
 .family-tree-children > li {
   position: relative;
   list-style: none;
@@ -791,31 +815,47 @@ button, input, textarea { font-family: inherit; }
   align-items: center;
   flex: 0 0 auto;
   min-width: 0;
+  padding-top: 0.7rem;
+}
+
+.family-tree-children:has(> li:only-child) > li {
   padding-top: 0;
 }
 
-/* Arrow shaft (father → son) */
+/* Vertical drop from spine down to son card + arrowhead */
 .family-tree-children > li::before {
   content: '';
-  display: block;
-  flex: 0 0 auto;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: var(--family-tree-arrow-width);
-  height: 1.15rem;
+  height: 0.7rem;
   background: var(--family-tree-arrow);
   border-radius: 1px;
+  z-index: 1;
 }
 
-/* Arrow head */
+.family-tree-children:has(> li:only-child) > li::before {
+  display: none;
+}
+
 .family-tree-children > li::after {
   content: '';
-  display: block;
-  flex: 0 0 auto;
+  position: absolute;
+  top: 0.62rem;
+  left: 50%;
+  transform: translateX(-50%);
   width: 0;
   height: 0;
-  margin-top: -1px;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
   border-top: 6px solid var(--family-tree-arrow);
+  z-index: 2;
+}
+
+.family-tree-children:has(> li:only-child) > li::after {
+  top: -0.35rem;
 }
 
 .family-tree-hint {
@@ -833,23 +873,59 @@ button, input, textarea { font-family: inherit; }
   letter-spacing: 0.02em;
 }
 
-/* Short stem from father card down to «أبناء …» */
-.family-tree-node:has(+ .family-tree-sons-label)::after {
+/* Stem from father card down toward connector */
+.family-tree-node:has(+ .family-tree-sons-label)::after,
+.family-tree-node--link:has(+ .family-tree-sons-label)::after {
   content: '';
   display: block;
   width: var(--family-tree-arrow-width);
-  height: 0.45rem;
+  height: 0.4rem;
   background: var(--family-tree-arrow);
-  margin: 0.12rem auto 0;
+  margin: 0.1rem auto 0;
   border-radius: 1px;
 }
 
+.family-tree-sons-label {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  padding: 0.05rem 0.45rem 0;
+  font-size: 0.5625rem;
+  line-height: 1.4;
+  color: var(--muted-foreground);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-align: center;
+  white-space: nowrap;
+}
+
 .family-tree > li > .family-tree-children {
-  gap: 0.55rem;
+  gap: 0.6rem;
 }
 
 .family-tree-children .family-tree-children {
-  gap: 0.4rem;
+  gap: 0.45rem;
+  padding-top: 1.2rem;
+}
+
+.family-tree-children .family-tree-children::before {
+  height: 0.65rem;
+}
+
+.family-tree-children .family-tree-children::after {
+  top: 0.65rem;
+}
+
+.family-tree-children .family-tree-children > li {
+  padding-top: 0.65rem;
+}
+
+.family-tree-children .family-tree-children > li::before {
+  height: 0.65rem;
+}
+
+.family-tree-children .family-tree-children > li::after {
+  top: 0.57rem;
 }
 
 @media (min-width: 768px) {

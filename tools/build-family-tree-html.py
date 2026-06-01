@@ -87,6 +87,7 @@ def render_node(n: dict, indent: int, ancestors: list[str], *, is_root: bool = F
         f"{pad}<li>\n"
         f"{inner}"
         f'{pad}  <p class="family-tree-sons-label">{sons_label}</p>\n'
+        f'{pad}  <div class="family-tree-connector" aria-hidden="true"></div>\n'
         f'{pad}  <ul class="family-tree-children">\n'
         f"{kids}"
         f'{pad}  </ul>\n'
@@ -204,7 +205,7 @@ def build_page_html() -> str:
         </div>
 
         <p class="family-tree-hint">
-          شجرة واحدة متصلة: <strong class="text-foreground">سهم أزرق ↓</strong> من الأب إلى كل ابن — الإخوة بجانب بعض بدون خط أفقي.
+          سهم متصل ↓ من الأب إلى كل ابن. الخط الأفقي يربط التفرّعات فقط — لا يربط الإخوة ببعض.
         </p>
 
         <div class="family-tree-pan" id="family-tree-pan" tabindex="0" aria-label="شجرة العائلة">
