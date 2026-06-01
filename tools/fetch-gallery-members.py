@@ -12,7 +12,7 @@ from html import unescape
 from datetime import date
 from pathlib import Path
 
-from gallery_members_sort import sort_posts
+from gallery_members_sort import gallery_display_name, sort_posts
 
 ROOT = Path(__file__).resolve().parents[1]
 INSTAGRAM_CACHE = ROOT / "data" / "instagram.json"
@@ -172,11 +172,7 @@ def clean_caption_text(text: str) -> str:
 
 
 def display_name(text: str) -> str:
-    t = clean_caption_text(text)
-    t = re.sub(r"[\u200e\u200f\u202a-\u202e\u2066-\u2069\t]", "", t)
-    t = re.sub(r"#\w+", "", t)
-    t = " ".join(t.split()).strip(' .-"')
-    return t
+    return gallery_display_name(text)
 
 
 def largest_candidate_url(candidates: list[dict]) -> str | None:

@@ -9,7 +9,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
-from gallery_members_sort import sort_posts  # noqa: E402
+from gallery_members_sort import gallery_display_name, sort_posts  # noqa: E402
 DATA = ROOT / "data" / "gallery-members.json"
 GALLERY = ROOT / "gallery" / "index.html"
 BASE = "/althawadi"
@@ -17,13 +17,8 @@ BASE = "/althawadi"
 
 def normalized_text(post: dict) -> str:
     raw = post.get("first_comment") or post.get("caption") or post.get("text") or post["shortcode"]
-    raw = html.unescape(raw)
-    raw = re.sub(r"[\u200e\u200f\u202a-\u202e\u2066-\u2069\t]", "", raw)
-    m = re.search(r':\s*"([^"]+)"', raw)
-    if m:
-        raw = m.group(1)
-    raw = re.sub(r"#\w+", "", raw)
-    return " ".join(raw.split()).strip(' .-"')
+    name = gallery_display_name(raw)
+    return name or post["shortcode"]
 
 
 def card_html(post: dict) -> str:

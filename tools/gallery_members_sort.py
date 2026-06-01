@@ -17,6 +17,34 @@ STRIP_PREFIXES = (
     r"من\s+سكنة\s+مدينة\s+الحد\s*",
 )
 
+LIVING_DUA_PATTERNS = (
+    r"الله\s+يحفظ(?:هم|ه)(?:\s+و(?:ي)?ط(?:و)?ل\s+بعمر(?:هم|ه))?",
+    r"الله\s+(?:ي)?ط(?:و)?ل\s+بعمر(?:هم|ه)",
+    r"الله\s+بحفظ(?:هم|ه)(?:\s+و(?:ي)?ط(?:و)?ل\s+بعمر(?:هم|ه))?",
+    r"الله\s+يرحم(?:هم|ه)\s+ويغفر(?:لهم|له)",
+)
+
+
+def _extract_caption_text(text: str) -> str:
+    t = unescape(text or "")
+    t = re.sub(r"[\u200e\u200f\u202a-\u202e\u2066-\u2069\t]", "", t)
+    m = re.search(r':\s*"([^"]+)"', t)
+    if m:
+        t = m.group(1)
+    t = re.sub(r"^\d+\s+likes?,\s+\d+\s+comments?\s+-\s+", "", t, flags=re.I)
+    t = re.sub(r"^althawadi_majlis\s+.*?:\s*", "", t, flags=re.I)
+    t = re.sub(r"#\S+", " ", t)
+    return t
+
+
+def gallery_display_name(text: str) -> str:
+    """Display label for gallery cards — name only, keep deceased honorifics."""
+    t = _extract_caption_text(text)
+    for pat in LIVING_DUA_PATTERNS:
+        t = re.sub(pat, " ", t, flags=re.I)
+    t = " ".join(t.split()).strip(" .،\"'")
+    return t
+
 
 def clean_display_name(text: str) -> str:
     t = unescape(text or "")
