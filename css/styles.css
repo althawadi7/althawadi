@@ -590,6 +590,7 @@ button, input, textarea { font-family: inherit; }
 
 .family-tree-canvas {
   display: inline-block;
+  position: relative;
   width: max-content;
   margin: 0 auto;
   padding: 0.5rem 0.75rem 0.75rem;
@@ -842,10 +843,71 @@ button, input, textarea { font-family: inherit; }
   display: none;
 }
 
-/* Stem from card bottom — ul continues the same vertical line */
-.family-tree-node:has(+ .family-tree-children)::after,
-.family-tree-node--link:has(+ .family-tree-children)::after {
+/* JS-drawn SVG lines replace pseudo-elements when wired */
+.family-tree-canvas--wired .family-tree-children::before,
+.family-tree-canvas--wired .family-tree-children::after,
+.family-tree-canvas--wired .family-tree-children > li::before {
   display: none;
+}
+
+.family-tree-canvas--wired .family-tree-children {
+  padding-top: var(--family-tree-v-gap);
+}
+
+.family-tree-canvas--wired .family-tree-children > li {
+  padding-top: 0;
+}
+
+.family-tree-lines {
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: visible;
+}
+
+.family-tree-lines path {
+  stroke: var(--family-tree-line);
+  stroke-width: var(--family-tree-line-width);
+  fill: none;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
+
+[data-theme="dark"] .family-tree-section {
+  --family-tree-line: oklch(0.82 0.11 232);
+  --family-tree-line-width: 3px;
+  --family-tree-card: oklch(0.34 0.022 248);
+  --family-tree-card-border: oklch(0.68 0.10 232);
+}
+
+[data-theme="dark"] .family-tree-pan {
+  background-color: oklch(0.20 0.014 252);
+  background-image: radial-gradient(
+    circle,
+    oklch(0.55 0.03 248 / 0.45) 1px,
+    transparent 1px
+  );
+}
+
+[data-theme="dark"] .family-tree-node {
+  box-shadow: 0 2px 0 oklch(0.15 0.012 252);
+}
+
+[data-theme="dark"] .family-tree-node.is-root,
+[data-theme="dark"] .family-tree-node.is-focus {
+  background: oklch(0.38 0.04 240);
+  border-color: oklch(0.75 0.11 232);
+}
+
+[data-theme="dark"] .family-tree-given {
+  color: oklch(0.96 0.008 248);
+}
+
+[data-theme="dark"] .family-tree-pat {
+  color: oklch(0.78 0.02 242);
 }
 
 .family-tree-hint {
