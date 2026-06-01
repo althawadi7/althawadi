@@ -55,11 +55,6 @@
   function resetLayout(canvas) {
     canvas.querySelectorAll('.family-tree-parent').forEach(function (wrap) {
       wrap.style.transform = '';
-    });
-    canvas.querySelectorAll('.family-tree-unit').forEach(function (unit) {
-      unit.style.width = '';
-    });
-    canvas.querySelectorAll('.family-tree-parent').forEach(function (wrap) {
       wrap.style.width = '';
     });
     canvas.querySelectorAll('.family-tree-children').forEach(function (ul) {
