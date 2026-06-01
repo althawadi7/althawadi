@@ -7,11 +7,19 @@
   <meta name="description" content="شجرة نسب ذرية عبدالله وراشد أبناء عيسى بن خليفة بن هلال بن حسن الذوادي — من المراجع والمصادر الموثّقة." />
   <meta property="og:title" content="شجرة عائلة الذوادي" />
   <link rel="canonical" href="/althawadi/tree/" />
-  <link rel="stylesheet" href="/althawadi/css/styles.css" />
+  <link rel="stylesheet" href="/althawadi/css/styles.css" id="althawadi-main-css" />
   <script src="/althawadi/js/url-clean.js"></script>
+  <script>
+    (function () {
+      if (location.pathname.indexOf('/althawadi/') !== -1) return;
+      window.__althawadiBase = '../';
+      var css = document.getElementById('althawadi-main-css');
+      if (css) css.href = '../css/styles.css';
+    })();
+  </script>
   <script src="/althawadi/js/main.js" defer></script>
-  <script src="/althawadi/js/family-tree.js" defer></script>
-  <script src="/althawadi/js/family-tree-pdf.js" defer></script>
+  <script src="/althawadi/js/family-tree.js" defer onerror="this.onerror=null;this.src=(window.__althawadiBase||'../')+'js/family-tree.js'"></script>
+  <script src="/althawadi/js/family-tree-pdf.js" defer onerror="this.onerror=null;this.src=(window.__althawadiBase||'../')+'js/family-tree-pdf.js'"></script>
 </head>
 <body>
   <div class="min-h-screen flex flex-col">

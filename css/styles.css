@@ -547,7 +547,7 @@ button, input, textarea { font-family: inherit; }
   max-width: 100%;
   --family-tree-line: #9a6848;
   --family-tree-line-soft: color-mix(in oklch, var(--family-tree-line) 35%, transparent);
-  --family-tree-line-width: 2.5px;
+  --family-tree-line-width: 2.75px;
   --family-tree-joint: #b87850;
   --family-tree-card-from: #faf6ee;
   --family-tree-card-to: #ede3cf;
@@ -555,9 +555,9 @@ button, input, textarea { font-family: inherit; }
   --family-tree-card-shadow: color-mix(in oklch, #6b4a2a 22%, transparent);
   --family-tree-accent: #b45309;
   --family-tree-gold: #c9952a;
-  --family-tree-v-gap: 1.75rem;
-  --family-tree-h-gap: 0.45rem;
-  --family-tree-corner: 10;
+  --family-tree-v-gap: 2.75rem;
+  --family-tree-h-gap: 0.65rem;
+  --family-tree-stem: 1.5rem;
 }
 
 .family-tree-lineage {
@@ -638,9 +638,9 @@ button, input, textarea { font-family: inherit; }
     radial-gradient(circle, color-mix(in oklch, #6b4a2a 14%, transparent) 1px, transparent 1px);
   background-size: 100% 100%, 20px 20px;
   background-position: center, center;
-  padding: 2rem 1.25rem 2.25rem;
-  min-height: 24rem;
-  max-height: min(88vh, 960px);
+  padding: 2rem 1.25rem 2.5rem;
+  min-height: 28rem;
+  max-height: min(92vh, 1200px);
   scrollbar-width: thin;
   scrollbar-color: var(--family-tree-accent) color-mix(in oklch, var(--border) 60%, transparent);
   direction: ltr;
@@ -910,23 +910,29 @@ button, input, textarea { font-family: inherit; }
 }
 
 .family-tree-children {
-  display: block;
-  position: relative;
+  display: flex;
+  flex-direction: row;
   flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: var(--family-tree-h-gap);
+  position: relative;
   padding: 0;
-  margin: 0;
+  margin: 0 auto;
   list-style: none;
   padding-top: var(--family-tree-v-gap);
+  width: max-content;
+  max-width: none;
 }
 
 .family-tree-children > li {
-  position: absolute;
-  top: 0;
+  position: relative;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   list-style: none;
-  display: block;
-  flex: none;
   min-width: 0;
-  padding-top: 0;
 }
 
 .family-tree-lines {
@@ -1098,8 +1104,8 @@ button, input, textarea { font-family: inherit; }
 
 @media (min-width: 768px) {
   .family-tree-section {
-    --family-tree-v-gap: 2rem;
-    --family-tree-h-gap: 0.55rem;
+    --family-tree-v-gap: 3.25rem;
+    --family-tree-h-gap: 0.75rem;
   }
 
   .family-tree-node {
