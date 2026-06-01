@@ -170,10 +170,40 @@
     return points;
   }
 
-  function forkPath(parentX, parentY, barY, childPoints) {
+  function cornerRadius() {
+    var section = document.querySelector('.family-tree-section');
+    var raw = section
+      ? getComputedStyle(section).getPropertyValue('--family-tree-corner').trim()
+      : '10';
+    return parseFloat(raw) || 10;
+  }
+
+  function elbowPath(x1, y1, x2, y2, r) {
+    r = Math.min(r, Math.abs(y2 - y1) / 2, Math.abs(x2 - x1) / 2);
+    if (r < 1 || Math.abs(x1 - x2) < 0.5) {
+      return 'M ' + x1 + ' ' + y1 + ' L ' + x2 + ' ' + y2;
+    }
+    var dir = x2 > x1 ? 1 : -1;
+    var bendY = round(y1 + (y2 - y1) * 0.55);
+    return (
+      'M ' + x1 + ' ' + y1 +
+      ' L ' + x1 + ' ' + (bendY - r) +
+      ' Q ' + x1 + ' ' + bendY + ' ' + (x1 + dir * r) + ' ' + bendY +
+      ' L ' + (x2 - dir * r) + ' ' + bendY +
+      ' Q ' + x2 + ' ' + bendY + ' ' + x2 + ' ' + (bendY + r) +
+      ' L ' + x2 + ' ' + y2
+    );
+  }
+
+  function forkPath(parentX, parentY, barY, childPoints, r) {
+    r = Math.min(r || 10, 12);
+
     if (childPoints.length === 1) {
       var c = childPoints[0];
-      return 'M ' + parentX + ' ' + parentY + ' L ' + c.x + ' ' + c.y;
+      if (Math.abs(parentX - c.x) < 0.5) {
+        return 'M ' + parentX + ' ' + parentY + ' L ' + c.x + ' ' + c.y;
+      }
+      return elbowPath(parentX, parentY, c.x, c.y, r);
     }
 
     var xs = childPoints.map(function (pt) {
@@ -192,6 +222,14 @@
     return d;
   }
 
+  function addJoint(svg, x, y, r) {
+    var dot = document.createElementNS(SVG_NS, 'circle');
+    dot.setAttribute('cx', String(round(x)));
+    dot.setAttribute('cy', String(round(y)));
+    dot.setAttribute('r', String(r || 3.5));
+    svg.appendChild(dot);
+  }
+
   function drawLines(canvas) {
     canvas.querySelectorAll('.family-tree-lines').forEach(function (svg) {
       svg.remove();
@@ -208,6 +246,8 @@
     svg.style.width = w + 'px';
     svg.style.height = h + 'px';
 
+    var r = cornerRadius();
+
     canvas.querySelectorAll('.family-tree-children').forEach(function (ul) {
       var parentEl = parentNode(ul);
       if (!parentEl) return;
@@ -221,11 +261,19 @@
       var childTop = childPoints.reduce(function (min, pt) {
         return Math.min(min, pt.y);
       }, childPoints[0].y);
-      var barY = round(parentY + (childTop - parentY) * 0.5);
+      var barY = round(parentY + (childTop - parentY) * 0.45);
 
       var path = document.createElementNS(SVG_NS, 'path');
-      path.setAttribute('d', forkPath(parentX, parentY, barY, childPoints));
+      path.setAttribute('d', forkPath(parentX, parentY, barY, childPoints, r));
       svg.appendChild(path);
+
+      addJoint(svg, parentX, parentY, 3);
+      if (childPoints.length > 1) {
+        addJoint(svg, parentX, barY, 3.5);
+      }
+      childPoints.forEach(function (pt) {
+        addJoint(svg, pt.x, pt.y, 2.75);
+      });
     });
 
     if (svg.childNodes.length) {

@@ -545,12 +545,81 @@ button, input, textarea { font-family: inherit; }
 /* Family tree — compact chart, auto-centered + scale-to-fit */
 .family-tree-section {
   max-width: 100%;
-  --family-tree-line: color-mix(in oklch, var(--accent) 70%, oklch(0.52 0.16 355));
-  --family-tree-line-width: 3px;
-  --family-tree-card: color-mix(in oklch, var(--accent) 18%, oklch(0.93 0.05 85));
-  --family-tree-card-border: color-mix(in oklch, var(--accent) 38%, var(--border));
-  --family-tree-v-gap: 1.25rem;
-  --family-tree-h-gap: 0.35rem;
+  --family-tree-line: #9a6848;
+  --family-tree-line-soft: color-mix(in oklch, var(--family-tree-line) 35%, transparent);
+  --family-tree-line-width: 2.5px;
+  --family-tree-joint: #b87850;
+  --family-tree-card-from: #faf6ee;
+  --family-tree-card-to: #ede3cf;
+  --family-tree-card-border: #c9a56a;
+  --family-tree-card-shadow: color-mix(in oklch, #6b4a2a 22%, transparent);
+  --family-tree-accent: #b45309;
+  --family-tree-gold: #c9952a;
+  --family-tree-v-gap: 1.75rem;
+  --family-tree-h-gap: 0.45rem;
+  --family-tree-corner: 10;
+}
+
+.family-tree-lineage {
+  border: 1px solid color-mix(in oklch, var(--family-tree-gold) 35%, var(--border));
+  border-radius: calc(var(--radius) * 2);
+  padding: 1.35rem 1.75rem;
+  background: linear-gradient(
+    165deg,
+    color-mix(in oklch, var(--card) 88%, var(--background)),
+    color-mix(in oklch, var(--family-tree-gold) 6%, var(--card))
+  );
+  box-shadow:
+    0 1px 0 color-mix(in oklch, white 40%, transparent) inset,
+    0 12px 32px color-mix(in oklch, var(--foreground) 6%, transparent);
+}
+
+.family-tree-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.family-tree-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem 1rem;
+  font-size: 0.6875rem;
+  color: var(--muted-foreground);
+}
+
+.family-tree-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.family-tree-legend-swatch {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.family-tree-legend-swatch--root {
+  background: linear-gradient(135deg, #faf0d4, #e8c878);
+  border: 1px solid #c9952a;
+}
+
+.family-tree-legend-swatch--lineage {
+  background: linear-gradient(135deg, #faf6ee, #ede3cf);
+  border: 1px solid #a08050;
+}
+
+.family-tree-legend-swatch--focus {
+  background: linear-gradient(135deg, #fff8ee, #f5dcc0);
+  border: 1px solid #b45309;
+  box-shadow: 0 0 0 1px color-mix(in oklch, #b45309 25%, transparent);
 }
 
 .family-tree-pan {
@@ -561,31 +630,35 @@ button, input, textarea { font-family: inherit; }
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
   touch-action: pan-x pan-y;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background-color: color-mix(in oklch, var(--muted) 18%, var(--background));
-  background-image: radial-gradient(
-    circle,
-    color-mix(in oklch, var(--foreground) 12%, transparent) 1px,
-    transparent 1px
-  );
-  background-size: 18px 18px;
-  padding: 1.5rem 1rem 1.75rem;
-  min-height: 22rem;
+  border: 1px solid color-mix(in oklch, var(--family-tree-gold) 28%, var(--border));
+  border-radius: calc(var(--radius) * 2);
+  background-color: #f3ebe0;
+  background-image:
+    radial-gradient(ellipse 120% 80% at 50% 0%, color-mix(in oklch, var(--family-tree-gold) 8%, transparent), transparent 55%),
+    radial-gradient(circle, color-mix(in oklch, #6b4a2a 14%, transparent) 1px, transparent 1px);
+  background-size: 100% 100%, 20px 20px;
+  background-position: center, center;
+  padding: 2rem 1.25rem 2.25rem;
+  min-height: 24rem;
   max-height: min(88vh, 960px);
   scrollbar-width: thin;
-  scrollbar-color: var(--accent) var(--border);
+  scrollbar-color: var(--family-tree-accent) color-mix(in oklch, var(--border) 60%, transparent);
   direction: ltr;
   text-align: center;
+  box-shadow:
+    0 1px 0 color-mix(in oklch, white 50%, transparent) inset,
+    0 20px 50px color-mix(in oklch, var(--foreground) 8%, transparent),
+    0 0 0 1px color-mix(in oklch, var(--family-tree-gold) 12%, transparent) inset;
 }
 
 .family-tree-pan::-webkit-scrollbar {
+  width: 6px;
   height: 6px;
 }
 
 .family-tree-pan::-webkit-scrollbar-thumb {
-  background: var(--accent);
-  border-radius: 3px;
+  background: color-mix(in oklch, var(--family-tree-accent) 75%, var(--border));
+  border-radius: 999px;
 }
 
 .family-tree-canvas {
@@ -593,7 +666,7 @@ button, input, textarea { font-family: inherit; }
   position: relative;
   width: max-content;
   margin: 0 auto;
-  padding: 0.5rem 0.75rem 0.75rem;
+  padding: 0.75rem 1rem 1rem;
   direction: rtl;
   vertical-align: top;
 }
@@ -633,39 +706,58 @@ button, input, textarea { font-family: inherit; }
   display: inline-flex;
 }
 
-/* Layout only — connector lines drawn in SVG (family-tree.js) */
+/* Cards — layout lines in SVG (family-tree.js) */
 .family-tree-node {
   position: relative;
   z-index: 3;
   display: inline-block;
   width: fit-content;
-  max-width: 6.25rem;
-  border-radius: 5px;
-  border: 2px solid var(--family-tree-card-border);
-  padding: 0.5rem 0.65rem;
+  max-width: 7.5rem;
+  border-radius: 10px;
+  border: 1px solid var(--family-tree-card-border);
+  padding: 0.55rem 0.7rem 0.6rem;
   text-align: center;
-  background: var(--family-tree-card);
-  box-shadow: 0 2px 0 color-mix(in oklch, var(--family-tree-card-border) 55%, transparent);
+  background: linear-gradient(168deg, var(--family-tree-card-from) 0%, var(--family-tree-card-to) 100%);
+  box-shadow:
+    0 1px 0 color-mix(in oklch, white 55%, transparent) inset,
+    0 3px 10px var(--family-tree-card-shadow),
+    0 1px 2px color-mix(in oklch, black 6%, transparent);
   white-space: normal;
   box-sizing: border-box;
-  min-width: 4.25rem;
+  min-width: 4.5rem;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.family-tree-node::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0.65rem;
+  right: 0.65rem;
+  height: 3px;
+  border-radius: 0 0 3px 3px;
+  background: color-mix(in oklch, var(--family-tree-card-border) 70%, transparent);
+  opacity: 0.55;
 }
 
 .family-tree-given {
   display: block;
   font-family: var(--font-display, inherit);
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   line-height: 1.35;
-  color: var(--foreground);
+  color: color-mix(in oklch, var(--foreground) 95%, #3d2810);
   font-weight: 700;
+  letter-spacing: 0.01em;
 }
 
 .family-tree-pat {
   display: block;
-  margin-top: 0.2rem;
+  margin-top: 0.28rem;
+  padding-top: 0.28rem;
+  border-top: 1px solid color-mix(in oklch, var(--family-tree-card-border) 45%, transparent);
   font-size: 0.625rem;
-  line-height: 1.4;
-  color: color-mix(in oklch, var(--foreground) 62%, var(--muted-foreground));
+  line-height: 1.45;
+  color: color-mix(in oklch, var(--foreground) 52%, var(--muted-foreground));
   font-weight: 500;
   word-break: break-word;
 }
@@ -707,42 +799,72 @@ button, input, textarea { font-family: inherit; }
   border: none;
   border-radius: 0;
   background: transparent;
+  box-shadow: none;
 }
 
 .family-tree-node.is-root {
-  border-color: color-mix(in oklch, var(--accent) 55%, var(--border));
-  background: color-mix(in oklch, var(--accent) 24%, oklch(0.93 0.05 85));
+  min-width: 5.25rem;
+  max-width: 8.5rem;
+  padding: 0.7rem 0.85rem 0.75rem;
+  border-color: color-mix(in oklch, var(--family-tree-gold) 65%, var(--family-tree-card-border));
+  background: linear-gradient(168deg, #faf0d4 0%, #e8d4a0 100%);
+  box-shadow:
+    0 1px 0 color-mix(in oklch, white 60%, transparent) inset,
+    0 6px 18px color-mix(in oklch, var(--family-tree-gold) 28%, transparent),
+    0 0 0 1px color-mix(in oklch, var(--family-tree-gold) 20%, transparent);
 }
 
-.family-tree-node.is-lineage {
-  border-color: color-mix(in oklch, var(--primary) 40%, var(--family-tree-card-border));
+.family-tree-node.is-root::before {
+  background: linear-gradient(90deg, #c9952a, #e8c878, #c9952a);
+  opacity: 1;
+  left: 0.5rem;
+  right: 0.5rem;
+}
+
+.family-tree-node.is-root .family-tree-given {
+  font-size: 1.05rem;
+}
+
+.family-tree-node.is-lineage::before {
+  background: color-mix(in oklch, var(--primary) 55%, var(--family-tree-card-border));
+  opacity: 0.75;
 }
 
 .family-tree-node.is-focus {
-  border-color: color-mix(in oklch, var(--accent) 65%, var(--border));
-  background: color-mix(in oklch, var(--accent) 28%, oklch(0.93 0.05 85));
-  box-shadow: 0 0 0 2px color-mix(in oklch, var(--accent) 18%, transparent);
+  border-color: color-mix(in oklch, var(--family-tree-accent) 70%, var(--family-tree-card-border));
+  background: linear-gradient(168deg, #fff8ee 0%, #f5dcc0 100%);
+  box-shadow:
+    0 1px 0 color-mix(in oklch, white 55%, transparent) inset,
+    0 4px 14px color-mix(in oklch, var(--family-tree-accent) 22%, transparent),
+    0 0 0 2px color-mix(in oklch, var(--family-tree-accent) 18%, transparent);
+}
+
+.family-tree-node.is-focus::before {
+  background: linear-gradient(90deg, #b45309, #d4844a, #b45309);
+  opacity: 1;
 }
 
 .family-tree-node--link {
   display: inline-block;
   width: fit-content;
-  max-width: 6.25rem;
+  max-width: 7.5rem;
   text-decoration: none;
   color: inherit;
-  transition: border-color 0.15s, background 0.15s;
+  cursor: pointer;
 }
 
 .family-tree-node--link:hover {
-  border-color: var(--accent);
-  background: color-mix(in oklch, var(--accent) 14%, transparent);
+  transform: translateY(-2px);
+  border-color: var(--family-tree-accent);
+  box-shadow:
+    0 1px 0 color-mix(in oklch, white 55%, transparent) inset,
+    0 8px 20px color-mix(in oklch, var(--family-tree-accent) 20%, transparent),
+    0 0 0 2px color-mix(in oklch, var(--family-tree-accent) 12%, transparent);
 }
 
-.family-tree-lineage {
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1.25rem 1.5rem;
-  background: color-mix(in oklch, var(--card) 60%, transparent);
+.family-tree-node--link:focus-visible {
+  outline: 2px solid var(--family-tree-accent);
+  outline-offset: 2px;
 }
 
 .family-tree-node--daughters {
@@ -755,6 +877,10 @@ button, input, textarea { font-family: inherit; }
   border-style: dashed;
   border-color: color-mix(in oklch, var(--accent) 40%, var(--border));
   background: color-mix(in oklch, var(--muted) 30%, transparent);
+}
+
+.family-tree-node--daughters::before {
+  display: none;
 }
 
 .family-tree-daughters-icons {
@@ -783,7 +909,6 @@ button, input, textarea { font-family: inherit; }
   height: 0.9rem;
 }
 
-/* Layout only — all connector lines drawn in SVG (family-tree.js) */
 .family-tree-children {
   display: block;
   position: relative;
@@ -817,34 +942,51 @@ button, input, textarea { font-family: inherit; }
   stroke: var(--family-tree-line);
   stroke-width: var(--family-tree-line-width);
   fill: none;
-  stroke-linecap: butt;
-  stroke-linejoin: miter;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.family-tree-lines circle {
+  fill: var(--family-tree-joint);
+  stroke: color-mix(in oklch, var(--family-tree-line) 40%, white);
+  stroke-width: 1;
 }
 
 [data-theme="dark"] .family-tree-section {
-  --family-tree-line: oklch(0.82 0.11 232);
-  --family-tree-line-width: 3px;
-  --family-tree-card: oklch(0.34 0.022 248);
-  --family-tree-card-border: oklch(0.68 0.10 232);
+  --family-tree-line: #d4956a;
+  --family-tree-joint: #e8a878;
+  --family-tree-card-from: #2a3040;
+  --family-tree-card-to: #222838;
+  --family-tree-card-border: #6a7898;
+  --family-tree-card-shadow: color-mix(in oklch, black 35%, transparent);
+  --family-tree-accent: #e8a060;
+  --family-tree-gold: #d4a840;
+}
+
+[data-theme="dark"] .family-tree-lineage {
+  background: linear-gradient(
+    165deg,
+    color-mix(in oklch, var(--card) 92%, var(--background)),
+    color-mix(in oklch, var(--family-tree-gold) 8%, var(--card))
+  );
+  border-color: color-mix(in oklch, var(--family-tree-gold) 25%, var(--border));
 }
 
 [data-theme="dark"] .family-tree-pan {
-  background-color: oklch(0.20 0.014 252);
-  background-image: radial-gradient(
-    circle,
-    oklch(0.55 0.03 248 / 0.45) 1px,
-    transparent 1px
-  );
+  background-color: #1a1e28;
+  background-image:
+    radial-gradient(ellipse 120% 80% at 50% 0%, color-mix(in oklch, var(--family-tree-gold) 6%, transparent), transparent 55%),
+    radial-gradient(circle, color-mix(in oklch, white 8%, transparent) 1px, transparent 1px);
+  border-color: color-mix(in oklch, var(--family-tree-gold) 22%, var(--border));
+  box-shadow:
+    0 1px 0 color-mix(in oklch, white 6%, transparent) inset,
+    0 20px 50px color-mix(in oklch, black 35%, transparent);
 }
 
 [data-theme="dark"] .family-tree-node {
-  box-shadow: 0 2px 0 oklch(0.15 0.012 252);
-}
-
-[data-theme="dark"] .family-tree-node.is-root,
-[data-theme="dark"] .family-tree-node.is-focus {
-  background: oklch(0.38 0.04 240);
-  border-color: oklch(0.75 0.11 232);
+  box-shadow:
+    0 1px 0 color-mix(in oklch, white 8%, transparent) inset,
+    0 4px 12px var(--family-tree-card-shadow);
 }
 
 [data-theme="dark"] .family-tree-given {
@@ -852,51 +994,88 @@ button, input, textarea { font-family: inherit; }
 }
 
 [data-theme="dark"] .family-tree-pat {
-  color: oklch(0.78 0.02 242);
+  color: oklch(0.72 0.02 242);
+  border-top-color: color-mix(in oklch, var(--family-tree-card-border) 55%, transparent);
+}
+
+[data-theme="dark"] .family-tree-node.is-root {
+  background: linear-gradient(168deg, #3a3428 0%, #2a2418 100%);
+  border-color: color-mix(in oklch, var(--family-tree-gold) 55%, var(--family-tree-card-border));
+}
+
+[data-theme="dark"] .family-tree-node.is-focus {
+  background: linear-gradient(168deg, #3a3028 0%, #322820 100%);
+  border-color: color-mix(in oklch, var(--family-tree-accent) 65%, var(--family-tree-card-border));
+}
+
+[data-theme="dark"] .family-tree-legend-swatch--root {
+  background: linear-gradient(135deg, #3a3428, #2a2418);
+  border-color: #d4a840;
+}
+
+[data-theme="dark"] .family-tree-legend-swatch--lineage {
+  background: linear-gradient(135deg, #2a3040, #222838);
+  border-color: #6a7898;
+}
+
+[data-theme="dark"] .family-tree-legend-swatch--focus {
+  background: linear-gradient(135deg, #3a3028, #322820);
+  border-color: #e8a060;
 }
 
 /* PDF export — hex/rgb only (html2canvas cannot parse oklch) */
 .family-tree-pan.family-tree-pdf-mode {
-  background-color: #e8e0d4 !important;
-  background-image: radial-gradient(circle, rgba(80, 65, 50, 0.12) 1px, transparent 1px) !important;
+  background-color: #f0e8dc !important;
+  background-image: radial-gradient(circle, rgba(90, 70, 50, 0.1) 1px, transparent 1px) !important;
+  box-shadow: none !important;
 }
 
 .family-tree-pdf-mode .family-tree-node {
-  background: #f0e4cc !important;
-  border-color: #c9a57a !important;
-  box-shadow: 0 2px 0 #d4c4a8 !important;
-  color: #3d3428 !important;
+  background: linear-gradient(168deg, #faf6ee, #ede3cf) !important;
+  border-color: #c9a56a !important;
+  box-shadow: 0 2px 6px rgba(80, 55, 30, 0.12) !important;
+  color: #3d2810 !important;
 }
 
 .family-tree-pdf-mode .family-tree-node.is-root,
 .family-tree-pdf-mode .family-tree-node.is-focus {
-  background: #f5ebd0 !important;
-  border-color: #b8654a !important;
+  background: linear-gradient(168deg, #faf0d4, #e8d4a0) !important;
+  border-color: #c9952a !important;
+}
+
+.family-tree-pdf-mode .family-tree-node.is-focus {
+  border-color: #b45309 !important;
+  background: linear-gradient(168deg, #fff8ee, #f5dcc0) !important;
 }
 
 .family-tree-pdf-mode .family-tree-given {
-  color: #3d3428 !important;
+  color: #3d2810 !important;
 }
 
 .family-tree-pdf-mode .family-tree-pat {
-  color: #6b5d4f !important;
+  color: #6b5344 !important;
+  border-top-color: rgba(201, 165, 106, 0.45) !important;
 }
 
 .family-tree-pdf-mode .family-tree-lines path {
-  stroke: #b8654a !important;
+  stroke: #9a6848 !important;
+}
+
+.family-tree-pdf-mode .family-tree-lines circle {
+  fill: #b87850 !important;
 }
 
 .family-tree-hint {
   text-align: center;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   color: var(--muted-foreground);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.85rem;
+  line-height: 1.65;
 }
 
 .family-tree-toolbar {
   display: flex;
   justify-content: center;
-  margin-bottom: 1rem;
 }
 
 .family-tree-pdf-btn .icon {
@@ -912,28 +1091,33 @@ button, input, textarea { font-family: inherit; }
   text-align: center;
   font-size: 0.65rem;
   color: var(--muted-foreground);
-  margin-top: 0.5rem;
+  margin-top: 0.65rem;
   letter-spacing: 0.02em;
+  opacity: 0.85;
 }
 
 @media (min-width: 768px) {
   .family-tree-section {
-    --family-tree-v-gap: 1.35rem;
-    --family-tree-h-gap: 0.4rem;
+    --family-tree-v-gap: 2rem;
+    --family-tree-h-gap: 0.55rem;
   }
 
   .family-tree-node {
-    min-width: 5.75rem;
-    max-width: 8rem;
-    padding: 0.55rem 0.75rem;
+    min-width: 5rem;
+    max-width: 8.25rem;
+    padding: 0.6rem 0.8rem 0.65rem;
   }
 
   .family-tree-given {
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
   }
 
   .family-tree-pat {
     font-size: 0.6875rem;
+  }
+
+  .family-tree-node.is-root .family-tree-given {
+    font-size: 1.125rem;
   }
 }
 

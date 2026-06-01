@@ -10,16 +10,19 @@
     'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js';
 
   var PDF = {
-    panBg: '#e8e0d4',
-    dot: 'rgba(80, 65, 50, 0.12)',
-    card: '#f0e4cc',
-    cardHi: '#f5ebd0',
-    cardBorder: '#c9a57a',
-    cardBorderHi: '#b8654a',
-    cardShadow: '#d4c4a8',
-    text: '#3d3428',
-    pat: '#6b5d4f',
-    line: '#b8654a',
+    panBg: '#f0e8dc',
+    dot: 'rgba(90, 70, 50, 0.1)',
+    card: '#f5efe3',
+    cardHi: '#faf0d4',
+    cardFocus: '#fff8ee',
+    cardBorder: '#c9a56a',
+    cardBorderHi: '#c9952a',
+    cardBorderFocus: '#b45309',
+    cardShadow: 'rgba(80, 55, 30, 0.12)',
+    text: '#3d2810',
+    pat: '#6b5344',
+    line: '#9a6848',
+    joint: '#b87850',
   };
 
   var COLOR_PROPS = [
@@ -152,12 +155,22 @@
 
     pan.querySelectorAll('.family-tree-node, .family-tree-node--link').forEach(function (node) {
       remember(node);
-      var hi = node.classList.contains('is-root') || node.classList.contains('is-focus');
-      node.style.background = hi ? PDF.cardHi : PDF.card;
-      node.style.borderColor = hi ? PDF.cardBorderHi : PDF.cardBorder;
+      var isRoot = node.classList.contains('is-root');
+      var isFocus = node.classList.contains('is-focus');
+      node.style.background = isRoot
+        ? PDF.cardHi
+        : isFocus
+          ? PDF.cardFocus
+          : PDF.card;
+      node.style.borderColor = isRoot
+        ? PDF.cardBorderHi
+        : isFocus
+          ? PDF.cardBorderFocus
+          : PDF.cardBorder;
       node.style.borderStyle = 'solid';
-      node.style.borderWidth = '2px';
-      node.style.boxShadow = '0 2px 0 ' + PDF.cardShadow;
+      node.style.borderWidth = '1px';
+      node.style.borderRadius = '10px';
+      node.style.boxShadow = '0 2px 6px ' + PDF.cardShadow;
       node.style.color = PDF.text;
     });
 
@@ -175,9 +188,14 @@
       remember(path);
       path.setAttribute('stroke', PDF.line);
       path.setAttribute('fill', 'none');
-      path.setAttribute('stroke-width', path.getAttribute('stroke-width') || '3');
       path.style.stroke = PDF.line;
       path.style.fill = 'none';
+    });
+
+    pan.querySelectorAll('.family-tree-lines circle').forEach(function (dot) {
+      remember(dot);
+      dot.setAttribute('fill', PDF.joint);
+      dot.style.fill = PDF.joint;
     });
 
     return saved;
