@@ -9,6 +9,7 @@ TEMPLATE = """<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8" />
+  <meta name="robots" content="noindex, nofollow" />
   <meta http-equiv="refresh" content="0; url={target}" />
   <link rel="canonical" href="{target}" />
   <script>location.replace("{target}");</script>
