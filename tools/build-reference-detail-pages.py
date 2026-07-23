@@ -20,15 +20,17 @@ ITEM_BASE = f"{BASE}/references/item"
 
 
 def abs_url(path: str) -> str:
+    """Root-absolute site URL. Note: path.startswith('') is always True, so never use BASE that way."""
     if not path:
         return path
-    if path.startswith("http") or path.startswith(BASE):
+    if path.startswith(("http://", "https://")):
         return path
     if path.startswith("../"):
-        return f"{BASE}/{path[3:]}"
-    if path.startswith("assets/"):
-        return f"{BASE}/{path}"
-    return path
+        path = path[3:]
+    if path.startswith("/"):
+        return path
+    prefix = (BASE or "").rstrip("/")
+    return f"{prefix}/{path}" if prefix else f"/{path}"
 
 
 def strip_tags(text: str) -> str:
@@ -582,22 +584,25 @@ def main() -> None:
     cards = parse_cards(text, ig_posts, saved_fulltext)
     cards = sync_ig_posts_into_cards(cards, ig_posts)
 
-    # Fill missing IG fulltext from JSON captions
+    # Fill missing IG fulltext from JSON captions; always refresh media paths from JSON
     for card in cards:
         slug = card.get("slug") or ""
-        if not slug.startswith("ig-") or card.get("fulltext"):
+        if not slug.startswith("ig-"):
             continue
         code = slug[3:]
         post = ig_posts.get(code)
-        if post and post.get("caption"):
-            card["fulltext"] = caption_to_fulltext(post["caption"])
+        if not post:
+            continue
+        if post.get("caption"):
+            if not card.get("fulltext"):
+                card["fulltext"] = caption_to_fulltext(post["caption"])
             if not card.get("title"):
                 card["title"] = title_from_caption(post["caption"])
             if not card.get("excerpt"):
                 card["excerpt"] = excerpt_from_caption(post["caption"])
             if not card.get("external_url"):
                 card["external_url"] = post.get("url") or ""
-            enrich_media_from_json(card, ig_posts)
+        enrich_media_from_json(card, ig_posts)
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     for child in OUT_DIR.iterdir():
