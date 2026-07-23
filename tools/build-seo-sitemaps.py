@@ -17,8 +17,11 @@ CARDS = ROOT / "data" / "references-cards.json"
 NEWS_DATA = ROOT / "data" / "family-news.json"
 ROBOTS = ROOT / "robots.txt"
 SITEMAP_XML = ROOT / "sitemap.xml"
+SITEMAP_INDEX = ROOT / "sitemap-index.xml"
 SITEMAP_HTML_DIR = ROOT / "site-map"
 SITEMAP_HTML = SITEMAP_HTML_DIR / "index.html"
+SEO_DIR = ROOT / "seo"
+SEO_SITEMAP = SEO_DIR / "sitemap.xml"
 
 # Main public pages (all indexed)
 CORE_PAGES = [
@@ -233,14 +236,18 @@ def news_item_urls() -> list[dict]:
 
 
 def write_robots() -> None:
+    # Prefer /seo/sitemap.xml first: GitHub Pages historically 500s when a
+    # /sitemap/ HTML folder collides with /sitemap.xml (GSC "General HTTP error").
     ROBOTS.write_text(
         "\n".join(
             [
                 "User-agent: *",
                 "Allow: /",
                 "",
-                f"Sitemap: {SITE}/sitemap.xml",
+                "# Primary (conflict-safe path on GitHub Pages)",
                 f"Sitemap: {SITE}/seo/sitemap.xml",
+                f"Sitemap: {SITE}/sitemap-index.xml",
+                f"Sitemap: {SITE}/sitemap.xml",
                 "",
             ]
         ),
@@ -267,11 +274,30 @@ def write_sitemap_xml(urls: list[dict]) -> None:
     lines.append("</urlset>")
     lines.append("")
     body = "\n".join(lines)
-    SITEMAP_XML.write_text(body, encoding="utf-8")
-    seo_dir = ROOT / "seo"
-    seo_dir.mkdir(parents=True, exist_ok=True)
-    (seo_dir / "sitemap.xml").write_text(body, encoding="utf-8")
+    # UTF-8 without BOM — Google is picky about leading BOM on some parsers
+    SITEMAP_XML.write_bytes(body.encode("utf-8"))
+    SEO_DIR.mkdir(parents=True, exist_ok=True)
+    SEO_SITEMAP.write_bytes(body.encode("utf-8"))
 
+    # Sitemap index — GSC-friendly alternate entry point
+    index_body = "\n".join(
+        [
+            '<?xml version="1.0" encoding="UTF-8"?>',
+            '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+            "  <sitemap>",
+            f"    <loc>{SITE}/seo/sitemap.xml</loc>",
+            f"    <lastmod>{TODAY}</lastmod>",
+            "  </sitemap>",
+            "  <sitemap>",
+            f"    <loc>{SITE}/sitemap.xml</loc>",
+            f"    <lastmod>{TODAY}</lastmod>",
+            "  </sitemap>",
+            "</sitemapindex>",
+            "",
+        ]
+    )
+    SITEMAP_INDEX.write_bytes(index_body.encode("utf-8"))
+    (SEO_DIR / "sitemap-index.xml").write_bytes(index_body.encode("utf-8"))
 
 def write_sitemap_html(urls: list[dict]) -> None:
     SITEMAP_HTML_DIR.mkdir(parents=True, exist_ok=True)
@@ -338,6 +364,8 @@ def write_sitemap_html(urls: list[dict]) -> None:
       <h1 class="font-display text-3xl md:text-4xl text-foreground mt-3">خريطة الموقع</h1>
       <p class="mt-4 text-muted-foreground leading-7">
         جميع صفحات الموقع المفهرسة. ملف XML لـ Google Search Console:
+        <a class="text-accent hover:underline font-latin" href="/seo/sitemap.xml">{SITE}/seo/sitemap.xml</a>
+        ·
         <a class="text-accent hover:underline font-latin" href="/sitemap.xml">{SITE}/sitemap.xml</a>
       </p>
 {''.join(sections)}

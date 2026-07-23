@@ -509,12 +509,18 @@ def media_block(media: dict, title: str) -> str:
         )
     if kind in ("image", "gallery"):
         imgs = media.get("images") or ([media.get("src")] if media.get("src") else [])
+        caption = (media.get("caption") or "").strip()
+        cap_html = (
+            f"<figcaption>{html.escape(caption)}</figcaption>" if caption else ""
+        )
+        fig_class = "ref-detail-media archive-doc" if caption else "ref-detail-media"
         if len(imgs) == 1:
             src = html.escape(imgs[0])
             alt = html.escape(media.get("alt") or title)
             return (
-                f'<figure class="ref-detail-media">'
+                f'<figure class="{fig_class}">'
                 f'<img src="{src}" alt="{alt}" loading="lazy" />'
+                f"{cap_html}"
                 f"</figure>"
             )
         parts = []
@@ -524,7 +530,10 @@ def media_block(media: dict, title: str) -> str:
                 f'<img src="{html.escape(u)}" alt="{html.escape(title)} — {idx}" loading="lazy" />'
                 f"</figure>"
             )
-        return f'<div class="ref-detail-gallery">{"".join(parts)}</div>'
+        gallery = f'<div class="ref-detail-gallery">{"".join(parts)}</div>'
+        if caption:
+            return gallery + f'<p class="ref-media-caption text-sm text-muted-foreground mt-3">{html.escape(caption)}</p>'
+        return gallery
     return ""
 
 
@@ -738,6 +747,23 @@ def main() -> None:
     cards = parse_cards(text, ig_posts, saved_fulltext)
     cards = sync_book_nawakhida_into_cards(cards)
     cards = sync_ig_posts_into_cards(cards, ig_posts)
+
+    # Keep British tribal table scan on ref-06 (not scraped from Instagram)
+    for card in cards:
+        if card.get("slug") == "ref-06":
+            card["media"] = {
+                "kind": "image",
+                "src": f"{BASE}/assets/E5UyU7aXEAIYjw9.jpg",
+                "thumb": f"{BASE}/assets/E5UyU7aXEAIYjw9.jpg",
+                "images": [f"{BASE}/assets/E5UyU7aXEAIYjw9.jpg"],
+                "alt": "صفحة 608 — Settled Tribes of the Centre — Beni Khālid — جدول Dawāudah تحت بطن 'Amā'ir",
+                "caption": (
+                    "صورة الأصل: صفحة 608 — «13. Beni Khālid» — جدول BENI KHĀLID — "
+                    "IOR/L/PS/20/E84/1 (Settled Tribes of the Centre, 1916). "
+                    "يظهر الذواودة (Dawāudah) تحت بطن العماير ('Amā'ir)."
+                ),
+            }
+            break
 
     # Fill missing IG fulltext from JSON captions; always refresh media paths from JSON
     for card in cards:

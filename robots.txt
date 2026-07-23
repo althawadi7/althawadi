@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://althawadi.org/sitemap.xml
+# Primary (conflict-safe path on GitHub Pages)
 Sitemap: https://althawadi.org/seo/sitemap.xml
+Sitemap: https://althawadi.org/sitemap-index.xml
+Sitemap: https://althawadi.org/sitemap.xml
