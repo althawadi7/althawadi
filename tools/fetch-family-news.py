@@ -16,6 +16,7 @@ ASSETS = ROOT / "assets" / "instagram" / "family-news"
 UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
 
 SHORTCODES = [
+    "DZ4tTppgIh6",
     "DMK2zPSNJqp",
     "DLuETdPtdjX",
     "DIb5jY-tkVi",

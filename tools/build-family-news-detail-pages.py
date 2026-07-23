@@ -19,9 +19,10 @@ ITEM_BASE = f"{BASE}/news/item"
 def abs_url(path: str) -> str:
     if not path:
         return path
-    if path.startswith("http") or path.startswith(BASE):
+    if path.startswith(("http://", "https://", "/")):
         return path
-    return f"{BASE}/{path.lstrip('/')}"
+    prefix = (BASE or "").rstrip("/")
+    return f"{prefix}/{path}" if prefix else f"/{path}"
 
 
 def trim_text(text: str, limit: int) -> str:
