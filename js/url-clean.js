@@ -2,6 +2,7 @@
   'use strict';
 
   var THEME_KEY = 'althawadi-theme';
+  var PAGES = ['about', 'tree', 'ancestors', 'gallery', 'news', 'references', 'contact', 'site-map'];
 
   try {
     if (localStorage.getItem(THEME_KEY) === 'dark') {
@@ -10,8 +11,6 @@
   } catch (e) {
     /* ignore */
   }
-
-  var PAGES = ['about', 'tree', 'ancestors', 'gallery', 'news', 'references', 'contact'];
 
   function cleanUrlBar() {
     if (!window.location.protocol.startsWith('http')) {
@@ -28,9 +27,14 @@
 
     for (var i = 0; i < PAGES.length; i++) {
       var p = PAGES[i];
-      var re = new RegExp('/' + p + '\\.html$', 'i');
-      if (re.test(path)) {
-        window.history.replaceState(null, '', path.replace(re, '/' + p + '/') + tail);
+      var reEn = new RegExp('^/en/' + p + '\\.html$', 'i');
+      var reAr = new RegExp('^/' + p + '\\.html$', 'i');
+      if (reEn.test(path)) {
+        window.history.replaceState(null, '', '/en/' + p + '/' + tail);
+        return;
+      }
+      if (reAr.test(path)) {
+        window.history.replaceState(null, '', '/' + p + '/' + tail);
         return;
       }
     }

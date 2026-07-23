@@ -10,6 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 from footer_snippet import footer_contact_col, footer_nav_cols  # noqa: E402
+from site_chrome import header_html, hreflang_tags_for, normalize_path  # noqa: E402
 INDEX = ROOT / "references" / "index.html"
 OUT_DIR = ROOT / "references" / "item"
 MANIFEST = ROOT / "data" / "references-manifest.json"
@@ -608,7 +609,8 @@ def card_html(card: dict) -> str:
 def page_shell(title: str, description: str, slug: str, body: str, og_image: str = "") -> str:
     t = html.escape(title)
     d = html.escape(description)
-    canonical = f"{ITEM_BASE}/{slug}/"
+    canonical_path = normalize_path(f"{ITEM_BASE}/{slug}/")
+    canonical = f"https://althawadi.org{canonical_path}"
     og_img_tag = ""
     if og_image:
         og_img_tag = f'  <meta property="og:image" content="{html.escape(og_image)}" />\n'
@@ -624,58 +626,16 @@ def page_shell(title: str, description: str, slug: str, body: str, og_image: str
   <meta property="og:description" content="{d}" />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="{canonical}" />
+  <meta property="og:site_name" content="AL Thawadi" />
 {og_img_tag}  <link rel="canonical" href="{canonical}" />
+{hreflang_tags_for("ar", canonical_path)}
   <link rel="stylesheet" href="{BASE}/css/styles.css" />
   <script src="{BASE}/js/url-clean.js"></script>
   <script src="{BASE}/js/main.js" defer></script>
 </head>
 <body>
   <div class="min-h-screen flex flex-col">
-    <header class="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur">
-      <div class="site-header-inner mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 py-4">
-        <a href="{BASE}/" data-home class="flex items-center gap-3 group">
-          <span class="site-logo-text leading-tight">
-            <span class="block font-display text-lg text-foreground">الذوادي</span>
-            <span class="block text-[11px] uppercase tracking-[0.25em] text-muted-foreground font-latin">AL Thawadi</span>
-          </span>
-        </a>
-        <nav class="hidden lg:flex items-center gap-7 text-sm">
-          <a href="{BASE}/" data-home class="nav-link text-foreground/70 hover:text-foreground transition-colors">الرئيسية</a>
-          <a href="{BASE}/about/" class="nav-link text-foreground/70 hover:text-foreground transition-colors">عن العائلة</a>
-          <a href="{BASE}/tree/" class="nav-link text-foreground/70 hover:text-foreground transition-colors">شجرة العائلة</a>
-          <a href="{BASE}/ancestors/" class="nav-link text-foreground/70 hover:text-foreground transition-colors">الأجداد</a>
-          <a href="{BASE}/gallery/" class="nav-link text-foreground/70 hover:text-foreground transition-colors">الصور</a>
-          <a href="{BASE}/news/" class="nav-link text-foreground/70 hover:text-foreground transition-colors">أخبار المجلس</a>
-          <a href="{BASE}/references/" class="nav-link text-foreground/70 hover:text-foreground transition-colors">مراجع</a>
-          <a href="{BASE}/contact/" class="nav-link text-foreground/70 hover:text-foreground transition-colors">تواصل</a>
-        </nav>
-        <div class="flex items-center gap-3">
-          <a href="https://www.instagram.com/althawadi_majlis/?hl=ar" target="_blank" rel="noreferrer" class="hidden sm:inline-flex items-center gap-2 rounded-full border border-border px-3 py-1.5 text-xs text-foreground/80 hover:bg-card transition-colors">
-            <span class="font-latin tracking-wide">@althawadi_majlis</span>
-          </a>
-          <button id="theme-toggle" type="button" class="theme-toggle" aria-label="تفعيل الوضع الليلي" aria-pressed="false" title="الوضع الليلي">
-            <svg class="icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
-            <svg class="icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-          </button>
-          <button id="menu-toggle" type="button" class="lg:hidden p-2 rounded-md hover:bg-card" aria-label="القائمة">
-            <svg id="menu-icon" class="icon h-5 w-5" viewBox="0 0 24 24" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
-            <svg id="close-icon" class="icon h-5 w-5" viewBox="0 0 24 24" aria-hidden="true" style="display:none"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-          </button>
-        </div>
-      </div>
-      <div id="mobile-nav" class="lg:hidden border-t border-border bg-background">
-        <nav class="flex flex-col px-6 py-4 gap-3 text-sm">
-          <a href="{BASE}/" data-home class="nav-link py-1 text-foreground/80">الرئيسية</a>
-          <a href="{BASE}/about/" class="nav-link py-1 text-foreground/80">عن العائلة</a>
-          <a href="{BASE}/tree/" class="nav-link py-1 text-foreground/80">شجرة العائلة</a>
-          <a href="{BASE}/ancestors/" class="nav-link py-1 text-foreground/80">الأجداد</a>
-          <a href="{BASE}/gallery/" class="nav-link py-1 text-foreground/80">الصور</a>
-          <a href="{BASE}/news/" class="nav-link py-1 text-foreground/80">أخبار المجلس</a>
-          <a href="{BASE}/references/" class="nav-link py-1 text-foreground/80">مراجع</a>
-          <a href="{BASE}/contact/" class="nav-link py-1 text-foreground/80">تواصل</a>
-        </nav>
-      </div>
-    </header>
+{header_html("ar", canonical_path)}
 
     <main class="flex-1 ref-detail-page">
       <nav class="ref-detail-breadcrumb mx-auto max-w-3xl px-4 sm:px-6 pt-8" aria-label="مسار التصفح">

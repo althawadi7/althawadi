@@ -176,11 +176,17 @@ def strengthen_page_head(page: dict) -> None:
     if re.search(r'rel=["\']canonical["\']', text, flags=re.I):
         text = re.sub(
             r'<link\s+rel=["\']canonical["\']\s+href=["\'][^"\']*["\']\s*/?>',
-            f'<link rel="canonical" href="{page["path"]}" />',
+            f'<link rel="canonical" href="{url}" />',
             text,
             count=1,
             flags=re.I,
         )
+    # Ensure hreflang present
+    from site_chrome import hreflang_tags_for
+
+    if 'hreflang="en"' not in text:
+        tags = hreflang_tags_for("ar", page["path"])
+        text = re.sub(r"(</head>)", tags + "\n\\1", text, count=1, flags=re.I)
     path.write_text(text, encoding="utf-8")
     set_robots_meta(path, "index, follow")
 
@@ -256,30 +262,47 @@ def write_robots() -> None:
 
 
 def write_sitemap_xml(urls: list[dict]) -> None:
+    # urlset with xhtml for hreflang alternates
     lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',
-        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"',
+        '        xmlns:xhtml="http://www.w3.org/1999/xhtml">',
     ]
     for u in urls:
+        path = u["path"]
+        loc = html.escape(SITE + path)
+        # Pair AR <-> EN
+        if path.startswith("/en/") or path == "/en":
+            en_path = path if path.endswith("/") or path == "/en" else path + "/"
+            if en_path == "/en":
+                en_path = "/en/"
+            ar_path = "/" if en_path == "/en/" else en_path[3:]  # strip /en
+            if not ar_path.endswith("/"):
+                ar_path += "/"
+        else:
+            ar_path = path
+            en_path = "/en/" if path == "/" else "/en" + path
+
         lines.extend(
             [
                 "  <url>",
-                f"    <loc>{html.escape(SITE + u['path'])}</loc>",
+                f"    <loc>{loc}</loc>",
                 f"    <lastmod>{TODAY}</lastmod>",
                 f"    <changefreq>{u.get('changefreq', 'monthly')}</changefreq>",
                 f"    <priority>{u.get('priority', '0.5')}</priority>",
+                f'    <xhtml:link rel="alternate" hreflang="ar" href="{html.escape(SITE + ar_path)}" />',
+                f'    <xhtml:link rel="alternate" hreflang="en" href="{html.escape(SITE + en_path)}" />',
+                f'    <xhtml:link rel="alternate" hreflang="x-default" href="{html.escape(SITE + ar_path)}" />',
                 "  </url>",
             ]
         )
     lines.append("</urlset>")
     lines.append("")
     body = "\n".join(lines)
-    # UTF-8 without BOM — Google is picky about leading BOM on some parsers
     SITEMAP_XML.write_bytes(body.encode("utf-8"))
     SEO_DIR.mkdir(parents=True, exist_ok=True)
     SEO_SITEMAP.write_bytes(body.encode("utf-8"))
 
-    # Sitemap index — GSC-friendly alternate entry point
     index_body = "\n".join(
         [
             '<?xml version="1.0" encoding="UTF-8"?>',
@@ -300,11 +323,16 @@ def write_sitemap_xml(urls: list[dict]) -> None:
     (SEO_DIR / "sitemap-index.xml").write_bytes(index_body.encode("utf-8"))
 
 def write_sitemap_html(urls: list[dict]) -> None:
+    from site_chrome import footer_html, header_html, hreflang_tags_for
+
     SITEMAP_HTML_DIR.mkdir(parents=True, exist_ok=True)
     groups = [
-        ("الصفحات الرئيسية", "main"),
-        ("صفحات المراجع التفصيلية", "references"),
-        ("أخبار أفراد العائلة", "news"),
+        ("الصفحات الرئيسية (عربي)", "main"),
+        ("صفحات المراجع التفصيلية (عربي)", "references"),
+        ("أخبار أفراد العائلة (عربي)", "news"),
+        ("Main pages (English)", "main-en"),
+        ("Reference detail pages (English)", "references-en"),
+        ("Family news (English)", "news-en"),
     ]
     sections = []
     for heading, key in groups:
@@ -326,6 +354,7 @@ def write_sitemap_html(urls: list[dict]) -> None:
         </section>"""
         )
 
+    hreflang = hreflang_tags_for("ar", "/site-map/")
     page = f"""<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -333,57 +362,68 @@ def write_sitemap_html(urls: list[dict]) -> None:
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="index, follow" />
   <title>خريطة الموقع — الذواودة AL Thawadi</title>
-  <meta name="description" content="خريطة كاملة لجميع صفحات موقع عائلة الذوادي القابلة للفهرسة." />
-  <link rel="canonical" href="/site-map/" />
+  <meta name="description" content="خريطة كاملة لجميع صفحات موقع عائلة الذوادي القابلة للفهرسة (عربي وإنجليزي)." />
+  <link rel="canonical" href="{SITE}/site-map/" />
   <meta property="og:title" content="خريطة الموقع — الذواودة" />
   <meta property="og:url" content="{SITE}/site-map/" />
+{hreflang}
   <link rel="stylesheet" href="/css/styles.css" />
   <script src="/js/url-clean.js"></script>
   <script src="/js/main.js" defer></script>
 </head>
 <body>
   <div class="min-h-screen flex flex-col">
-    <header class="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur">
-      <div class="site-header-inner mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 py-4">
-        <a href="/" data-home class="flex items-center gap-3 group">
-          <span class="site-logo-text leading-tight">
-            <span class="block font-display text-lg text-foreground">الذوادي</span>
-            <span class="block text-[11px] uppercase tracking-[0.25em] text-muted-foreground font-latin">AL Thawadi</span>
-          </span>
-        </a>
-        <nav class="hidden lg:flex items-center gap-7 text-sm">
-          <a href="/" data-home class="nav-link text-foreground/70 hover:text-foreground">الرئيسية</a>
-          <a href="/ancestors/" class="nav-link text-foreground/70 hover:text-foreground">الأجداد</a>
-          <a href="/gallery/" class="nav-link text-foreground/70 hover:text-foreground">الصور</a>
-          <a href="/references/" class="nav-link text-foreground/70 hover:text-foreground">مراجع</a>
-        </nav>
-      </div>
-    </header>
+{header_html("ar", "/site-map/")}
     <main class="flex-1 mx-auto max-w-3xl px-4 sm:px-6 py-12 w-full">
       <p class="text-xs uppercase tracking-[0.3em] text-accent font-latin">Sitemap</p>
       <h1 class="font-display text-3xl md:text-4xl text-foreground mt-3">خريطة الموقع</h1>
       <p class="mt-4 text-muted-foreground leading-7">
-        جميع صفحات الموقع المفهرسة. ملف XML لـ Google Search Console:
+        جميع صفحات الموقع المفهرسة (عربي + English). ملف XML لـ Google Search Console:
         <a class="text-accent hover:underline font-latin" href="/seo/sitemap.xml">{SITE}/seo/sitemap.xml</a>
         ·
         <a class="text-accent hover:underline font-latin" href="/sitemap.xml">{SITE}/sitemap.xml</a>
       </p>
 {''.join(sections)}
     </main>
-    <footer class="mt-24 border-t border-border bg-card/40">
-      <div class="mx-auto max-w-7xl px-6 py-10 text-sm text-muted-foreground">
-        <a href="/" class="hover:text-accent">الرئيسية</a>
-        <span class="mx-2">·</span>
-        <a href="/references/" class="hover:text-accent">المراجع</a>
-        <span class="mx-2">·</span>
-        <a href="/contact/" class="hover:text-accent">تواصل</a>
-      </div>
-    </footer>
+{footer_html("ar")}
   </div>
 </body>
 </html>
 """
     SITEMAP_HTML.write_text(page, encoding="utf-8")
+
+
+def en_mirror_urls(ar_urls: list[dict]) -> list[dict]:
+    out = []
+    for u in ar_urls:
+        path = u["path"]
+        en_path = "/en/" if path == "/" else "/en" + path
+        group = u.get("group", "main")
+        if not group.endswith("-en"):
+            group = f"{group}-en"
+        title = u.get("title") or en_path
+        # Prefer English titles for main pages
+        en_titles = {
+            "/en/": "AL Thawadi — Family Majlis",
+            "/en/about/": "About AL Thawadi",
+            "/en/tree/": "AL Thawadi Family Tree",
+            "/en/ancestors/": "AL Thawadi Ancestors",
+            "/en/gallery/": "AL Thawadi Gallery",
+            "/en/news/": "AL Thawadi Majlis News",
+            "/en/references/": "AL Thawadi References & Sources",
+            "/en/contact/": "Contact AL Thawadi",
+            "/en/site-map/": "Sitemap — AL Thawadi",
+        }
+        out.append(
+            {
+                "path": en_path,
+                "title": en_titles.get(en_path, title),
+                "priority": u.get("priority", "0.5"),
+                "changefreq": u.get("changefreq", "monthly"),
+                "group": group,
+            }
+        )
+    return out
 
 
 def main() -> None:
@@ -402,11 +442,11 @@ def main() -> None:
 
     urls.extend(reference_item_urls())
     urls.extend(news_item_urls())
+    urls.extend(en_mirror_urls(list(urls)))
 
     write_robots()
     write_sitemap_xml(urls)
     write_sitemap_html(urls)
-    # Ensure HTML sitemap page itself is indexed after rewrite
     set_robots_meta(SITEMAP_HTML, "index, follow")
     print(f"Full-site SEO sitemap: {len(urls)} URLs")
     print(f"  XML: {SITEMAP_XML}")

@@ -1,9 +1,19 @@
 (function () {
   'use strict';
 
-  var SITE_HOME = '/';
   var LEGACY_PREFIX = '/althawadi/';
-  var PAGES = ['about', 'tree', 'ancestors', 'gallery', 'news', 'references', 'contact'];
+  var PAGES = ['about', 'tree', 'ancestors', 'gallery', 'news', 'references', 'contact', 'site-map'];
+
+  function isEnglish() {
+    return (
+      (document.documentElement.lang || '').toLowerCase().indexOf('en') === 0 ||
+      /^\/en(\/|$)/i.test(window.location.pathname)
+    );
+  }
+
+  function siteHome() {
+    return isEnglish() ? '/en/' : '/';
+  }
 
   function fileSiteRoot() {
     var url = window.location.href.split('#')[0].split('?')[0];
@@ -63,9 +73,14 @@
 
     for (var i = 0; i < PAGES.length; i++) {
       var p = PAGES[i];
-      var re = new RegExp('/' + p + '\\.html$', 'i');
-      if (re.test(path)) {
-        window.history.replaceState(null, '', path.replace(re, '/' + p + '/') + tail);
+      var reEn = new RegExp('^/en/' + p + '\\.html$', 'i');
+      var reAr = new RegExp('^/' + p + '\\.html$', 'i');
+      if (reEn.test(path)) {
+        window.history.replaceState(null, '', '/en/' + p + '/' + tail);
+        return;
+      }
+      if (reAr.test(path)) {
+        window.history.replaceState(null, '', '/' + p + '/' + tail);
         return;
       }
     }
@@ -76,25 +91,32 @@
     if (/\/index\.html$/i.test(p)) {
       p = p.replace(/\/index\.html$/i, '/');
     }
-    return p === '/' || /\/althawadi\/?$/i.test(p);
+    return (
+      p === '/' ||
+      p === '/en/' ||
+      /\/althawadi\/?$/i.test(p) ||
+      /\/althawadi\/en\/?$/i.test(p)
+    );
   }
 
   normalizeSiteLinks();
   cleanUrlBar();
   window.addEventListener('pageshow', cleanUrlBar);
 
+  var SITE_HOME = siteHome();
+
   function siteHomeHref() {
     if (window.location.protocol === 'file:') {
       var url = window.location.href.split('#')[0].split('?')[0];
       var idx = url.toLowerCase().indexOf(LEGACY_PREFIX);
       if (idx !== -1) {
-        return url.substring(0, idx + LEGACY_PREFIX.length) + 'index.html';
+        var base = url.substring(0, idx + LEGACY_PREFIX.length);
+        return isEnglish() ? base + 'en/index.html' : base + 'index.html';
       }
     }
     return SITE_HOME;
   }
 
-  /* Logo + الرئيسية → / (not …/index.html) on GitHub Pages */
   document.querySelectorAll('[data-home]').forEach(function (link) {
     link.setAttribute('href', siteHomeHref());
     link.addEventListener('click', function (e) {
@@ -111,7 +133,6 @@
     });
   });
 
-  /* Mobile menu */
   var menuBtn = document.getElementById('menu-toggle');
   var mobileNav = document.getElementById('mobile-nav');
   var menuIcon = document.getElementById('menu-icon');
@@ -133,11 +154,13 @@
     });
   }
 
-  /* Active nav link — works on file:// and https:// */
   function pageFromPath(pathStr) {
     var segs = pathStr.replace(/\\/g, '/').split('/').filter(Boolean);
     if (segs.length && segs[segs.length - 1] === 'index.html') {
       segs.pop();
+    }
+    if (segs[0] === 'en') {
+      segs.shift();
     }
     var last = segs.length ? segs[segs.length - 1] : 'home';
     if (last === 'altahwadi' || /^[a-z]:$/i.test(last)) {
@@ -152,7 +175,14 @@
     var href = link.getAttribute('href') || '';
     if (!href || href.indexOf('http') === 0) return;
     var linkPage = 'home';
-    if (href === './' || href === '../' || href === '.' || href === '..') {
+    if (
+      href === './' ||
+      href === '../' ||
+      href === '.' ||
+      href === '..' ||
+      href === '/' ||
+      href === '/en/'
+    ) {
       linkPage = 'home';
     } else {
       linkPage = pageFromPath(href);
@@ -162,21 +192,22 @@
     }
   });
 
-  /* Footer year */
   var yearEl = document.getElementById('footer-year');
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
-  /* Contact form */
   var form = document.getElementById('contact-form');
   if (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      alert('شكرًا لتواصلكم. سيتمّ الرّد عليكم قريبًا إن شاء الله.');
+      alert(
+        isEnglish()
+          ? 'Thank you for reaching out. We will reply soon, God willing.'
+          : 'شكرًا لتواصلكم. سيتمّ الرّد عليكم قريبًا إن شاء الله.'
+      );
       form.reset();
     });
   }
 
-  /* Dark mode toggle */
   var THEME_KEY = 'althawadi-theme';
 
   function currentTheme() {
@@ -186,9 +217,22 @@
   function updateThemeToggle(btn) {
     if (!btn) return;
     var dark = currentTheme() === 'dark';
+    var en = isEnglish();
     btn.setAttribute('aria-pressed', dark ? 'true' : 'false');
-    btn.setAttribute('aria-label', dark ? 'تفعيل الوضع الفاتح' : 'تفعيل الوضع الليلي');
-    btn.setAttribute('title', dark ? 'الوضع الفاتح' : 'الوضع الليلي');
+    btn.setAttribute(
+      'aria-label',
+      dark
+        ? en
+          ? 'Enable light mode'
+          : 'تفعيل الوضع الفاتح'
+        : en
+          ? 'Enable dark mode'
+          : 'تفعيل الوضع الليلي'
+    );
+    btn.setAttribute(
+      'title',
+      dark ? (en ? 'Light mode' : 'الوضع الفاتح') : en ? 'Dark mode' : 'الوضع الليلي'
+    );
   }
 
   function applyTheme(theme, animate) {
@@ -224,9 +268,9 @@
       btn.innerHTML =
         '<svg class="icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>' +
         '<svg class="icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>';
-      var menuBtn = document.getElementById('menu-toggle');
-      if (menuBtn) {
-        actions.insertBefore(btn, menuBtn);
+      var menuBtn2 = document.getElementById('menu-toggle');
+      if (menuBtn2) {
+        actions.insertBefore(btn, menuBtn2);
       } else {
         actions.appendChild(btn);
       }
