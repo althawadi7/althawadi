@@ -1,10 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://althawadi.org/references/</loc>
+    <loc>https://althawadi.org/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://althawadi.org/about/</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://althawadi.org/tree/</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://althawadi.org/ancestors/</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://althawadi.org/gallery/</loc>
@@ -13,10 +31,28 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://althawadi.org/ancestors/</loc>
+    <loc>https://althawadi.org/news/</loc>
     <lastmod>2026-07-23</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://althawadi.org/references/</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://althawadi.org/contact/</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://althawadi.org/site-map/</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.3</priority>
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ref-01/</loc>
@@ -409,9 +445,63 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://althawadi.org/site-map/</loc>
+    <loc>https://althawadi.org/news/item/DZ4tTppgIh6/</loc>
     <lastmod>2026-07-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.3</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://althawadi.org/news/item/DMK2zPSNJqp/</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://althawadi.org/news/item/DLuETdPtdjX/</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://althawadi.org/news/item/DIb5jY-tkVi/</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://althawadi.org/news/item/DIdu5N8NvCl/</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://althawadi.org/news/item/DBVblo1tDCK/</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://althawadi.org/news/item/C01oFAgNqxk/</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://althawadi.org/news/item/C0hJiFqN3Qj/</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://althawadi.org/news/item/CybcWAYtRfJ/</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://althawadi.org/news/item/Ce2oYLuP9AE/</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>

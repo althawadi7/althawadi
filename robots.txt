@@ -1,12 +1,5 @@
 User-agent: *
 Allow: /
 
-# Prefer these public documentation sections
-Allow: /references/
-Allow: /gallery/
-Allow: /ancestors/
-Allow: /site-map/
-Allow: /seo/
-
 Sitemap: https://althawadi.org/sitemap.xml
 Sitemap: https://althawadi.org/seo/sitemap.xml

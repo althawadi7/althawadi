@@ -26,6 +26,7 @@ def footer_nav_cols(base: str = BASE) -> str:
             <li><a href="{base}/gallery/" class="hover:text-accent">الصور</a></li>
             <li><a href="{base}/news/" class="hover:text-accent">أخبار المجلس</a></li>
             <li><a href="{base}/references/" class="hover:text-accent">مراجع ومصادر</a></li>
+            <li><a href="{base}/site-map/" class="hover:text-accent">خريطة الموقع</a></li>
           </ul>
         </div>"""
 

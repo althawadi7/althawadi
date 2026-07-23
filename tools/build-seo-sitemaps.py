@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Enable SEO indexing for references/gallery/ancestors and build sitemaps."""
+"""Build full-site sitemap + enable index,follow on all public pages."""
 
 from __future__ import annotations
 
@@ -14,48 +14,108 @@ SITE = "https://althawadi.org"
 TODAY = date.today().isoformat()
 
 CARDS = ROOT / "data" / "references-cards.json"
+NEWS_DATA = ROOT / "data" / "family-news.json"
 ROBOTS = ROOT / "robots.txt"
 SITEMAP_XML = ROOT / "sitemap.xml"
 SITEMAP_HTML_DIR = ROOT / "site-map"
 SITEMAP_HTML = SITEMAP_HTML_DIR / "index.html"
 
-SECTION_PAGES = [
+# Main public pages (all indexed)
+CORE_PAGES = [
     {
-        "path": "/references/",
-        "file": ROOT / "references" / "index.html",
-        "title": "مراجع ومصادر عن عائلة الذوادي",
+        "path": "/",
+        "file": ROOT / "index.html",
+        "title": "الذواودة — مجلس عائلة الذوادي",
         "description": (
-            "مراجع وكتب ووثائق ومنشورات توثّق نسب وعائلة الذوادي (الذواودة) في البحرين: "
-            "بني خالد والعماير، نواخذة الغوص، ودليل الخليج وسجلات المقيمية."
+            "الموقع الرسمي لعائلة الذوادي (الذواودة) في البحرين — توثيق ذرية عبدالله وراشد "
+            "أبناء عيسى بن خليفة بن هلال بن حسن الذوادي من العماير بني خالد."
         ),
         "priority": "1.0",
         "changefreq": "weekly",
+        "group": "main",
     },
     {
-        "path": "/gallery/",
-        "file": ROOT / "gallery" / "index.html",
-        "title": "معرض صور عائلة الذوادي",
-        "description": (
-            "معرض صور أرشيفية وحالية لأفراد عائلة الذوادي — من الأجداد إلى الأحفاد في الحد والبحرين."
-        ),
+        "path": "/about/",
+        "file": ROOT / "about" / "index.html",
+        "title": "عن عائلة الذوادي",
+        "description": "تاريخ ونسب عائلة الذوادي في البحرين — العماير من بني خالد واستقرارهم في الحد.",
         "priority": "0.9",
-        "changefreq": "weekly",
+        "changefreq": "monthly",
+        "group": "main",
+    },
+    {
+        "path": "/tree/",
+        "file": ROOT / "tree" / "index.html",
+        "title": "شجرة عائلة الذوادي",
+        "description": "شجرة نسب ذرية عبدالله وراشد أبناء عيسى بن خليفة بن هلال بن حسن الذوادي.",
+        "priority": "0.9",
+        "changefreq": "monthly",
+        "group": "main",
     },
     {
         "path": "/ancestors/",
         "file": ROOT / "ancestors" / "index.html",
         "title": "أجداد عائلة الذوادي — سير الأعيان",
         "description": (
-            "سير أعيان الذواودة: النوخذة الشيخ عبد الله بن عيسى الذوادي والشيخ راشد بن عيسى الذوادي، "
-            "الغوص ودانة عبدالله ووثائق الحد التاريخية."
+            "سير أعيان الذواودة: النوخذة الشيخ عبد الله بن عيسى الذوادي والشيخ راشد بن عيسى الذوادي."
         ),
         "priority": "0.9",
         "changefreq": "monthly",
+        "group": "main",
+    },
+    {
+        "path": "/gallery/",
+        "file": ROOT / "gallery" / "index.html",
+        "title": "معرض صور عائلة الذوادي",
+        "description": "معرض صور أرشيفية وحالية لأفراد عائلة الذوادي — من الأجداد إلى الأحفاد.",
+        "priority": "0.9",
+        "changefreq": "weekly",
+        "group": "main",
+    },
+    {
+        "path": "/news/",
+        "file": ROOT / "news" / "index.html",
+        "title": "أخبار عائلة الذوادي",
+        "description": "أخبار أفراد عائلة الذوادي وإنجازاتهم من حساب مجلس الذواودة على إنستغرام.",
+        "priority": "0.8",
+        "changefreq": "weekly",
+        "group": "main",
+    },
+    {
+        "path": "/references/",
+        "file": ROOT / "references" / "index.html",
+        "title": "مراجع ومصادر عن عائلة الذوادي",
+        "description": (
+            "مراجع وكتب ووثائق ومنشورات توثّق نسب وعائلة الذوادي في البحرين: بني خالد والعماير ونواخذة الغوص."
+        ),
+        "priority": "1.0",
+        "changefreq": "weekly",
+        "group": "main",
+    },
+    {
+        "path": "/contact/",
+        "file": ROOT / "contact" / "index.html",
+        "title": "تواصل مع عائلة الذوادي",
+        "description": "تواصل مع مجلس الذواودة للمساهمة بالمعلومات والصور والوثائق العائلية.",
+        "priority": "0.6",
+        "changefreq": "yearly",
+        "group": "main",
+    },
+    {
+        "path": "/site-map/",
+        "file": ROOT / "site-map" / "index.html",
+        "title": "خريطة الموقع — الذواودة",
+        "description": "خريطة كاملة لصفحات موقع عائلة الذوادي القابلة للفهرسة.",
+        "priority": "0.3",
+        "changefreq": "weekly",
+        "group": "main",
     },
 ]
 
 
 def set_robots_meta(path: Path, content: str = "index, follow") -> None:
+    if not path.exists():
+        return
     text = path.read_text(encoding="utf-8")
     if re.search(r'<meta\s+name=["\']robots["\']', text, flags=re.I):
         text = re.sub(
@@ -76,7 +136,7 @@ def set_robots_meta(path: Path, content: str = "index, follow") -> None:
     path.write_text(text, encoding="utf-8")
 
 
-def strengthen_section_head(page: dict) -> None:
+def strengthen_page_head(page: dict) -> None:
     path: Path = page["file"]
     if not path.exists():
         return
@@ -85,12 +145,7 @@ def strengthen_section_head(page: dict) -> None:
     desc = page["description"]
     url = f"{SITE}{page['path']}"
 
-    text = re.sub(
-        r"<title>[^<]*</title>",
-        f"<title>{html.escape(title)}</title>",
-        text,
-        count=1,
-    )
+    text = re.sub(r"<title>[^<]*</title>", f"<title>{html.escape(title)}</title>", text, count=1)
     if re.search(r'<meta\s+name=["\']description["\']', text, flags=re.I):
         text = re.sub(
             r'<meta\s+name=["\']description["\']\s+content=["\'][^"\']*["\']\s*/?>',
@@ -99,15 +154,6 @@ def strengthen_section_head(page: dict) -> None:
             count=1,
             flags=re.I,
         )
-    else:
-        text = re.sub(
-            r"(<title>[^<]*</title>)",
-            rf'\1\n  <meta name="description" content="{html.escape(desc, quote=True)}" />',
-            text,
-            count=1,
-        )
-
-    # Absolute OG URL + description
     if re.search(r'<meta\s+property=["\']og:url["\']', text, flags=re.I):
         text = re.sub(
             r'<meta\s+property=["\']og:url["\']\s+content=["\'][^"\']*["\']\s*/?>',
@@ -116,23 +162,14 @@ def strengthen_section_head(page: dict) -> None:
             count=1,
             flags=re.I,
         )
-    if re.search(r'<meta\s+property=["\']og:description["\']', text, flags=re.I):
-        text = re.sub(
-            r'<meta\s+property=["\']og:description["\']\s+content=["\'][^"\']*["\']\s*/?>',
-            f'<meta property="og:description" content="{html.escape(desc, quote=True)}" />',
-            text,
-            count=1,
-            flags=re.I,
-        )
     else:
         text = re.sub(
-            r'(<meta\s+property=["\']og:title["\'][^>]*/?>)',
-            rf'\1\n  <meta property="og:description" content="{html.escape(desc, quote=True)}" />',
+            r"(</head>)",
+            f'  <meta property="og:url" content="{url}" />\n\\1',
             text,
             count=1,
             flags=re.I,
         )
-
     if re.search(r'rel=["\']canonical["\']', text, flags=re.I):
         text = re.sub(
             r'<link\s+rel=["\']canonical["\']\s+href=["\'][^"\']*["\']\s*/?>',
@@ -141,25 +178,6 @@ def strengthen_section_head(page: dict) -> None:
             count=1,
             flags=re.I,
         )
-
-    # JSON-LD CollectionPage (insert once)
-    if "application/ld+json" not in text:
-        ld = {
-            "@context": "https://schema.org",
-            "@type": "CollectionPage",
-            "name": title,
-            "description": desc,
-            "url": url,
-            "isPartOf": {"@type": "WebSite", "name": "الذواودة — AL Thawadi", "url": SITE},
-            "inLanguage": "ar",
-        }
-        ld_tag = (
-            '  <script type="application/ld+json">\n'
-            f"  {json.dumps(ld, ensure_ascii=False)}\n"
-            "  </script>"
-        )
-        text = re.sub(r"</head>", ld_tag + "\n</head>", text, count=1, flags=re.I)
-
     path.write_text(text, encoding="utf-8")
     set_robots_meta(path, "index, follow")
 
@@ -167,36 +185,48 @@ def strengthen_section_head(page: dict) -> None:
 def reference_item_urls() -> list[dict]:
     if not CARDS.exists():
         return []
-    cards = json.loads(CARDS.read_text(encoding="utf-8"))
     out = []
-    for card in cards:
+    for card in json.loads(CARDS.read_text(encoding="utf-8")):
         slug = card.get("slug") or ""
-        if not slug:
+        if not slug or re.fullmatch(r"ref-(2[0-9]|30)", slug):
             continue
-        # Skip orphaned ghost pages from earlier broken builds
-        if re.fullmatch(r"ref-(2[0-9]|30)", slug):
+        item = ROOT / "references" / "item" / slug / "index.html"
+        if not item.exists():
             continue
-        item_dir = ROOT / "references" / "item" / slug / "index.html"
-        if not item_dir.exists():
-            continue
-        set_robots_meta(item_dir, "index, follow")
-        # Strengthen detail meta robots already done; ensure absolute og:url if relative
-        text = item_dir.read_text(encoding="utf-8")
-        abs_item = f"{SITE}/references/item/{slug}/"
-        text = re.sub(
-            r'<meta\s+property=["\']og:url["\']\s+content=["\'][^"\']*["\']\s*/?>',
-            f'<meta property="og:url" content="{abs_item}" />',
-            text,
-            count=1,
-            flags=re.I,
-        )
-        item_dir.write_text(text, encoding="utf-8")
+        set_robots_meta(item, "index, follow")
         out.append(
             {
                 "path": f"/references/item/{slug}/",
                 "title": card.get("title") or slug,
                 "priority": "0.7",
                 "changefreq": "monthly",
+                "group": "references",
+            }
+        )
+    return out
+
+
+def news_item_urls() -> list[dict]:
+    if not NEWS_DATA.exists():
+        return []
+    out = []
+    for post in json.loads(NEWS_DATA.read_text(encoding="utf-8")).get("posts", []):
+        code = post.get("shortcode") or ""
+        if not code:
+            continue
+        item = ROOT / "news" / "item" / code / "index.html"
+        if not item.exists():
+            continue
+        set_robots_meta(item, "index, follow")
+        caption = (post.get("caption") or post.get("text") or code).strip()
+        title = caption.split("\n")[0][:100]
+        out.append(
+            {
+                "path": f"/news/item/{code}/",
+                "title": title,
+                "priority": "0.6",
+                "changefreq": "monthly",
+                "group": "news",
             }
         )
     return out
@@ -208,13 +238,6 @@ def write_robots() -> None:
             [
                 "User-agent: *",
                 "Allow: /",
-                "",
-                "# Prefer these public documentation sections",
-                "Allow: /references/",
-                "Allow: /gallery/",
-                "Allow: /ancestors/",
-                "Allow: /site-map/",
-                "Allow: /seo/",
                 "",
                 f"Sitemap: {SITE}/sitemap.xml",
                 f"Sitemap: {SITE}/seo/sitemap.xml",
@@ -231,11 +254,10 @@ def write_sitemap_xml(urls: list[dict]) -> None:
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
     ]
     for u in urls:
-        loc = f"{SITE}{u['path']}"
         lines.extend(
             [
                 "  <url>",
-                f"    <loc>{html.escape(loc)}</loc>",
+                f"    <loc>{html.escape(SITE + u['path'])}</loc>",
                 f"    <lastmod>{TODAY}</lastmod>",
                 f"    <changefreq>{u.get('changefreq', 'monthly')}</changefreq>",
                 f"    <priority>{u.get('priority', '0.5')}</priority>",
@@ -246,7 +268,6 @@ def write_sitemap_xml(urls: list[dict]) -> None:
     lines.append("")
     body = "\n".join(lines)
     SITEMAP_XML.write_text(body, encoding="utf-8")
-    # Duplicate path (avoids rare root path caching issues in Search Console)
     seo_dir = ROOT / "seo"
     seo_dir.mkdir(parents=True, exist_ok=True)
     (seo_dir / "sitemap.xml").write_text(body, encoding="utf-8")
@@ -254,18 +275,16 @@ def write_sitemap_xml(urls: list[dict]) -> None:
 
 def write_sitemap_html(urls: list[dict]) -> None:
     SITEMAP_HTML_DIR.mkdir(parents=True, exist_ok=True)
-    groups = {
-        "الصفحات الرئيسية": [],
-        "صفحات المراجع التفصيلية": [],
-    }
-    for u in urls:
-        if u["path"].startswith("/references/item/"):
-            groups["صفحات المراجع التفصيلية"].append(u)
-        else:
-            groups["الصفحات الرئيسية"].append(u)
-
+    groups = [
+        ("الصفحات الرئيسية", "main"),
+        ("صفحات المراجع التفصيلية", "references"),
+        ("أخبار أفراد العائلة", "news"),
+    ]
     sections = []
-    for heading, items in groups.items():
+    for heading, key in groups:
+        items = [u for u in urls if u.get("group") == key]
+        if not items:
+            continue
         lis = "\n".join(
             f'            <li><a href="{html.escape(i["path"])}">{html.escape(i["title"])}</a>'
             f' <span class="text-muted-foreground font-latin text-xs">{html.escape(SITE + i["path"])}</span></li>'
@@ -288,7 +307,7 @@ def write_sitemap_html(urls: list[dict]) -> None:
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="index, follow" />
   <title>خريطة الموقع — الذواودة AL Thawadi</title>
-  <meta name="description" content="خريطة صفحات موقع عائلة الذوادي القابلة للفهرسة: المراجع، المعرض، والأجداد." />
+  <meta name="description" content="خريطة كاملة لجميع صفحات موقع عائلة الذوادي القابلة للفهرسة." />
   <link rel="canonical" href="/site-map/" />
   <meta property="og:title" content="خريطة الموقع — الذواودة" />
   <meta property="og:url" content="{SITE}/site-map/" />
@@ -307,6 +326,7 @@ def write_sitemap_html(urls: list[dict]) -> None:
           </span>
         </a>
         <nav class="hidden lg:flex items-center gap-7 text-sm">
+          <a href="/" data-home class="nav-link text-foreground/70 hover:text-foreground">الرئيسية</a>
           <a href="/ancestors/" class="nav-link text-foreground/70 hover:text-foreground">الأجداد</a>
           <a href="/gallery/" class="nav-link text-foreground/70 hover:text-foreground">الصور</a>
           <a href="/references/" class="nav-link text-foreground/70 hover:text-foreground">مراجع</a>
@@ -317,11 +337,20 @@ def write_sitemap_html(urls: list[dict]) -> None:
       <p class="text-xs uppercase tracking-[0.3em] text-accent font-latin">Sitemap</p>
       <h1 class="font-display text-3xl md:text-4xl text-foreground mt-3">خريطة الموقع</h1>
       <p class="mt-4 text-muted-foreground leading-7">
-        صفحات مفهرسة لمحركات البحث. ملف XML لتقديمه في Google Search Console:
+        جميع صفحات الموقع المفهرسة. ملف XML لـ Google Search Console:
         <a class="text-accent hover:underline font-latin" href="/sitemap.xml">{SITE}/sitemap.xml</a>
       </p>
 {''.join(sections)}
     </main>
+    <footer class="mt-24 border-t border-border bg-card/40">
+      <div class="mx-auto max-w-7xl px-6 py-10 text-sm text-muted-foreground">
+        <a href="/" class="hover:text-accent">الرئيسية</a>
+        <span class="mx-2">·</span>
+        <a href="/references/" class="hover:text-accent">المراجع</a>
+        <span class="mx-2">·</span>
+        <a href="/contact/" class="hover:text-accent">تواصل</a>
+      </div>
+    </footer>
   </div>
 </body>
 </html>
@@ -331,37 +360,29 @@ def write_sitemap_html(urls: list[dict]) -> None:
 
 def main() -> None:
     urls: list[dict] = []
-    for page in SECTION_PAGES:
-        strengthen_section_head(page)
+    for page in CORE_PAGES:
+        strengthen_page_head(page)
         urls.append(
             {
                 "path": page["path"],
                 "title": page["title"],
                 "priority": page["priority"],
                 "changefreq": page["changefreq"],
+                "group": page["group"],
             }
         )
 
-    item_urls = reference_item_urls()
-    urls.extend(item_urls)
-
-    # HTML sitemap itself
-    urls.append(
-        {
-            "path": "/site-map/",
-            "title": "خريطة الموقع",
-            "priority": "0.3",
-            "changefreq": "weekly",
-        }
-    )
+    urls.extend(reference_item_urls())
+    urls.extend(news_item_urls())
 
     write_robots()
     write_sitemap_xml(urls)
     write_sitemap_html(urls)
-    print(f"SEO enabled. Sitemap URLs: {len(urls)}")
+    # Ensure HTML sitemap page itself is indexed after rewrite
+    set_robots_meta(SITEMAP_HTML, "index, follow")
+    print(f"Full-site SEO sitemap: {len(urls)} URLs")
     print(f"  XML: {SITEMAP_XML}")
     print(f"  HTML: {SITEMAP_HTML}")
-    print(f"  Submit in GSC: {SITE}/sitemap.xml")
 
 
 if __name__ == "__main__":
