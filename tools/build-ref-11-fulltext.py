@@ -16,7 +16,6 @@ SOURCE_URL = "https://bashaaralhadi.blogspot.com/2014/11/blog-post_5.html"
 THAWADI_NAMES = (
     "عبدالله بن عيسى الذوادي",
     "عبد الله بن عيسى الذوادي",
-    "محمد بن متعب الذوادي",
 )
 
 
@@ -27,12 +26,6 @@ def highlight_thawadi(text: str) -> str:
         esc = esc.replace(
             esc_name,
             f'<mark class="ref-thawadi-mark">{esc_name}</mark>',
-        )
-    if "الذوادي" in text and "<mark" not in esc:
-        esc = re.sub(
-            r"(الذوادي)",
-            r'<mark class="ref-thawadi-mark">\1</mark>',
-            esc,
         )
     return esc
 
@@ -79,7 +72,6 @@ def build_html(sections: list[tuple[str, list[str]]]) -> str:
         "<h2 class=\"ref-thawadi-related-title\">نواخذة من عائلة الذوادي في القائمة</h2>",
         '<ul class="ref-thawadi-related-list">',
         "<li><strong>عبد الله بن عيسى الذوادي</strong> — حرف العين</li>",
-        "<li><strong>محمد بن متعب الذوادي</strong> — حرف الميم</li>",
         "</ul>",
         '<p class="ref-thawadi-related-note">العبارات المتعلقة بالذوادي '
         '<mark class="ref-thawadi-mark">مظلّلة</mark> في نص المقال.</p>',
@@ -100,7 +92,7 @@ def build_html(sections: list[tuple[str, list[str]]]) -> str:
         parts.append(f'<h3 class="ref-article-h3">{html.escape(heading)}</h3>')
         parts.append('<ol class="ref-ship-list">')
         for i, line in enumerate(lines, 1):
-            is_thawadi = "الذوادي" in line
+            is_thawadi = any(name in line for name in THAWADI_NAMES)
             cls = "ref-ship-item ref-ship-item--thawadi" if is_thawadi else "ref-ship-item"
             body = highlight_thawadi(line)
             parts.append(f'<li class="{cls}">{body}</li>')
@@ -133,7 +125,7 @@ def update_cards(fulltext: str) -> None:
             card["fulltext"] = fulltext
             card["excerpt"] = (
                 "قائمة كاملة بأسماء نواخذة الغوص في البحرين (1920–1960) مرتبة على حروف المعجم؛ "
-                "يذكر عبد الله بن عيسى الذوادي ومحمد بن متعب الذوادي."
+                "يذكر عبد الله بن عيسى الذوادي."
             )
             break
     CARDS.write_text(json.dumps(cards, ensure_ascii=False, indent=2), encoding="utf-8")
