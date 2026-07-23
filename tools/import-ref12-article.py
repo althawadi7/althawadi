@@ -12,20 +12,19 @@ PAGE = ROOT / "references" / "item" / "ref-12" / "index.html"
 CARDS = ROOT / "data" / "references-cards.json"
 
 THAWADI = re.compile(
-    r"(الذوادي|عبد\s*الله\s*(?:بن\s*عيسى\s*)?الذوادي|الحاج\s+عبد\s*الله(?:\s+بن\s+عيسى)?\s+الذوادي)",
+    r"(عبد\s*الله\s*بن\s*عيسى\s*الذوادي|الحاج\s+عبد\s*الله\s+بن\s+عيسى\s+الذوادي)",
     re.I,
 )
 
 RELATED = """<aside class="ref-thawadi-related" aria-label="ما يخص عائلة الذوادي">
-<h2 class="ref-thawadi-related-title">سفن النوخذة عبد الله بن عيسى الذوادي</h2>
+<h2 class="ref-thawadi-related-title">سفن ذُكرت مع اسم الذوادي</h2>
 <ul class="ref-thawadi-related-list">
 <li><strong>مساعد</strong> — سنبوك، للحاج عبد الله الذوادي <span class="ref-ship-ref">(رقم 10 — قائمة الشملان)</span></li>
 <li><strong>بشارة</strong> — جالبوت، للحاج عبد الله بن عيسى الذوادي <span class="ref-ship-ref">(رقم 21 — قائمة الشملان)</span></li>
 <li><strong>دلال</strong> — جالبوت، للذوادي <span class="ref-ship-ref">(رقم 13 — استدراك العماري)</span></li>
 </ul>
-<p class="ref-thawadi-related-note">العبارات المتعلقة بالذوادي <mark class="ref-thawadi-mark">مظلّلة</mark> في نص المقال.</p>
+<p class="ref-thawadi-related-note">المظلّل في نص المقال يخص سفينة <strong>بشارة</strong> للنوخذة عبد الله بن عيسى الذوادي فقط. «مساعد» و«دلال» مذكورتان في القائمة دون تظليل.</p>
 </aside>"""
-
 
 def hi(text: str) -> str:
     return THAWADI.sub(
