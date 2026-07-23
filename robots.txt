@@ -5,6 +5,6 @@ Allow: /
 Allow: /references/
 Allow: /gallery/
 Allow: /ancestors/
-Allow: /sitemap/
+Allow: /site-map/
 
 Sitemap: https://althawadi.org/sitemap.xml

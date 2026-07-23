@@ -16,7 +16,7 @@ TODAY = date.today().isoformat()
 CARDS = ROOT / "data" / "references-cards.json"
 ROBOTS = ROOT / "robots.txt"
 SITEMAP_XML = ROOT / "sitemap.xml"
-SITEMAP_HTML_DIR = ROOT / "sitemap"
+SITEMAP_HTML_DIR = ROOT / "site-map"
 SITEMAP_HTML = SITEMAP_HTML_DIR / "index.html"
 
 SECTION_PAGES = [
@@ -213,7 +213,7 @@ def write_robots() -> None:
                 "Allow: /references/",
                 "Allow: /gallery/",
                 "Allow: /ancestors/",
-                "Allow: /sitemap/",
+                "Allow: /site-map/",
                 "",
                 f"Sitemap: {SITE}/sitemap.xml",
                 "",
@@ -282,9 +282,9 @@ def write_sitemap_html(urls: list[dict]) -> None:
   <meta name="robots" content="index, follow" />
   <title>خريطة الموقع — الذواودة AL Thawadi</title>
   <meta name="description" content="خريطة صفحات موقع عائلة الذوادي القابلة للفهرسة: المراجع، المعرض، والأجداد." />
-  <link rel="canonical" href="/sitemap/" />
+  <link rel="canonical" href="/site-map/" />
   <meta property="og:title" content="خريطة الموقع — الذواودة" />
-  <meta property="og:url" content="{SITE}/sitemap/" />
+  <meta property="og:url" content="{SITE}/site-map/" />
   <link rel="stylesheet" href="/css/styles.css" />
   <script src="/js/url-clean.js"></script>
   <script src="/js/main.js" defer></script>
@@ -341,7 +341,7 @@ def main() -> None:
     # HTML sitemap itself
     urls.append(
         {
-            "path": "/sitemap/",
+            "path": "/site-map/",
             "title": "خريطة الموقع",
             "priority": "0.3",
             "changefreq": "weekly",
