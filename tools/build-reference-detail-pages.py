@@ -137,6 +137,7 @@ def book_entry_fulltext(book: str, author: str, entry: dict) -> str:
     dates = html.escape(entry.get("dates") or "")
     pages = html.escape(entry.get("pages") or "")
     text = (entry.get("text") or "").strip()
+    photo_note = (entry.get("photo_note") or "").strip()
     book_e = html.escape(book)
     author_e = html.escape(author)
     cite = (
@@ -147,11 +148,13 @@ def book_entry_fulltext(book: str, author: str, entry: dict) -> str:
         "</aside>"
     )
     body_parts = []
+    if photo_note:
+        body_parts.append(
+            f'<p class="mt-4 text-sm text-muted-foreground">{html.escape(photo_note)}</p>'
+        )
     if text:
-        # Split on blank lines, else keep as one or two readable blocks
         paras = [p.strip() for p in re.split(r"\n\n+", text) if p.strip()]
         if len(paras) == 1 and len(paras[0]) > 350:
-            # Soft-split long book extracts at sentence boundaries for readability
             chunk = paras[0]
             mid = chunk.find("، ويشير")
             if mid < 0:
@@ -230,6 +233,26 @@ def sync_book_nawakhida_into_cards(cards: list[dict]) -> list[dict]:
     entries = data.get("entries") or []
     if not entries:
         return cards
+
+    book_slugs = {e.get("slug") for e in entries if e.get("slug")}
+    book_titles = {e.get("name") for e in entries if e.get("name")}
+
+    # Drop orphaned ref-* ghosts that duplicated book characters (broken slug parse)
+    cleaned = []
+    for c in cards:
+        slug = c.get("slug") or ""
+        title = c.get("title") or ""
+        if (
+            slug.startswith("ref-")
+            and slug not in {f"ref-{i:02d}" for i in range(1, 20)}
+            and title in book_titles
+        ):
+            continue
+        if slug.startswith("book-nawakhida-") and slug not in book_slugs:
+            # keep unknown book pages unless clearly orphans; skip none
+            pass
+        cleaned.append(c)
+    cards = cleaned
 
     by_slug = {c["slug"]: i for i, c in enumerate(cards)}
     insert_at = 0
@@ -363,6 +386,12 @@ def parse_cards(
     for i, block in enumerate(blocks, 1):
         card_id = first_match(block, r'\bid="([^"]+)"')
         detail_href = first_match(block, r'class="ref-ig-read-more"[^>]*href="([^"]+)"')
+        if not detail_href:
+            detail_href = first_match(block, r'<a[^>]*href="([^"]+)"[^>]*class="[^"]*ref-ig-read-more')
+        if not detail_href:
+            detail_href = first_match(block, r'class="ref-ig-card-title-link"[^>]*href="([^"]+)"')
+        if not detail_href:
+            detail_href = first_match(block, r'<a[^>]*href="([^"]+)"[^>]*class="[^"]*ref-ig-card-title-link')
         slug = card_id or slug_from_href(detail_href) or f"ref-{i:02d}"
         is_source = "ref-ig-card--source" in block
         title = strip_tags(
@@ -539,7 +568,7 @@ def card_html(card: dict) -> str:
     search = html.escape(card["search"], quote=True)
     thumb = card_thumb_html(card)
     classes = "ref-ig-card ref-ig-card--source" if card["is_source"] else "ref-ig-card"
-    id_attr = f' id="{card["slug"]}"' if card["slug"].startswith("ig-") else ""
+    id_attr = f' id="{html.escape(card["slug"])}"'
     meta_bits = []
     if card["is_source"]:
         meta_bits.append('<span class="ref-ig-badge">مرجع</span>')
