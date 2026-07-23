@@ -214,8 +214,10 @@ def write_robots() -> None:
                 "Allow: /gallery/",
                 "Allow: /ancestors/",
                 "Allow: /site-map/",
+                "Allow: /seo/",
                 "",
                 f"Sitemap: {SITE}/sitemap.xml",
+                f"Sitemap: {SITE}/seo/sitemap.xml",
                 "",
             ]
         ),
@@ -242,7 +244,12 @@ def write_sitemap_xml(urls: list[dict]) -> None:
         )
     lines.append("</urlset>")
     lines.append("")
-    SITEMAP_XML.write_text("\n".join(lines), encoding="utf-8")
+    body = "\n".join(lines)
+    SITEMAP_XML.write_text(body, encoding="utf-8")
+    # Duplicate path (avoids rare root path caching issues in Search Console)
+    seo_dir = ROOT / "seo"
+    seo_dir.mkdir(parents=True, exist_ok=True)
+    (seo_dir / "sitemap.xml").write_text(body, encoding="utf-8")
 
 
 def write_sitemap_html(urls: list[dict]) -> None:
