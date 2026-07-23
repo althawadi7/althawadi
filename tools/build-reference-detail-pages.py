@@ -608,7 +608,7 @@ def page_shell(title: str, description: str, slug: str, body: str, og_image: str
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="robots" content="noindex, nofollow" />
+  <meta name="robots" content="index, follow" />
   <title>{t} — مراجع الذوادي</title>
   <meta name="description" content="{d}" />
   <meta property="og:title" content="{t}" />
