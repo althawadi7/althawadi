@@ -2320,6 +2320,20 @@ a.ref-ig-thumb--card-link:hover img {
   background: color-mix(in oklch, var(--accent) 7%, var(--card));
 }
 
+.ref-book-cite {
+  margin: 0 0 1.5rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid color-mix(in oklch, var(--accent) 30%, var(--border));
+  border-radius: var(--radius);
+  background: color-mix(in oklch, var(--accent) 6%, var(--card));
+  font-size: 0.925rem;
+  line-height: 1.8;
+}
+
+.ref-book-cite p {
+  margin: 0.15rem 0;
+}
+
 .ref-thawadi-related-title {
   font-family: var(--font-display, inherit);
   font-size: 1.125rem;

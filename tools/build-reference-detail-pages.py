@@ -15,6 +15,7 @@ OUT_DIR = ROOT / "references" / "item"
 MANIFEST = ROOT / "data" / "references-manifest.json"
 CARDS_DATA = ROOT / "data" / "references-cards.json"
 IG_DATA = ROOT / "data" / "instagram-history.json"
+BOOK_NAWAKHIDA = ROOT / "data" / "book-nawakhida-bahrain.json"
 BASE = ""
 ITEM_BASE = f"{BASE}/references/item"
 
@@ -128,6 +129,130 @@ def renumber_ig_cards(cards: list[dict]) -> list[dict]:
         if not c.get("is_source") and str(c.get("slug", "")).startswith("ig-"):
             n += 1
             c["num"] = f"{n:02d}"
+    return cards
+
+
+def book_entry_fulltext(book: str, author: str, entry: dict) -> str:
+    name = html.escape(entry.get("name") or "")
+    dates = html.escape(entry.get("dates") or "")
+    pages = html.escape(entry.get("pages") or "")
+    text = (entry.get("text") or "").strip()
+    book_e = html.escape(book)
+    author_e = html.escape(author)
+    cite = (
+        '<aside class="ref-book-cite" aria-label="بيانات المصدر">'
+        f'<p><strong class="text-foreground">المصدر:</strong> {book_e}</p>'
+        f'<p><strong class="text-foreground">تأليف:</strong> {author_e}</p>'
+        f'<p><strong class="text-foreground">الصفحات:</strong> {pages}</p>'
+        "</aside>"
+    )
+    body_parts = []
+    if text:
+        # Split on blank lines, else keep as one or two readable blocks
+        paras = [p.strip() for p in re.split(r"\n\n+", text) if p.strip()]
+        if len(paras) == 1 and len(paras[0]) > 350:
+            # Soft-split long book extracts at sentence boundaries for readability
+            chunk = paras[0]
+            mid = chunk.find("، ويشير")
+            if mid < 0:
+                mid = chunk.find(". وقد ")
+            if mid > 80:
+                paras = [chunk[: mid + 1].strip(), chunk[mid + 1 :].lstrip(" ،.")]
+        for para in paras:
+            body_parts.append(
+                f'<p class="ref-ig-caption-p mt-6">{html.escape(para)}</p>'
+            )
+    dates_line = (
+        f'<p class="mt-4 text-sm text-muted-foreground">التواريخ في الكتاب: {dates}</p>'
+        if dates
+        else ""
+    )
+    return (
+        f"{cite}\n"
+        f'<h2 class="ref-article-h2 mt-8">{name}</h2>\n'
+        f"{dates_line}\n"
+        f"{''.join(body_parts)}"
+    )
+
+
+def card_from_book_entry(book: str, author: str, entry: dict, index: int) -> dict:
+    slug = entry["slug"]
+    name = entry.get("name") or slug
+    pages = entry.get("pages") or ""
+    text = entry.get("text") or ""
+    imgs_raw = entry.get("images") or []
+    if not imgs_raw and entry.get("image"):
+        imgs_raw = [entry["image"]]
+    imgs = [abs_url(u) for u in imgs_raw if u]
+    excerpt = excerpt_from_caption(
+        f"من {book} — تأليف {author} — ص {pages}. {text}",
+        160,
+    )
+    media = {"kind": "none"}
+    if len(imgs) > 1:
+        media = {
+            "kind": "gallery",
+            "src": imgs[0],
+            "thumb": imgs[0],
+            "images": imgs,
+            "alt": name,
+        }
+    elif imgs:
+        media = {
+            "kind": "image",
+            "src": imgs[0],
+            "thumb": imgs[0],
+            "images": imgs,
+            "alt": name,
+        }
+    return {
+        "slug": slug,
+        "index": index,
+        "is_source": True,
+        "title": name,
+        "excerpt": excerpt,
+        "author": f"{author} — {book}",
+        "num": "",
+        "search": f"{name} {book} {author} صفحات {pages} {text}",
+        "fulltext": book_entry_fulltext(book, author, entry),
+        "external_url": "",
+        "media": media,
+    }
+
+
+def sync_book_nawakhida_into_cards(cards: list[dict]) -> list[dict]:
+    """Insert/update character entries from كتاب نواخذة البحرين."""
+    if not BOOK_NAWAKHIDA.exists():
+        return cards
+    data = json.loads(BOOK_NAWAKHIDA.read_text(encoding="utf-8"))
+    book = data.get("book") or "كتاب نواخذة البحرين"
+    author = data.get("author") or "بشار بن يوسف الحادي"
+    entries = data.get("entries") or []
+    if not entries:
+        return cards
+
+    by_slug = {c["slug"]: i for i, c in enumerate(cards)}
+    insert_at = 0
+    for i, c in enumerate(cards):
+        if c.get("is_source"):
+            insert_at = i + 1
+
+    for entry in entries:
+        slug = entry.get("slug")
+        if not slug:
+            continue
+        card = card_from_book_entry(book, author, entry, 0)
+        if slug in by_slug:
+            idx = by_slug[slug]
+            card["index"] = cards[idx]["index"]
+            cards[idx] = card
+        else:
+            cards.insert(insert_at, card)
+            insert_at += 1
+            by_slug = {c["slug"]: i for i, c in enumerate(cards)}
+
+    for i, c in enumerate(cards, 1):
+        c["index"] = i
     return cards
 
 
@@ -582,6 +707,7 @@ def main() -> None:
     ig_posts = load_ig_posts()
     saved_fulltext = load_fulltext_from_details()
     cards = parse_cards(text, ig_posts, saved_fulltext)
+    cards = sync_book_nawakhida_into_cards(cards)
     cards = sync_ig_posts_into_cards(cards, ig_posts)
 
     # Fill missing IG fulltext from JSON captions; always refresh media paths from JSON
