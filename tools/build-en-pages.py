@@ -753,24 +753,27 @@ def build_detail_en_shells() -> int:
             article = article.replace("← كل المراجع", f"← All {section_label.lower()}")
             article = article.replace("← أخبار المجلس", "← Majlis News")
             article = rewrite_links_to_en(article)
+            article = localize_ui(article)
+            article = fix_family_names(article)
             body = f"""      <nav class="ref-detail-breadcrumb mx-auto max-w-3xl px-4 sm:px-6 pt-8" aria-label="Breadcrumb">
         <a href="{en_list}" class="text-sm text-muted-foreground hover:text-accent">← {section_label}</a>
       </nav>
-      <article class="mx-auto max-w-3xl px-4 sm:px-6 py-10 pb-20">
-        {original_note()}
+      <article class="mx-auto max-w-3xl px-4 sm:px-6 py-10 pb-20" lang="ar" dir="rtl">
+        {original_note() if "references/item" in ar_prefix or "news/item" in ar_prefix else ""}
         {article}
       </article>"""
-            # page_shell wraps another main — use custom shell without nested main issues
+            # EN meta titles keep source Arabic title but brand is AL Thawadi
+            en_title = f"{raw_title} — {SINGULAR}"
+            en_desc = fix_family_names(desc)[:300]
             page = page_shell(
                 lang="en",
                 path=en_path,
-                title=html.escape(f"{raw_title} — AL Thawadi"),
-                description=html.escape(desc[:160], quote=True),
+                title=html.escape(en_title),
+                description=html.escape(en_desc, quote=True),
                 body=body,
                 og_image=og_m.group(1) if og_m else "",
                 og_type="article",
             )
-            # Fix double main: page_shell puts body inside main; our body already has article — OK
             dest = en_dir / slug / "index.html"
             dest.parent.mkdir(parents=True, exist_ok=True)
             dest.write_text(page, encoding="utf-8")

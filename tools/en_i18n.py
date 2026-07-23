@@ -15,7 +15,8 @@ import re
 
 # Preferred Latin forms
 PLURAL = "AL Thawawdah"
-SINGULAR = "AL Thawadi"
+BRAND = "AL Thawadi"  # logo / site signal (singular)
+SINGULAR = "Al Thawadi"  # in running English names
 
 # Wrong → correct (order matters: longer first)
 NAME_FIXES = [
@@ -172,6 +173,10 @@ def transliterate_caption(ar: str) -> str:
     # Clean leftover Arabic digits markers etc.
     t = t.replace("،", ",")
     t = re.sub(r"\s{2,}", " ", t).strip(" .")
+    # Capitalize after sentence breaks
+    t = re.sub(r"([.!?]\s+)([a-z])", lambda m: m.group(1) + m.group(2).upper(), t)
+    if t and t[0].islower():
+        t = t[0].upper() + t[1:]
     # If still mostly Arabic, keep original (don't invent)
     arabic_chars = len(re.findall(r"[\u0600-\u06FF]", t))
     if arabic_chars > max(3, len(t) // 3):
