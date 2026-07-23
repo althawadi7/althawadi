@@ -20,7 +20,25 @@ HEADERS = {
     "Accept-Language": "ar,en;q=0.9",
 }
 
+# When MERGE is True, only fetch these and prepend into existing instagram-history.json.
+MERGE = True
 SHORTCODES = [
+    "DaanHrxsWB5",
+    "DalEy-tgkDn",
+    "Da0dbXTgWDr",
+    "DaIyTwcg3d1",
+    "DaNLL_xAuXx",
+    "DaU754bAgdT",
+]
+
+# Full archive list (kept for reference / full re-fetch when MERGE=False)
+_ALL_SHORTCODES = [
+    "DaanHrxsWB5",
+    "DalEy-tgkDn",
+    "Da0dbXTgWDr",
+    "DaIyTwcg3d1",
+    "DaNLL_xAuXx",
+    "DaU754bAgdT",
     "DYg1frRABy6",
     "DX3tjkvgFU7",
     "DKSPaQot4pT",
@@ -239,11 +257,12 @@ def download_all_images(code: str, post: dict) -> list[str]:
 
 def main() -> None:
     ASSETS.mkdir(parents=True, exist_ok=True)
+    codes = SHORTCODES if MERGE else _ALL_SHORTCODES
     posts = []
     failed = []
 
-    for i, code in enumerate(SHORTCODES, 1):
-        print(f"[{i}/{len(SHORTCODES)}] {code}")
+    for i, code in enumerate(codes, 1):
+        print(f"[{i}/{len(codes)}] {code}")
         item = fetch_post(code)
         if not item:
             failed.append(code)
@@ -257,18 +276,39 @@ def main() -> None:
         if post["image_count"] > 1 and post["type"] == "image":
             post["type"] = "album"
         post["cover"] = local_images[0] if local_images else (post["images"][0] if post["images"] else None)
+        # Drop CDN-only field before save
+        post.pop("images", None)
         posts.append(post)
         time.sleep(0.6)
 
-    out = {
-        "source": "https://www.instagram.com/althawadi_majlis/?hl=ar",
-        "description": "منشورات تاريخية مختارة من حساب مجلس الذواودة",
-        "fetched_at": date.today().isoformat(),
-        "posts": posts,
-        "failed": failed,
-    }
-    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"\nSaved {len(posts)} posts to {OUT}")
+    if MERGE and OUT.exists():
+        existing = json.loads(OUT.read_text(encoding="utf-8"))
+        old_posts = existing.get("posts", [])
+        have = {p["shortcode"] for p in posts}
+        kept = [p for p in old_posts if p.get("shortcode") not in have]
+        merged = posts + kept
+        out = {
+            "source": existing.get("source")
+            or "https://www.instagram.com/althawadi_majlis/?hl=ar",
+            "description": existing.get("description")
+            or "منشورات تاريخية مختارة من حساب مجلس الذواودة",
+            "fetched_at": date.today().isoformat(),
+            "posts": merged,
+            "failed": failed,
+        }
+        OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(f"\nMerged {len(posts)} new + {len(kept)} existing → {len(merged)} total in {OUT}")
+    else:
+        out = {
+            "source": "https://www.instagram.com/althawadi_majlis/?hl=ar",
+            "description": "منشورات تاريخية مختارة من حساب مجلس الذواودة",
+            "fetched_at": date.today().isoformat(),
+            "posts": posts,
+            "failed": failed,
+        }
+        OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(f"\nSaved {len(posts)} posts to {OUT}")
+
     if failed:
         print("Failed:", ", ".join(failed))
 

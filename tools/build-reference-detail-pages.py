@@ -41,6 +41,94 @@ def first_match(block: str, pattern: str) -> str:
     return m.group(1).strip() if m else ""
 
 
+def caption_to_fulltext(caption: str) -> str:
+    clean = (caption or "").strip().replace('"\n', "\n").strip('"')
+    parts = [p.strip() for p in re.split(r"\n\n+", clean) if p.strip()]
+    blocks = []
+    for para in parts:
+        lines = [html.escape(l.strip()) for l in para.split("\n") if l.strip()]
+        inner = "<br />".join(lines)
+        blocks.append(f'<p class="ref-ig-caption-p">{inner}</p>')
+    return "\n                ".join(blocks)
+
+
+def title_from_caption(caption: str) -> str:
+    line = (caption or "").strip().split("\n")[0].strip()
+    line = re.sub(r'^[\s"]+|[\s"]+$', "", line)
+    if len(line) > 100:
+        return line[:97].rstrip() + "…"
+    return line or "منشور من @althawadi_majlis"
+
+
+def excerpt_from_caption(caption: str, max_len: int = 160) -> str:
+    clean = re.sub(r"\s+", " ", (caption or "").strip().replace('"\n', "\n").strip('"'))
+    if len(clean) <= max_len:
+        return clean
+    return clean[: max_len - 1].rstrip() + "…"
+
+
+def card_from_ig_post(post: dict, index: int) -> dict:
+    code = post["shortcode"]
+    caption = post.get("caption") or ""
+    card = {
+        "slug": f"ig-{code}",
+        "index": index,
+        "is_source": False,
+        "title": title_from_caption(caption),
+        "excerpt": excerpt_from_caption(caption),
+        "author": "",
+        "num": f"{index:02d}",
+        "search": f"{code} {caption}",
+        "fulltext": caption_to_fulltext(caption),
+        "external_url": post.get("url") or f"https://www.instagram.com/p/{code}/?hl=ar",
+        "media": {"kind": "none"},
+    }
+    enrich_media_from_json(card, {code: post})
+    return card
+
+
+def sync_ig_posts_into_cards(cards: list[dict], ig_posts: dict[str, dict]) -> list[dict]:
+    """Prepend any Instagram posts from JSON that are missing on the page."""
+    if not IG_DATA.exists():
+        return cards
+    data = json.loads(IG_DATA.read_text(encoding="utf-8"))
+    ordered = data.get("posts") or []
+    existing = {c["slug"] for c in cards}
+    missing = []
+    for post in ordered:
+        code = post.get("shortcode")
+        if not code:
+            continue
+        slug = f"ig-{code}"
+        if slug in existing:
+            continue
+        missing.append(post)
+        ig_posts[code] = post
+
+    if not missing:
+        # Still renumber IG cards to match JSON order preference for new ones at top
+        return renumber_ig_cards(cards)
+
+    # Insert missing after last source card (or at start if none)
+    insert_at = 0
+    for i, c in enumerate(cards):
+        if c.get("is_source"):
+            insert_at = i + 1
+    new_cards = [card_from_ig_post(p, 0) for p in missing]
+    cards = cards[:insert_at] + new_cards + cards[insert_at:]
+    return renumber_ig_cards(cards)
+
+
+def renumber_ig_cards(cards: list[dict]) -> list[dict]:
+    n = 0
+    for i, c in enumerate(cards, 1):
+        c["index"] = i
+        if not c.get("is_source") and str(c.get("slug", "")).startswith("ig-"):
+            n += 1
+            c["num"] = f"{n:02d}"
+    return cards
+
+
 def load_ig_posts() -> dict[str, dict]:
     if not IG_DATA.exists():
         return {}
@@ -492,6 +580,24 @@ def main() -> None:
     ig_posts = load_ig_posts()
     saved_fulltext = load_fulltext_from_details()
     cards = parse_cards(text, ig_posts, saved_fulltext)
+    cards = sync_ig_posts_into_cards(cards, ig_posts)
+
+    # Fill missing IG fulltext from JSON captions
+    for card in cards:
+        slug = card.get("slug") or ""
+        if not slug.startswith("ig-") or card.get("fulltext"):
+            continue
+        code = slug[3:]
+        post = ig_posts.get(code)
+        if post and post.get("caption"):
+            card["fulltext"] = caption_to_fulltext(post["caption"])
+            if not card.get("title"):
+                card["title"] = title_from_caption(post["caption"])
+            if not card.get("excerpt"):
+                card["excerpt"] = excerpt_from_caption(post["caption"])
+            if not card.get("external_url"):
+                card["external_url"] = post.get("url") or ""
+            enrich_media_from_json(card, ig_posts)
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     for child in OUT_DIR.iterdir():
