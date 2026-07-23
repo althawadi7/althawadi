@@ -331,7 +331,7 @@ def enrich_media_from_json(card: dict, ig_posts: dict[str, dict]) -> None:
     post = ig_posts.get(code)
     if not post:
         return
-    if post.get("url") and not card.get("external_url"):
+    if post.get("url"):
         card["external_url"] = post["url"]
     imgs = [abs_url(u) for u in (post.get("local_images") or [])]
     vids = [abs_url(u) for u in (post.get("local_videos") or [])]
@@ -341,6 +341,16 @@ def enrich_media_from_json(card: dict, ig_posts: dict[str, dict]) -> None:
         media["src"] = vids[0]
         media["poster"] = imgs[0] if imgs else media.get("poster") or media.get("thumb")
         media["thumb"] = media["poster"] or media["src"]
+        if len(vids) > 1:
+            media["videos"] = [
+                {
+                    "src": v,
+                    "poster": imgs[i] if i < len(imgs) else (imgs[0] if imgs else ""),
+                }
+                for i, v in enumerate(vids)
+            ]
+        if post.get("hide_post_label"):
+            card["num"] = ""
         return
     if len(imgs) > 1:
         media["kind"] = "gallery"
@@ -500,6 +510,21 @@ def fix_paths_in_html(fragment: str) -> str:
 def media_block(media: dict, title: str) -> str:
     kind = media.get("kind")
     if kind == "video":
+        videos = media.get("videos") or []
+        if len(videos) > 1:
+            parts = []
+            for i, v in enumerate(videos, 1):
+                poster = html.escape(v.get("poster") or "")
+                src = html.escape(v.get("src") or "")
+                parts.append(
+                    f'<figure class="ref-detail-media ref-detail-media--video">'
+                    f'<video class="ref-detail-video" controls playsinline preload="metadata" '
+                    f'{"poster=\"" + poster + "\"" if poster else ""} src="{src}"></video>'
+                    f'<figcaption class="ref-media-caption text-sm text-muted-foreground mt-2">'
+                    f"فيديو {i}</figcaption>"
+                    f"</figure>"
+                )
+            return f'<div class="ref-detail-gallery ref-detail-gallery--videos">{"".join(parts)}</div>'
         poster = html.escape(media.get("poster") or "")
         src = html.escape(media.get("src") or "")
         return (
@@ -716,11 +741,11 @@ def main() -> None:
                 "src": f"{BASE}/assets/E5UyU7aXEAIYjw9.jpg",
                 "thumb": f"{BASE}/assets/E5UyU7aXEAIYjw9.jpg",
                 "images": [f"{BASE}/assets/E5UyU7aXEAIYjw9.jpg"],
-                "alt": "صفحة 608 — Settled Tribes of the Centre — Beni Khālid — جدول Dawāudah تحت بطن 'Amā'ir",
+                "alt": "صفحة 608 — Settled Tribes of the Centre — Beni Khālid — جدول AL Thawawdah (Dawāudah في النص الأصلي) تحت بطن 'Amā'ir",
                 "caption": (
                     "صورة الأصل: صفحة 608 — «13. Beni Khālid» — جدول BENI KHĀLID — "
                     "IOR/L/PS/20/E84/1 (Settled Tribes of the Centre, 1916). "
-                    "يظهر الذواودة (Dawāudah) تحت بطن العماير ('Amā'ir)."
+                    "يظهر الذواودة — AL Thawawdah (وردت في النص البريطاني Dawāudah) تحت بطن العماير ('Amā'ir)."
                 ),
             }
             break

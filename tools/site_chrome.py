@@ -58,7 +58,7 @@ FOOTER = {
         "contact": "Contact",
         "references_full": "References & Sources",
         "sitemap": "Sitemap",
-        "brand_blurb": "An archive of the descendants of Abdullah and Rashid, sons of Isa bin Khalifa bin Hilal bin Hasan Al Thawadi — Al-‘Ama’ir of Bani Khalid.",
+        "brand_blurb": "An archive of AL Thawawdah — descendants of Abdullah and Rashid, sons of Isa bin Khalifa bin Hilal bin Hasan Al Thawadi — Al-‘Ama’ir of Bani Khalid.",
         "contact_blurb": 'To contribute information or photos: <a href="{base}/contact/" class="text-accent hover:underline">Contact page</a>',
         "rights": "AL Thawadi Family — All rights reserved",
         "brand_name": "AL Thawadi",

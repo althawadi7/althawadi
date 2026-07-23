@@ -18,6 +18,14 @@ from site_chrome import (
     normalize_path,
     page_shell,
 )
+from en_i18n import (
+    PLURAL,
+    SINGULAR,
+    fix_family_names,
+    localize_gallery_html,
+    localize_ui,
+    transliterate_caption,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 EN_ROOT = ROOT / "en"
@@ -113,13 +121,13 @@ def body_home() -> str:
             <p class="text-xs uppercase tracking-[0.5em] text-accent font-latin">AL Thawadi · Bahrain</p>
             <div class="ornament my-6 w-44"></div>
             <h1 class="font-display text-5xl md:text-7xl text-foreground leading-tight">
-              Al-Dhawawdah
+              {PLURAL}
               <span class="block text-3xl md:text-4xl text-primary/80 mt-3">in Al-Hidd</span>
             </h1>
             <p class="mt-8 text-lg text-muted-foreground leading-9 max-w-xl">
               The official archive documenting the descendants of
               <strong class="text-foreground">Abdullah and Rashid</strong>, sons of
-              <strong class="text-foreground">Isa bin Khalifa bin Hilal bin Hasan Al Thawadi</strong>,
+              <strong class="text-foreground">Isa bin Khalifa bin Hilal bin Hasan {SINGULAR}</strong>,
               in the Kingdom of Bahrain — from the Al-‘Ama’ir of Bani Khalid —
               and preserving ancestral lives in legal records, pearling registers, and endowments.
             </p>
@@ -157,7 +165,7 @@ def body_home() -> str:
             <p class="text-[11px] uppercase tracking-[0.4em] text-accent font-latin">Lineage</p>
             <h2 class="mt-3 font-display text-4xl text-foreground">Al-‘Ama’ir of Bani Khalid</h2>
             <p class="mt-6 text-muted-foreground leading-9">
-              The sheikhly house of Al-Dhawawdah in Bahrain belongs solidly to the
+              The sheikhly house of {PLURAL} in Bahrain belongs solidly to the
               <strong class="text-foreground">Al-‘Ama’ir</strong> of the Bani Khalid tribe —
               people of the sword and the sea — from the ‘Ama’ir islands on the eastern coast,
               through Zubarah and Fariha, to their settlement in Al-Hidd within the tribal alliance of the Al Khalifa.
@@ -189,11 +197,11 @@ def body_home() -> str:
 def body_about() -> str:
     return f"""      <section class="border-b border-border bg-card/40 paper-texture">
         <div class="mx-auto max-w-5xl px-6 py-20 text-center">
-          <p class="text-[11px] uppercase tracking-[0.4em] text-accent font-latin">About — AL Thawadi</p>
+          <p class="text-[11px] uppercase tracking-[0.4em] text-accent font-latin">About — {SINGULAR}</p>
           <div class="ornament my-5 mx-auto w-40"></div>
           <h1 class="font-display text-4xl md:text-5xl text-foreground">History of lineage &amp; foundation</h1>
           <p class="mt-6 max-w-2xl mx-auto text-muted-foreground leading-8">
-            Al-Dhawawdah (AL Thawadi) of the Al-‘Ama’ir — Bani Khalid — people of the sea and trade;
+            {PLURAL} ({SINGULAR} in the singular) of the Al-‘Ama’ir — Bani Khalid — people of the sea and trade;
             their historic home is Al-Hidd in the islands of Bahrain.
           </p>
         </div>
@@ -209,7 +217,7 @@ def body_about() -> str:
             </p>
             <p class="text-muted-foreground mt-4">
               This site documents the descendants of <strong class="text-foreground">Abdullah and Rashid</strong>,
-              sons of <strong class="text-foreground">Isa bin Khalifa bin Hilal bin Hasan Al Thawadi</strong>,
+              sons of <strong class="text-foreground">Isa bin Khalifa bin Hilal bin Hasan {SINGULAR}</strong>,
               of Al-Hidd, Kingdom of Bahrain.
             </p>
           </section>
@@ -217,7 +225,7 @@ def body_about() -> str:
             <h2 class="font-display text-3xl text-foreground mb-4">Settlement in Al-Hidd</h2>
             <p class="text-muted-foreground">
               After the tribal movements linked to Zubarah and the opening of Bahrain (1783 CE),
-              Al-Dhawawdah settled in Al-Hidd as part of the coastal social fabric —
+              {PLURAL} settled in Al-Hidd as part of the coastal social fabric —
               pearling captains (nawakhida), merchants, and community notables.
             </p>
           </section>
@@ -230,9 +238,8 @@ def body_about() -> str:
               <a href="{href('en', '/references/')}" class="text-accent hover:underline">References</a> pages.
             </p>
           </section>
-          {original_note()}
           <p class="text-sm text-muted-foreground">
-            For the full Arabic narrative and source quotations, see the
+            For extended Arabic quotations from the sources, see the
             <a href="/about/" class="text-accent hover:underline" hreflang="ar">Arabic About page</a>.
           </p>
         </div>
@@ -321,13 +328,13 @@ def build_main_en_pages() -> None:
         (
             "/en/",
             "AL Thawadi — Family Majlis",
-            "Official archive of the AL Thawadi (Al-Dhawawdah) family in Bahrain — descendants of Abdullah and Rashid, sons of Isa bin Khalifa bin Hilal bin Hasan Al Thawadi.",
+            "Official archive of AL Thawawdah — brand AL Thawadi — in Bahrain: descendants of Abdullah and Rashid, sons of Isa bin Khalifa bin Hilal bin Hasan Al Thawadi.",
             body_home(),
         ),
         (
             "/en/about/",
             "About AL Thawadi",
-            "History and lineage of the AL Thawadi family in Bahrain — Al-‘Ama’ir of Bani Khalid and settlement in Al-Hidd.",
+            "History and lineage of AL Thawawdah (singular: AL Thawadi) in Bahrain — Al-‘Ama’ir of Bani Khalid and settlement in Al-Hidd.",
             body_about(),
         ),
         (
@@ -337,31 +344,27 @@ def build_main_en_pages() -> None:
             body_simple_hero(
                 "Family Tree",
                 "Lineage of the house",
-                "Personal names and nasab are shown in Arabic as recorded.",
+                "Personal names and nasab are shown in Arabic as recorded in the family archive.",
             )
-            + original_note()
             + extract_tree_only(),
         ),
         (
             "/en/ancestors/",
             "AL Thawadi Ancestors",
-            "Lives of AL Thawadi notables: Nawkhidha Sheikh Abdullah bin Isa Al Thawadi and Sheikh Rashid bin Isa Al Thawadi.",
-            body_from_ar_with_en_hero(
-                "/ancestors/",
-                "Ancestors",
-                "Men who shaped the name",
-                "Biographies keep Arabic names and source wording; page chrome is in English.",
-            ),
+            "Lives of AL Thawawdah notables: Nawkhidha Sheikh Abdullah bin Isa Al Thawadi and Sheikh Rashid bin Isa Al Thawadi.",
+            body_ancestors_en(),
         ),
         (
             "/en/gallery/",
             "AL Thawadi Gallery",
-            "Archival and contemporary photographs of the AL Thawadi family.",
+            "Archival and contemporary photographs of the AL Thawadi family (AL Thawawdah).",
             body_from_ar_with_en_hero(
                 "/gallery/",
                 "Gallery",
                 "Pictures that remember",
-                "Captions may remain in Arabic where they are part of the archive.",
+                "Photographs of the family — captions in English transliteration.",
+                note=False,
+                gallery=True,
             ),
         ),
         (
@@ -372,18 +375,22 @@ def build_main_en_pages() -> None:
                 "/news/",
                 "Majlis News",
                 "Family occasions & achievements",
-                "Post captions stay in Arabic (original data).",
+                "UI in English; Instagram captions stay as originally published.",
+                note=False,
+                localize=True,
             ),
         ),
         (
             "/en/references/",
             "AL Thawadi References & Sources",
-            "Books, documents, and posts documenting AL Thawadi lineage and history in Bahrain.",
+            "Books, documents, and posts documenting AL Thawawdah lineage and history in Bahrain.",
             body_from_ar_with_en_hero(
                 "/references/",
                 "References",
                 "Our sources & references",
-                "Titles and article text stay in Arabic as published; UI is English.",
+                "Search and navigation in English. Source titles keep their published wording (often Arabic).",
+                note=False,
+                localize=True,
             ),
         ),
         (
@@ -426,10 +433,19 @@ def extract_tree_only() -> str:
     return rewrite_links_to_en(main)
 
 
-def body_from_ar_with_en_hero(ar_path: str, eyebrow: str, title: str, lead: str) -> str:
+def body_from_ar_with_en_hero(
+    ar_path: str,
+    eyebrow: str,
+    title: str,
+    lead: str,
+    *,
+    note: bool = False,
+    localize: bool = True,
+    gallery: bool = False,
+) -> str:
     text = ar_file_for(ar_path).read_text(encoding="utf-8")
     main = extract_main(text)
-    # Replace first paper-texture hero with EN hero
+    note_html = f"\n      {original_note()}\n" if note else "\n"
     en_hero = f"""      <section class="border-b border-border bg-card/40 paper-texture">
         <div class="mx-auto max-w-5xl px-6 py-20 text-center">
           <p class="text-[11px] uppercase tracking-[0.4em] text-accent font-latin">{eyebrow}</p>
@@ -437,9 +453,7 @@ def body_from_ar_with_en_hero(ar_path: str, eyebrow: str, title: str, lead: str)
           <h1 class="font-display text-4xl md:text-5xl text-foreground">{title}</h1>
           <p class="mt-6 max-w-2xl mx-auto text-muted-foreground leading-8">{lead}</p>
         </div>
-      </section>
-      {original_note()}
-"""
+      </section>{note_html}"""
     main2, n = re.subn(
         r'<section class="border-b border-border bg-card/40 paper-texture">[\s\S]*?</section>',
         en_hero,
@@ -448,7 +462,215 @@ def body_from_ar_with_en_hero(ar_path: str, eyebrow: str, title: str, lead: str)
     )
     if n == 0:
         main2 = en_hero + main
-    return rewrite_links_to_en(main2)
+    out = rewrite_links_to_en(main2)
+    if gallery:
+        out = localize_gallery_html(out)
+    elif localize:
+        out = localize_ui(out)
+    return fix_family_names(out)
+
+
+def body_ancestors_en() -> str:
+    return f"""      <section class="border-b border-border bg-card/40 paper-texture">
+        <div class="mx-auto max-w-5xl px-6 py-20 text-center">
+          <p class="text-[11px] uppercase tracking-[0.4em] text-accent font-latin">Ancestors</p>
+          <div class="ornament my-5 mx-auto w-40"></div>
+          <h1 class="font-display text-4xl md:text-5xl text-foreground">Notables of {PLURAL}</h1>
+          <p class="mt-6 max-w-2xl mx-auto text-muted-foreground leading-8">
+            This site documents the descendants of
+            <strong class="text-foreground">Abdullah and Rashid</strong>, sons of
+            <strong class="text-foreground">Isa bin Khalifa bin Hilal bin Hasan {SINGULAR}</strong>
+            — of the Al-‘Ama’ir, Bani Khalid.
+          </p>
+        </div>
+      </section>
+
+      <section class="mx-auto max-w-5xl px-6 pb-20">
+        <ol class="timeline space-y-16 md:pl-12">
+          <li class="timeline-item" id="abdullah-bin-isa">
+            <span class="timeline-marker">1</span>
+            <p class="text-[11px] uppercase tracking-[0.3em] text-accent font-latin">Al-Hidd — Nawkhidha &amp; sheikhly leadership</p>
+            <h3 class="mt-2 font-display text-3xl text-foreground">Nawkhidha / Sheikh Abdullah bin Isa {SINGULAR}</h3>
+            <p class="mt-1 text-primary italic">Sheikh and community leader of {PLURAL} — among the best-known pearling captains of Al-Hidd</p>
+            <p class="mt-4 text-muted-foreground leading-9">
+              One of the foremost men of {PLURAL} in Bahrain, combining
+              <strong class="text-foreground">tribal sheikhly leadership</strong> in Al-Hidd with
+              <strong class="text-foreground">command of pearling vessels</strong> (nawkhidha).
+              He appears in the <em>Gazetteer of the Persian Gulf</em> among the leading tribes of Al-Hidd,
+              in Bahrain nawakhida lists (1920–1960), in the pearling captains’ petition of 1344 AH / 1925 CE —
+              where he was the <strong class="text-foreground">first signatory</strong> — and in Muharraq Municipality
+              correspondence (1936–1938) on diver (jazwa) rolls and pearling fees. He is a pillar of the documented lineage.
+            </p>
+
+            <dl class="fact-grid">
+              <div class="fact-item"><dt>Title</dt><dd>Nawkhidha — master and owner of a pearling vessel</dd></div>
+              <div class="fact-item"><dt>Place</dt><dd>Al-Hidd — Fareej {PLURAL}, near the midaf and jalafa</dd></div>
+              <div class="fact-item"><dt>Ships</dt><dd>Bashara, Musa‘id, Nayef, Umm Kulthum</dd></div>
+              <div class="fact-item"><dt>Documentation</dt><dd>Petition 1925; Muharraq Municipality 1936–1938; Gulf Gazetteer</dd></div>
+            </dl>
+
+            <div class="ancestor-detail">
+              <h4>Nawkhidha and sheikhly office</h4>
+              <p class="text-muted-foreground leading-9 text-sm">
+                In the Gulf, the <strong class="text-foreground">nawkhidha</strong> is the ship’s master and owner —
+                responsible for pearling voyages, the crew (jazwa), and disposing of the pearl catch.
+                At the same time, Abdullah bin Isa was <strong class="text-foreground">sheikh and community head</strong>
+                of {PLURAL} in Al-Hidd — keeper of an open majlis and a voice among the country’s notables.
+                He was known for <strong class="text-foreground">financing himself</strong> without borrowing,
+                and held a close friendship with the Al Khalifa — including Sheikh Hamad bin Isa, Ruler of Bahrain,
+                and Sheikh Abdullah bin Isa Al Khalifa, Minister of Education.
+              </p>
+              <p class="mt-3 text-muted-foreground leading-9 text-sm">
+                Among his well-known sailors: <strong class="text-foreground">Dhahir Al-‘Umairi</strong> and
+                <strong class="text-foreground">Husain Al-Kuwaiti</strong> — the diver who found
+                <strong class="text-foreground">Dana Abdullah</strong>. Among his charitable works: digging a
+                <strong class="text-foreground">shared water spring</strong> for the people of Al-Hidd
+                (known as “‘Ayn Al Thawadi”), which the neighbourhood used freely.
+              </p>
+            </div>
+
+            <div class="ancestor-detail">
+              <h4>His ships and fleet</h4>
+              <ul class="content-list text-sm">
+                <li><strong class="text-foreground">Bashara</strong> — the vessel on which Dana Abdullah {SINGULAR} was found</li>
+                <li><strong class="text-foreground">Musa‘id</strong> — among his owned ships</li>
+                <li><strong class="text-foreground">Nayef</strong> — among his owned ships</li>
+                <li><strong class="text-foreground">Umm Kulthum</strong> — among his owned ships</li>
+              </ul>
+              <p class="mt-3 text-xs text-muted-foreground leading-7">
+                Source: family biography preserved through oral history — to verify ship names and dates,
+                <a href="/en/contact/" class="text-accent hover:underline">contact us</a>.
+              </p>
+            </div>
+
+            <div class="ancestor-detail">
+              <h4>Pearling captains’ petition — 1344 AH / October 1925</h4>
+              <p class="text-muted-foreground leading-9 text-sm">
+                When the government proposed new pearling regulations, Abdullah bin Isa {SINGULAR} —
+                <strong class="text-foreground">first among the signatories</strong> — submitted a petition to
+                Sheikh Hamad bin Isa Al Khalifa with other nawakhida and pearl traders, objecting to clauses that
+                limited the nawkhidha’s authority over selling the catch and managing the jazwa.
+                The petition reached the British Political Resident, Colonel Prideaux, and amendments followed.
+              </p>
+              <blockquote class="doc-excerpt" lang="ar" dir="rtl">
+                «…نرفع لسعادتكم شكوانا من خسارة المال واشتغال البال والسبب في ذلك النظامات الجارية في خصوص الغوص
+                قد أضرت بنا… الذي نرجو من فضلكم في هذه المسألة أن يكون البيع بنظر النواخذة فهم أعلم بصنوف القماش
+                وأحرص من الجزوى على حصول المصلحة…»
+                <cite>Pearling captains’ petition — Rabi‘ II 1344 AH — Abdullah bin Isa {SINGULAR} (first signatory)</cite>
+              </blockquote>
+              <p class="mt-3 text-xs text-muted-foreground leading-7">
+                Other signatories included Hamad bin Saqr Al-Buflasa, Muhanna bin Fadl Al-Nuaimi, Isa bin Hamad Al-Khatm, and others.
+                <a href="/en/references/#petition-1925" class="text-accent hover:underline">Full text &amp; references</a>.
+              </p>
+            </div>
+
+            <div class="ancestor-detail">
+              <h4>Dana Abdullah — among Bahrain’s most famous pearls</h4>
+              <p class="text-muted-foreground leading-9 text-sm">
+                It ranks among Bahrain’s most celebrated pearls after <strong class="text-foreground">Dana bin Tarif</strong>.
+                In a pearling season — likely <strong class="text-foreground">1938 CE</strong> — the ship
+                <strong class="text-foreground">Bashara</strong>, whose nawkhidha was
+                <strong class="text-foreground">Ahmad bin Abdullah</strong> (his son), sailed to
+                <strong class="text-foreground">Hair Bu‘Amama</strong>. While opening oysters,
+                <strong class="text-foreground">Husain Al-Kuwaiti</strong> found an immense pearl and told Nawkhidha Ahmad,
+                who informed his father Abdullah bin Isa — who rejoiced and thanked God.
+              </p>
+              <dl class="fact-grid mt-4">
+                <div class="fact-item"><dt>Weight</dt><dd>204 jaw (traditional pearl weight)</dd></div>
+                <div class="fact-item"><dt>Sale</dt><dd>34,000 rupees — to Hajj Abdulrahman Al-Qusaibi</dd></div>
+                <div class="fact-item"><dt>Diver’s reward</dt><dd>300 rupees to Husain Al-Kuwaiti</dd></div>
+                <div class="fact-item"><dt>Eyewitness</dt><dd>Muhammad bin Abdullah bin Isa {SINGULAR}</dd></div>
+              </dl>
+              <p class="mt-4 text-muted-foreground leading-9 text-sm">
+                <em>Jaridat Al-Bahrain</em> (Abdullah Al-Za’id) reported it on
+                <strong class="text-foreground">6 Rajab 1358 AH / 17 August 1939</strong> under the title
+                “A rare pearl from the fisheries of Bahrain” — noting Al-Qusaibi bought an 18-carat pearl that
+                stirred the jewellery world in Europe and India. On
+                <strong class="text-foreground">10 Sha‘ban 1359 AH / 12 September 1940</strong> the paper said
+                Al-Qusaibi sold it to Indian royalty for a large sum. Diver Husain Al-Kuwaiti described its size as “like a marble.”
+              </p>
+              <p class="mt-3 text-xs text-muted-foreground leading-7">
+                It appeared after Japanese cultured pearls and the market collapse — underscoring Abdullah bin Isa’s achievement in disposing of it.
+                <a href="/en/references/#danat-abdullah" class="text-accent hover:underline">Press sources</a>.
+              </p>
+            </div>
+
+            <div class="ancestor-detail">
+              <h4>Material heritage in Al-Hidd</h4>
+              <p class="text-muted-foreground leading-9 text-sm">
+                Local memory preserves the <strong class="text-foreground">“House of Nawkhidha Abdullah bin Isa {SINGULAR}”</strong>
+                in old Fareej Al-Hidd — a large house near the <strong class="text-foreground">midaf</strong> (boat landing)
+                and <strong class="text-foreground">jalafa</strong> (wooden shipbuilding), in a quarter tied to the sea.
+                Nearby is <strong class="text-foreground">‘Ayn Al Thawadi</strong> — the shared spring he dug for the people.
+              </p>
+            </div>
+
+            <div class="ancestor-detail">
+              <h4>Descendants (from available sources)</h4>
+              <p class="text-muted-foreground leading-9 text-sm">
+                <strong class="text-foreground">Ahmad bin Abdullah bin Isa</strong> — nawkhidha of Bashara (season of Dana Abdullah).
+                <br /><strong class="text-foreground">Muhammad bin Abdullah bin Isa</strong> — eyewitness to the pearl story;
+                chosen dean of {PLURAL} in Bahrain in 2014. Sons of Muhammad include Abdullah, Isa, Ahmad, and Ali.
+              </p>
+            </div>
+          </li>
+
+          <li class="timeline-item" id="rashid-bin-isa">
+            <span class="timeline-marker">2</span>
+            <p class="text-[11px] uppercase tracking-[0.3em] text-accent font-latin">Al-Hidd — Nawkhidha &amp; clan sheikh</p>
+            <h3 class="mt-2 font-display text-3xl text-foreground">Sheikh Rashid bin Isa {SINGULAR}</h3>
+            <p class="mt-1 text-primary italic">Nawkhidha Rashid bin Isa bin Khalifa {SINGULAR} — sheikh of {PLURAL} in Al-Hidd</p>
+            <p class="mt-4 text-muted-foreground leading-9">
+              A documented notable of {PLURAL} in the majlis archive and Bahraini historical sources.
+              Known for piety and wide knowledge of navigation, his voyages reached East African ports such as
+              <strong class="text-foreground">Zanzibar</strong> — a source of mangrove timber and more — as his sons relate.
+              He kept close ties with the <strong class="text-foreground">Al-‘Ama’ir of Bani Khalid</strong>,
+              and a historical letter names him <strong class="text-foreground">sheikh of the {PLURAL} clan</strong> in Bahrain.
+            </p>
+
+            <div class="ancestor-detail">
+              <h4>Fleet and pearling</h4>
+              <p class="text-muted-foreground leading-9 text-sm">
+                He owned several pearling vessels, including <strong class="text-foreground">Armitha</strong>,
+                <strong class="text-foreground">Malfaja</strong>, <strong class="text-foreground">Jalboot Al-‘Arida</strong>,
+                and <strong class="text-foreground">Jalboot Umm Du‘aij</strong>.
+                One ship was sold to the merchant Muhammad Tayyib (may God have mercy on him), who converted it to a motor launch
+                and hired it out in Al-Hidd before it sailed again.
+              </p>
+            </div>
+
+            <div class="ancestor-detail">
+              <h4>Descendants (from available sources)</h4>
+              <p class="text-muted-foreground leading-9 text-sm">
+                <strong class="text-foreground">Khalifa bin Rashid bin Isa {SINGULAR}</strong> — nawkhidha.
+                <br /><strong class="text-foreground">Ahmad bin Rashid bin Isa {SINGULAR}</strong> — nawkhidha.
+                <br /><strong class="text-foreground">Hasan bin Rashid bin Isa {SINGULAR}</strong> — nawkhidha.
+                <br /><strong class="text-foreground">Hilal bin Rashid bin Isa {SINGULAR}</strong> — nawkhidha (his majlis in Al-Hidd beside Shanuf Mosque).
+                <br /><strong class="text-foreground">Jassim bin Rashid bin Isa {SINGULAR}</strong> — nawkhidha.
+                <br />And three daughters, may God have mercy on them. From the line of Abdullah bin Isa — who followed in sheikhly office and pearling —
+                <a href="#abdullah-bin-isa" class="text-accent hover:underline">Nawkhidha Abdullah bin Isa {SINGULAR}</a>.
+              </p>
+            </div>
+
+            <div class="ancestor-detail">
+              <h4>Death</h4>
+              <p class="text-muted-foreground leading-9 text-sm">
+                He died after performing the Hajj and visiting Madinah, and was buried there — may God have mercy on him.
+              </p>
+              <p class="mt-3 text-xs text-muted-foreground leading-7">
+                <a href="/en/references/#references-archive" class="text-accent hover:underline">Archive &amp; publication sources</a>
+                — @althawadi_majlis posts and British Residency documents.
+              </p>
+            </div>
+          </li>
+        </ol>
+
+        <div class="mt-20 text-center text-sm text-muted-foreground border-t border-border pt-10 leading-8">
+          Sources: Al-Khalidi, Al-Wahbi, Al-Shaqha’, Lorimer, Al-Jasir, Al-Nabhani — see the
+          <a href="/en/references/" class="text-accent hover:underline">full references page</a>
+          — to add a verified biography, <a href="/en/contact/" class="text-accent hover:underline">contact us</a>.
+        </div>
+      </section>"""
 
 
 def body_site_map_en() -> str:
