@@ -242,18 +242,21 @@ def news_item_urls() -> list[dict]:
 
 
 def write_robots() -> None:
-    # Prefer /seo/sitemap.xml first: GitHub Pages historically 500s when a
-    # /sitemap/ HTML folder collides with /sitemap.xml (GSC "General HTTP error").
+    # Prefer the sitemap *index* under /seo/ (split AR/EN files). Avoid relying on a
+    # single large file — GitHub Pages + Googlebot often shows GSC "General HTTP error"
+    # even when browsers get HTTP 200.
     ROBOTS.write_text(
         "\n".join(
             [
                 "User-agent: *",
                 "Allow: /",
                 "",
-                "# Primary (conflict-safe path on GitHub Pages)",
+                "# Prefer index (split AR + EN) - most reliable for Google on GitHub Pages",
+                f"Sitemap: {SITE}/seo/sitemap-index.xml",
+                f"Sitemap: {SITE}/seo/sitemap-ar.xml",
+                f"Sitemap: {SITE}/seo/sitemap-en.xml",
                 f"Sitemap: {SITE}/seo/sitemap.xml",
                 f"Sitemap: {SITE}/sitemap-index.xml",
-                f"Sitemap: {SITE}/sitemap.xml",
                 "",
             ]
         ),
@@ -261,66 +264,76 @@ def write_robots() -> None:
     )
 
 
-def write_sitemap_xml(urls: list[dict]) -> None:
-    # urlset with xhtml for hreflang alternates
+def _url_entry(u: dict) -> list[str]:
+    loc = html.escape(SITE + u["path"])
+    return [
+        "  <url>",
+        f"    <loc>{loc}</loc>",
+        f"    <lastmod>{TODAY}</lastmod>",
+        f"    <changefreq>{u.get('changefreq', 'monthly')}</changefreq>",
+        f"    <priority>{u.get('priority', '0.5')}</priority>",
+        "  </url>",
+    ]
+
+
+def _write_urlset(path: Path, urls: list[dict]) -> bytes:
     lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',
-        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"',
-        '        xmlns:xhtml="http://www.w3.org/1999/xhtml">',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
     ]
     for u in urls:
-        path = u["path"]
-        loc = html.escape(SITE + path)
-        # Pair AR <-> EN
-        if path.startswith("/en/") or path == "/en":
-            en_path = path if path.endswith("/") or path == "/en" else path + "/"
-            if en_path == "/en":
-                en_path = "/en/"
-            ar_path = "/" if en_path == "/en/" else en_path[3:]  # strip /en
-            if not ar_path.endswith("/"):
-                ar_path += "/"
-        else:
-            ar_path = path
-            en_path = "/en/" if path == "/" else "/en" + path
-
-        lines.extend(
-            [
-                "  <url>",
-                f"    <loc>{loc}</loc>",
-                f"    <lastmod>{TODAY}</lastmod>",
-                f"    <changefreq>{u.get('changefreq', 'monthly')}</changefreq>",
-                f"    <priority>{u.get('priority', '0.5')}</priority>",
-                f'    <xhtml:link rel="alternate" hreflang="ar" href="{html.escape(SITE + ar_path)}" />',
-                f'    <xhtml:link rel="alternate" hreflang="en" href="{html.escape(SITE + en_path)}" />',
-                f'    <xhtml:link rel="alternate" hreflang="x-default" href="{html.escape(SITE + ar_path)}" />',
-                "  </url>",
-            ]
-        )
+        lines.extend(_url_entry(u))
     lines.append("</urlset>")
     lines.append("")
-    body = "\n".join(lines)
-    SITEMAP_XML.write_bytes(body.encode("utf-8"))
+    body = "\n".join(lines).encode("utf-8")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(body)
+    return body
+
+
+def write_sitemap_xml(urls: list[dict]) -> None:
+    """Write plain (no xhtml) sitemaps — hreflang lives in HTML <link> tags.
+
+    Split AR/EN under /seo/ so Googlebot fetches smaller files (mitigates common
+    GitHub Pages + GSC 'General HTTP error' / Couldn't fetch failures).
+    """
     SEO_DIR.mkdir(parents=True, exist_ok=True)
-    SEO_SITEMAP.write_bytes(body.encode("utf-8"))
+
+    ar_urls = [u for u in urls if not str(u["path"]).startswith("/en")]
+    en_urls = [u for u in urls if str(u["path"]).startswith("/en")]
+
+    ar_body = _write_urlset(SEO_DIR / "sitemap-ar.xml", ar_urls)
+    en_body = _write_urlset(SEO_DIR / "sitemap-en.xml", en_urls)
+    all_body = _write_urlset(SEO_SITEMAP, urls)
+    # Root mirror of the combined file (legacy submissions)
+    SITEMAP_XML.write_bytes(all_body)
+
+    # Ultra-simple text sitemap (also supported by Google)
+    txt_lines = [SITE + u["path"] for u in urls]
+    (SEO_DIR / "sitemap.txt").write_text("\n".join(txt_lines) + "\n", encoding="utf-8")
 
     index_body = "\n".join(
         [
             '<?xml version="1.0" encoding="UTF-8"?>',
             '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
             "  <sitemap>",
-            f"    <loc>{SITE}/seo/sitemap.xml</loc>",
+            f"    <loc>{SITE}/seo/sitemap-ar.xml</loc>",
             f"    <lastmod>{TODAY}</lastmod>",
             "  </sitemap>",
             "  <sitemap>",
-            f"    <loc>{SITE}/sitemap.xml</loc>",
+            f"    <loc>{SITE}/seo/sitemap-en.xml</loc>",
             f"    <lastmod>{TODAY}</lastmod>",
             "  </sitemap>",
             "</sitemapindex>",
             "",
         ]
-    )
-    SITEMAP_INDEX.write_bytes(index_body.encode("utf-8"))
-    (SEO_DIR / "sitemap-index.xml").write_bytes(index_body.encode("utf-8"))
+    ).encode("utf-8")
+    SITEMAP_INDEX.write_bytes(index_body)
+    (SEO_DIR / "sitemap-index.xml").write_bytes(index_body)
+
+    print(f"  AR urls: {len(ar_urls)} ({len(ar_body)} bytes)")
+    print(f"  EN urls: {len(en_urls)} ({len(en_body)} bytes)")
+    print(f"  ALL urls: {len(urls)} ({len(all_body)} bytes)")
 
 def write_sitemap_html(urls: list[dict]) -> None:
     from site_chrome import footer_html, header_html, hreflang_tags_for

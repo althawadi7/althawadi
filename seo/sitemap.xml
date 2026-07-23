@@ -1,1534 +1,1023 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://althawadi.org/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/" />
   </url>
   <url>
     <loc>https://althawadi.org/about/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/about/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/about/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/about/" />
   </url>
   <url>
     <loc>https://althawadi.org/tree/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/tree/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/tree/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/tree/" />
   </url>
   <url>
     <loc>https://althawadi.org/ancestors/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/ancestors/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/ancestors/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/ancestors/" />
   </url>
   <url>
     <loc>https://althawadi.org/gallery/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/gallery/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/gallery/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/gallery/" />
   </url>
   <url>
     <loc>https://althawadi.org/news/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/news/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/news/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/news/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/" />
   </url>
   <url>
     <loc>https://althawadi.org/contact/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/contact/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/contact/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/contact/" />
   </url>
   <url>
     <loc>https://althawadi.org/site-map/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/site-map/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/site-map/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/site-map/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ref-01/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-01/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-01/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-01/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ref-02/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-02/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-02/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-02/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ref-03/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-03/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-03/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-03/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ref-04/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-04/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-04/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-04/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ref-05/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-05/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-05/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-05/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ref-06/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-06/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-06/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-06/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ref-07/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-07/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-07/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-07/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ref-08/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-08/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-08/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-08/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ref-09/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-09/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-09/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-09/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ref-10/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-10/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-10/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-10/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ref-11/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-11/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-11/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-11/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ref-12/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-12/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-12/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-12/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ref-13/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-13/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-13/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-13/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ref-14/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-14/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-14/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-14/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ref-15/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-15/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-15/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-15/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ref-16/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-16/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-16/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-16/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ref-17/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-17/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-17/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-17/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ref-18/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-18/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-18/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-18/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ref-19/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-19/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-19/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-19/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/book-nawakhida-ahmad-rashid/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/book-nawakhida-ahmad-rashid/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/book-nawakhida-ahmad-rashid/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/book-nawakhida-ahmad-rashid/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/book-nawakhida-ahmad-abdullah/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/book-nawakhida-ahmad-abdullah/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/book-nawakhida-ahmad-abdullah/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/book-nawakhida-ahmad-abdullah/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/book-nawakhida-hasan-rashid/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/book-nawakhida-hasan-rashid/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/book-nawakhida-hasan-rashid/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/book-nawakhida-hasan-rashid/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/book-nawakhida-rashid-isa/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/book-nawakhida-rashid-isa/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/book-nawakhida-rashid-isa/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/book-nawakhida-rashid-isa/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/book-nawakhida-abdullah-isa/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/book-nawakhida-abdullah-isa/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/book-nawakhida-abdullah-isa/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/book-nawakhida-abdullah-isa/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/book-nawakhida-hilal-rashid/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/book-nawakhida-hilal-rashid/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/book-nawakhida-hilal-rashid/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/book-nawakhida-hilal-rashid/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-DZwndVCtV4L/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-DZwndVCtV4L/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-DZwndVCtV4L/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-DZwndVCtV4L/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-DaanHrxsWB5/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-DaanHrxsWB5/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-DaanHrxsWB5/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-DaanHrxsWB5/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-DalEy-tgkDn/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-DalEy-tgkDn/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-DalEy-tgkDn/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-DalEy-tgkDn/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-Da0dbXTgWDr/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-Da0dbXTgWDr/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-Da0dbXTgWDr/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-Da0dbXTgWDr/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-DaIyTwcg3d1/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-DaIyTwcg3d1/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-DaIyTwcg3d1/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-DaIyTwcg3d1/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-DaNLL_xAuXx/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-DaNLL_xAuXx/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-DaNLL_xAuXx/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-DaNLL_xAuXx/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-DaU754bAgdT/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-DaU754bAgdT/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-DaU754bAgdT/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-DaU754bAgdT/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-DYg1frRABy6/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-DYg1frRABy6/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-DYg1frRABy6/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-DYg1frRABy6/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-DX3tjkvgFU7/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-DX3tjkvgFU7/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-DX3tjkvgFU7/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-DX3tjkvgFU7/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-DKSPaQot4pT/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-DKSPaQot4pT/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-DKSPaQot4pT/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-DKSPaQot4pT/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-DIV70GZtgNN/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-DIV70GZtgNN/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-DIV70GZtgNN/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-DIV70GZtgNN/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-DBetmvkRmOo/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-DBetmvkRmOo/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-DBetmvkRmOo/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-DBetmvkRmOo/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-DBpq9l-i3kl/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-DBpq9l-i3kl/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-DBpq9l-i3kl/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-DBpq9l-i3kl/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-C-ixCuuNdhp/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-C-ixCuuNdhp/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-C-ixCuuNdhp/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-C-ixCuuNdhp/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-C-l6FMOisnj/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-C-l6FMOisnj/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-C-l6FMOisnj/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-C-l6FMOisnj/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-DAGHk3hNNAT/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-DAGHk3hNNAT/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-DAGHk3hNNAT/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-DAGHk3hNNAT/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-C8nBlnbtJjg/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-C8nBlnbtJjg/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-C8nBlnbtJjg/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-C8nBlnbtJjg/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-C8j_GlAtkLn/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-C8j_GlAtkLn/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-C8j_GlAtkLn/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-C8j_GlAtkLn/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-C0m1kvntnLN/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-C0m1kvntnLN/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-C0m1kvntnLN/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-C0m1kvntnLN/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-CzTTSp0RjVS/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-CzTTSp0RjVS/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-CzTTSp0RjVS/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-CzTTSp0RjVS/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-C0JF28UN0oA/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-C0JF28UN0oA/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-C0JF28UN0oA/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-C0JF28UN0oA/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-Cxu0HuTM4Zw/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-Cxu0HuTM4Zw/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-Cxu0HuTM4Zw/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-Cxu0HuTM4Zw/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-CxuzbJnA6DP/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-CxuzbJnA6DP/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-CxuzbJnA6DP/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-CxuzbJnA6DP/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-Cr8BolYAMd7/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-Cr8BolYAMd7/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-Cr8BolYAMd7/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-Cr8BolYAMd7/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-CsOQ-H3MzAM/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-CsOQ-H3MzAM/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-CsOQ-H3MzAM/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-CsOQ-H3MzAM/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-CpQWCsktNpj/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-CpQWCsktNpj/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-CpQWCsktNpj/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-CpQWCsktNpj/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-Cr6kSQtrX_o/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-Cr6kSQtrX_o/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-Cr6kSQtrX_o/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-Cr6kSQtrX_o/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-CPvj182hg4T/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-CPvj182hg4T/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-CPvj182hg4T/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-CPvj182hg4T/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-Bv_l0deFcq2/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-Bv_l0deFcq2/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-Bv_l0deFcq2/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-Bv_l0deFcq2/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-Bv_mbFnF1tj/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-Bv_mbFnF1tj/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-Bv_mbFnF1tj/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-Bv_mbFnF1tj/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-CHSyFQiAST7/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-CHSyFQiAST7/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-CHSyFQiAST7/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-CHSyFQiAST7/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-Buw0SAGFvfs/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-Buw0SAGFvfs/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-Buw0SAGFvfs/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-Buw0SAGFvfs/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-BuyonGkFexZ/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-BuyonGkFexZ/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-BuyonGkFexZ/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-BuyonGkFexZ/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-Bu3kpdMF9lW/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-Bu3kpdMF9lW/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-Bu3kpdMF9lW/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-Bu3kpdMF9lW/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-BuwySjBFvQc/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-BuwySjBFvQc/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-BuwySjBFvQc/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-BuwySjBFvQc/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-BuwzdiilqMd/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-BuwzdiilqMd/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-BuwzdiilqMd/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-BuwzdiilqMd/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-Buw0J_glD9C/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-Buw0J_glD9C/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-Buw0J_glD9C/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-Buw0J_glD9C/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-Br-gRJCBb7n/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-Br-gRJCBb7n/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-Br-gRJCBb7n/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-Br-gRJCBb7n/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-Bsask1OBW5C/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-Bsask1OBW5C/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-Bsask1OBW5C/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-Bsask1OBW5C/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-BuwyET5ghvm/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-BuwyET5ghvm/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-BuwyET5ghvm/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-BuwyET5ghvm/" />
   </url>
   <url>
     <loc>https://althawadi.org/references/item/ig-CwxfzlssIK9/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-CwxfzlssIK9/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-CwxfzlssIK9/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-CwxfzlssIK9/" />
   </url>
   <url>
     <loc>https://althawadi.org/news/item/DZ4tTppgIh6/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/news/item/DZ4tTppgIh6/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/news/item/DZ4tTppgIh6/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/news/item/DZ4tTppgIh6/" />
   </url>
   <url>
     <loc>https://althawadi.org/news/item/DMK2zPSNJqp/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/news/item/DMK2zPSNJqp/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/news/item/DMK2zPSNJqp/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/news/item/DMK2zPSNJqp/" />
   </url>
   <url>
     <loc>https://althawadi.org/news/item/DLuETdPtdjX/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/news/item/DLuETdPtdjX/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/news/item/DLuETdPtdjX/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/news/item/DLuETdPtdjX/" />
   </url>
   <url>
     <loc>https://althawadi.org/news/item/DIb5jY-tkVi/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/news/item/DIb5jY-tkVi/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/news/item/DIb5jY-tkVi/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/news/item/DIb5jY-tkVi/" />
   </url>
   <url>
     <loc>https://althawadi.org/news/item/DIdu5N8NvCl/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/news/item/DIdu5N8NvCl/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/news/item/DIdu5N8NvCl/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/news/item/DIdu5N8NvCl/" />
   </url>
   <url>
     <loc>https://althawadi.org/news/item/DBVblo1tDCK/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/news/item/DBVblo1tDCK/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/news/item/DBVblo1tDCK/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/news/item/DBVblo1tDCK/" />
   </url>
   <url>
     <loc>https://althawadi.org/news/item/C01oFAgNqxk/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/news/item/C01oFAgNqxk/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/news/item/C01oFAgNqxk/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/news/item/C01oFAgNqxk/" />
   </url>
   <url>
     <loc>https://althawadi.org/news/item/C0hJiFqN3Qj/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/news/item/C0hJiFqN3Qj/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/news/item/C0hJiFqN3Qj/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/news/item/C0hJiFqN3Qj/" />
   </url>
   <url>
     <loc>https://althawadi.org/news/item/CybcWAYtRfJ/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/news/item/CybcWAYtRfJ/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/news/item/CybcWAYtRfJ/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/news/item/CybcWAYtRfJ/" />
   </url>
   <url>
     <loc>https://althawadi.org/news/item/Ce2oYLuP9AE/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/news/item/Ce2oYLuP9AE/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/news/item/Ce2oYLuP9AE/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/news/item/Ce2oYLuP9AE/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/about/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/about/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/about/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/about/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/tree/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/tree/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/tree/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/tree/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/ancestors/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/ancestors/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/ancestors/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/ancestors/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/gallery/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/gallery/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/gallery/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/gallery/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/news/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/news/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/news/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/news/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/contact/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/contact/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/contact/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/contact/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/site-map/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/site-map/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/site-map/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/site-map/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ref-01/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-01/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-01/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-01/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ref-02/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-02/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-02/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-02/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ref-03/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-03/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-03/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-03/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ref-04/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-04/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-04/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-04/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ref-05/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-05/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-05/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-05/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ref-06/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-06/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-06/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-06/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ref-07/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-07/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-07/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-07/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ref-08/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-08/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-08/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-08/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ref-09/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-09/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-09/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-09/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ref-10/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-10/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-10/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-10/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ref-11/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-11/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-11/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-11/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ref-12/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-12/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-12/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-12/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ref-13/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-13/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-13/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-13/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ref-14/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-14/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-14/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-14/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ref-15/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-15/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-15/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-15/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ref-16/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-16/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-16/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-16/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ref-17/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-17/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-17/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-17/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ref-18/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-18/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-18/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-18/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ref-19/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ref-19/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ref-19/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ref-19/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/book-nawakhida-ahmad-rashid/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/book-nawakhida-ahmad-rashid/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/book-nawakhida-ahmad-rashid/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/book-nawakhida-ahmad-rashid/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/book-nawakhida-ahmad-abdullah/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/book-nawakhida-ahmad-abdullah/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/book-nawakhida-ahmad-abdullah/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/book-nawakhida-ahmad-abdullah/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/book-nawakhida-hasan-rashid/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/book-nawakhida-hasan-rashid/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/book-nawakhida-hasan-rashid/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/book-nawakhida-hasan-rashid/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/book-nawakhida-rashid-isa/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/book-nawakhida-rashid-isa/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/book-nawakhida-rashid-isa/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/book-nawakhida-rashid-isa/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/book-nawakhida-abdullah-isa/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/book-nawakhida-abdullah-isa/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/book-nawakhida-abdullah-isa/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/book-nawakhida-abdullah-isa/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/book-nawakhida-hilal-rashid/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/book-nawakhida-hilal-rashid/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/book-nawakhida-hilal-rashid/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/book-nawakhida-hilal-rashid/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-DZwndVCtV4L/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-DZwndVCtV4L/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-DZwndVCtV4L/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-DZwndVCtV4L/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-DaanHrxsWB5/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-DaanHrxsWB5/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-DaanHrxsWB5/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-DaanHrxsWB5/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-DalEy-tgkDn/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-DalEy-tgkDn/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-DalEy-tgkDn/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-DalEy-tgkDn/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-Da0dbXTgWDr/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-Da0dbXTgWDr/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-Da0dbXTgWDr/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-Da0dbXTgWDr/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-DaIyTwcg3d1/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-DaIyTwcg3d1/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-DaIyTwcg3d1/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-DaIyTwcg3d1/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-DaNLL_xAuXx/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-DaNLL_xAuXx/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-DaNLL_xAuXx/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-DaNLL_xAuXx/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-DaU754bAgdT/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-DaU754bAgdT/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-DaU754bAgdT/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-DaU754bAgdT/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-DYg1frRABy6/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-DYg1frRABy6/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-DYg1frRABy6/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-DYg1frRABy6/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-DX3tjkvgFU7/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-DX3tjkvgFU7/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-DX3tjkvgFU7/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-DX3tjkvgFU7/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-DKSPaQot4pT/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-DKSPaQot4pT/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-DKSPaQot4pT/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-DKSPaQot4pT/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-DIV70GZtgNN/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-DIV70GZtgNN/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-DIV70GZtgNN/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-DIV70GZtgNN/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-DBetmvkRmOo/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-DBetmvkRmOo/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-DBetmvkRmOo/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-DBetmvkRmOo/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-DBpq9l-i3kl/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-DBpq9l-i3kl/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-DBpq9l-i3kl/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-DBpq9l-i3kl/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-C-ixCuuNdhp/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-C-ixCuuNdhp/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-C-ixCuuNdhp/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-C-ixCuuNdhp/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-C-l6FMOisnj/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-C-l6FMOisnj/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-C-l6FMOisnj/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-C-l6FMOisnj/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-DAGHk3hNNAT/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-DAGHk3hNNAT/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-DAGHk3hNNAT/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-DAGHk3hNNAT/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-C8nBlnbtJjg/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-C8nBlnbtJjg/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-C8nBlnbtJjg/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-C8nBlnbtJjg/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-C8j_GlAtkLn/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-C8j_GlAtkLn/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-C8j_GlAtkLn/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-C8j_GlAtkLn/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-C0m1kvntnLN/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-C0m1kvntnLN/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-C0m1kvntnLN/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-C0m1kvntnLN/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-CzTTSp0RjVS/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-CzTTSp0RjVS/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-CzTTSp0RjVS/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-CzTTSp0RjVS/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-C0JF28UN0oA/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-C0JF28UN0oA/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-C0JF28UN0oA/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-C0JF28UN0oA/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-Cxu0HuTM4Zw/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-Cxu0HuTM4Zw/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-Cxu0HuTM4Zw/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-Cxu0HuTM4Zw/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-CxuzbJnA6DP/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-CxuzbJnA6DP/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-CxuzbJnA6DP/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-CxuzbJnA6DP/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-Cr8BolYAMd7/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-Cr8BolYAMd7/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-Cr8BolYAMd7/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-Cr8BolYAMd7/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-CsOQ-H3MzAM/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-CsOQ-H3MzAM/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-CsOQ-H3MzAM/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-CsOQ-H3MzAM/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-CpQWCsktNpj/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-CpQWCsktNpj/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-CpQWCsktNpj/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-CpQWCsktNpj/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-Cr6kSQtrX_o/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-Cr6kSQtrX_o/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-Cr6kSQtrX_o/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-Cr6kSQtrX_o/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-CPvj182hg4T/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-CPvj182hg4T/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-CPvj182hg4T/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-CPvj182hg4T/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-Bv_l0deFcq2/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-Bv_l0deFcq2/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-Bv_l0deFcq2/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-Bv_l0deFcq2/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-Bv_mbFnF1tj/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-Bv_mbFnF1tj/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-Bv_mbFnF1tj/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-Bv_mbFnF1tj/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-CHSyFQiAST7/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-CHSyFQiAST7/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-CHSyFQiAST7/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-CHSyFQiAST7/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-Buw0SAGFvfs/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-Buw0SAGFvfs/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-Buw0SAGFvfs/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-Buw0SAGFvfs/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-BuyonGkFexZ/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-BuyonGkFexZ/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-BuyonGkFexZ/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-BuyonGkFexZ/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-Bu3kpdMF9lW/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-Bu3kpdMF9lW/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-Bu3kpdMF9lW/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-Bu3kpdMF9lW/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-BuwySjBFvQc/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-BuwySjBFvQc/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-BuwySjBFvQc/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-BuwySjBFvQc/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-BuwzdiilqMd/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-BuwzdiilqMd/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-BuwzdiilqMd/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-BuwzdiilqMd/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-Buw0J_glD9C/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-Buw0J_glD9C/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-Buw0J_glD9C/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-Buw0J_glD9C/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-Br-gRJCBb7n/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-Br-gRJCBb7n/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-Br-gRJCBb7n/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-Br-gRJCBb7n/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-Bsask1OBW5C/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-Bsask1OBW5C/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-Bsask1OBW5C/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-Bsask1OBW5C/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-BuwyET5ghvm/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-BuwyET5ghvm/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-BuwyET5ghvm/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-BuwyET5ghvm/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/references/item/ig-CwxfzlssIK9/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/references/item/ig-CwxfzlssIK9/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/references/item/ig-CwxfzlssIK9/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/references/item/ig-CwxfzlssIK9/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/news/item/DZ4tTppgIh6/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/news/item/DZ4tTppgIh6/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/news/item/DZ4tTppgIh6/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/news/item/DZ4tTppgIh6/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/news/item/DMK2zPSNJqp/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/news/item/DMK2zPSNJqp/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/news/item/DMK2zPSNJqp/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/news/item/DMK2zPSNJqp/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/news/item/DLuETdPtdjX/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/news/item/DLuETdPtdjX/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/news/item/DLuETdPtdjX/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/news/item/DLuETdPtdjX/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/news/item/DIb5jY-tkVi/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/news/item/DIb5jY-tkVi/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/news/item/DIb5jY-tkVi/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/news/item/DIb5jY-tkVi/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/news/item/DIdu5N8NvCl/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/news/item/DIdu5N8NvCl/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/news/item/DIdu5N8NvCl/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/news/item/DIdu5N8NvCl/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/news/item/DBVblo1tDCK/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/news/item/DBVblo1tDCK/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/news/item/DBVblo1tDCK/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/news/item/DBVblo1tDCK/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/news/item/C01oFAgNqxk/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/news/item/C01oFAgNqxk/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/news/item/C01oFAgNqxk/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/news/item/C01oFAgNqxk/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/news/item/C0hJiFqN3Qj/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/news/item/C0hJiFqN3Qj/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/news/item/C0hJiFqN3Qj/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/news/item/C0hJiFqN3Qj/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/news/item/CybcWAYtRfJ/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/news/item/CybcWAYtRfJ/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/news/item/CybcWAYtRfJ/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/news/item/CybcWAYtRfJ/" />
   </url>
   <url>
     <loc>https://althawadi.org/en/news/item/Ce2oYLuP9AE/</loc>
     <lastmod>2026-07-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://althawadi.org/news/item/Ce2oYLuP9AE/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://althawadi.org/en/news/item/Ce2oYLuP9AE/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://althawadi.org/news/item/Ce2oYLuP9AE/" />
   </url>
 </urlset>
