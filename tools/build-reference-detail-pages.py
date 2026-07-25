@@ -507,59 +507,95 @@ def fix_paths_in_html(fragment: str) -> str:
     return fragment
 
 
+def _video_caption(index: int, total: int) -> str:
+    if total == 2:
+        return "المقطع المختصر" if index == 1 else "النسخة الكاملة"
+    return f"فيديو {index}"
+
+
 def media_block(media: dict, title: str) -> str:
     kind = media.get("kind")
     if kind == "video":
         videos = media.get("videos") or []
         if len(videos) > 1:
             parts = []
+            total = len(videos)
             for i, v in enumerate(videos, 1):
                 poster = html.escape(v.get("poster") or "")
                 src = html.escape(v.get("src") or "")
+                label = html.escape(_video_caption(i, total))
                 parts.append(
                     f'<figure class="ref-detail-media ref-detail-media--video">'
+                    f'<div class="ref-detail-video-frame">'
                     f'<video class="ref-detail-video" controls playsinline preload="metadata" '
                     f'{"poster=\"" + poster + "\"" if poster else ""} src="{src}"></video>'
-                    f'<figcaption class="ref-media-caption text-sm text-muted-foreground mt-2">'
-                    f"فيديو {i}</figcaption>"
+                    f"</div>"
+                    f'<figcaption class="ref-media-caption">'
+                    f'<span class="ref-media-caption__index">{i:02d}</span>'
+                    f'<span class="ref-media-caption__label">{label}</span>'
+                    f"</figcaption>"
                     f"</figure>"
                 )
-            return f'<div class="ref-detail-gallery ref-detail-gallery--videos">{"".join(parts)}</div>'
+            return (
+                f'<section class="ref-detail-media-section" aria-label="فيديو">'
+                f'<div class="ref-detail-gallery ref-detail-gallery--videos">'
+                f'{"".join(parts)}</div></section>'
+            )
         poster = html.escape(media.get("poster") or "")
         src = html.escape(media.get("src") or "")
         return (
+            f'<section class="ref-detail-media-section" aria-label="فيديو">'
             f'<figure class="ref-detail-media ref-detail-media--video">'
+            f'<div class="ref-detail-video-frame">'
             f'<video class="ref-detail-video" controls playsinline preload="metadata" '
             f'{"poster=\"" + poster + "\"" if poster else ""} src="{src}"></video>'
-            f"</figure>"
+            f"</div></figure></section>"
         )
     if kind in ("image", "gallery"):
         imgs = media.get("images") or ([media.get("src")] if media.get("src") else [])
         caption = (media.get("caption") or "").strip()
         cap_html = (
-            f"<figcaption>{html.escape(caption)}</figcaption>" if caption else ""
+            f'<figcaption class="ref-media-caption">'
+            f'<span class="ref-media-caption__label">{html.escape(caption)}</span>'
+            f"</figcaption>"
+            if caption
+            else ""
         )
-        fig_class = "ref-detail-media archive-doc" if caption else "ref-detail-media"
         if len(imgs) == 1:
             src = html.escape(imgs[0])
             alt = html.escape(media.get("alt") or title)
+            fig_extra = " archive-doc" if caption else ""
             return (
-                f'<figure class="{fig_class}">'
+                f'<section class="ref-detail-media-section" aria-label="صورة">'
+                f'<figure class="ref-detail-media ref-detail-media--image{fig_extra}">'
+                f'<div class="ref-detail-image-frame">'
                 f'<img src="{src}" alt="{alt}" loading="lazy" />'
-                f"{cap_html}"
-                f"</figure>"
+                f"</div>{cap_html}</figure></section>"
             )
         parts = []
         for idx, u in enumerate(imgs, 1):
             parts.append(
                 f'<figure class="ref-detail-media ref-detail-media--slide">'
+                f'<div class="ref-detail-image-frame">'
                 f'<img src="{html.escape(u)}" alt="{html.escape(title)} — {idx}" loading="lazy" />'
+                f"</div>"
+                f'<figcaption class="ref-media-caption">'
+                f'<span class="ref-media-caption__index">{idx:02d}</span>'
+                f'<span class="ref-media-caption__label">صورة {idx}</span>'
+                f"</figcaption>"
                 f"</figure>"
             )
-        gallery = f'<div class="ref-detail-gallery">{"".join(parts)}</div>'
+        gallery = (
+            f'<section class="ref-detail-media-section" aria-label="معرض صور">'
+            f'<div class="ref-detail-gallery ref-detail-gallery--images">'
+            f'{"".join(parts)}</div>'
+        )
         if caption:
-            return gallery + f'<p class="ref-media-caption text-sm text-muted-foreground mt-3">{html.escape(caption)}</p>'
-        return gallery
+            gallery += (
+                f'<p class="ref-media-caption ref-media-caption--block">'
+                f'<span class="ref-media-caption__label">{html.escape(caption)}</span></p>'
+            )
+        return gallery + "</section>"
     return ""
 
 

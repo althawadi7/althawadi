@@ -63,10 +63,12 @@ def media_block(post: dict, title: str) -> str:
         src = html.escape(vids[0])
         poster_attr = f' poster="{poster}"' if poster else ""
         return (
+            f'<section class="ref-detail-media-section" aria-label="فيديو">'
             f'<figure class="ref-detail-media ref-detail-media--video">'
+            f'<div class="ref-detail-video-frame">'
             f'<video class="ref-detail-video" controls playsinline preload="metadata"'
             f'{poster_attr} src="{src}"></video>'
-            f"</figure>"
+            f"</div></figure></section>"
         )
 
     if len(imgs) > 1:
@@ -74,16 +76,28 @@ def media_block(post: dict, title: str) -> str:
         for idx, u in enumerate(imgs, 1):
             parts.append(
                 f'<figure class="ref-detail-media ref-detail-media--slide">'
+                f'<div class="ref-detail-image-frame">'
                 f'<img src="{html.escape(u)}" alt="{html.escape(title)} — {idx}" loading="lazy" />'
+                f"</div>"
+                f'<figcaption class="ref-media-caption">'
+                f'<span class="ref-media-caption__index">{idx:02d}</span>'
+                f'<span class="ref-media-caption__label">صورة {idx}</span>'
+                f"</figcaption>"
                 f"</figure>"
             )
-        return f'<div class="ref-detail-gallery">{"".join(parts)}</div>'
+        return (
+            f'<section class="ref-detail-media-section" aria-label="معرض صور">'
+            f'<div class="ref-detail-gallery ref-detail-gallery--images">'
+            f'{"".join(parts)}</div></section>'
+        )
 
     if imgs:
         return (
-            f'<figure class="ref-detail-media">'
+            f'<section class="ref-detail-media-section" aria-label="صورة">'
+            f'<figure class="ref-detail-media ref-detail-media--image">'
+            f'<div class="ref-detail-image-frame">'
             f'<img src="{html.escape(imgs[0])}" alt="{html.escape(title)}" loading="lazy" />'
-            f"</figure>"
+            f"</div></figure></section>"
         )
 
     return ""

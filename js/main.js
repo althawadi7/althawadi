@@ -282,4 +282,17 @@
   }
 
   initThemeToggle();
+
+  /* One reference video at a time */
+  (function initRefDetailVideos() {
+    var videos = document.querySelectorAll('.ref-detail-page .ref-detail-video');
+    if (!videos.length) return;
+    videos.forEach(function (video) {
+      video.addEventListener('play', function () {
+        videos.forEach(function (other) {
+          if (other !== video && !other.paused) other.pause();
+        });
+      });
+    });
+  })();
 })();
