@@ -74,15 +74,16 @@ def excerpt_from_caption(caption: str, max_len: int = 160) -> str:
 def card_from_ig_post(post: dict, index: int) -> dict:
     code = post["shortcode"]
     caption = post.get("caption") or ""
+    title = (post.get("title") or "").strip() or title_from_caption(caption)
     card = {
         "slug": f"ig-{code}",
         "index": index,
-        "is_source": False,
-        "title": title_from_caption(caption),
+        "is_source": bool(post.get("is_source")),
+        "title": title,
         "excerpt": excerpt_from_caption(caption),
-        "author": "",
-        "num": f"{index:02d}",
-        "search": f"{code} {caption}",
+        "author": (post.get("author") or "").strip(),
+        "num": "" if post.get("hide_post_label") or post.get("is_source") else f"{index:02d}",
+        "search": f"{code} {title} {caption}",
         "fulltext": caption_to_fulltext(caption),
         "external_url": post.get("url") or f"https://www.instagram.com/p/{code}/?hl=ar",
         "media": {"kind": "none"},
@@ -92,34 +93,33 @@ def card_from_ig_post(post: dict, index: int) -> dict:
 
 
 def sync_ig_posts_into_cards(cards: list[dict], ig_posts: dict[str, dict]) -> list[dict]:
-    """Prepend any Instagram posts from JSON that are missing on the page."""
+    """Merge Instagram posts from JSON: add missing and refresh existing IG cards."""
     if not IG_DATA.exists():
         return cards
     data = json.loads(IG_DATA.read_text(encoding="utf-8"))
     ordered = data.get("posts") or []
-    existing = {c["slug"] for c in cards}
+    by_slug = {c["slug"]: i for i, c in enumerate(cards)}
     missing = []
     for post in ordered:
         code = post.get("shortcode")
         if not code:
             continue
         slug = f"ig-{code}"
-        if slug in existing:
+        ig_posts[code] = post
+        if slug in by_slug:
+            # Refresh fields from JSON (title/author/media/caption)
+            refreshed = card_from_ig_post(post, cards[by_slug[slug]].get("index") or 0)
+            cards[by_slug[slug]] = refreshed
             continue
         missing.append(post)
-        ig_posts[code] = post
 
-    if not missing:
-        # Still renumber IG cards to match JSON order preference for new ones at top
-        return renumber_ig_cards(cards)
-
-    # Insert missing after last source card (or at start if none)
-    insert_at = 0
-    for i, c in enumerate(cards):
-        if c.get("is_source"):
-            insert_at = i + 1
-    new_cards = [card_from_ig_post(p, 0) for p in missing]
-    cards = cards[:insert_at] + new_cards + cards[insert_at:]
+    if missing:
+        insert_at = 0
+        for i, c in enumerate(cards):
+            if c.get("is_source"):
+                insert_at = i + 1
+        new_cards = [card_from_ig_post(p, 0) for p in missing]
+        cards = cards[:insert_at] + new_cards + cards[insert_at:]
     return renumber_ig_cards(cards)
 
 
