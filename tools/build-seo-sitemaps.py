@@ -46,15 +46,16 @@ CORE_PAGES = [
         "changefreq": "monthly",
         "group": "main",
     },
-    {
-        "path": "/tree/",
-        "file": ROOT / "tree" / "index.html",
-        "title": "شجرة عائلة الذوادي",
-        "description": "شجرة نسب ذرية عبدالله وراشد أبناء عيسى بن خليفة بن هلال بن حسن الذوادي.",
-        "priority": "0.9",
-        "changefreq": "monthly",
-        "group": "main",
-    },
+    # Hidden for now (page kept on disk; restore later):
+    # {
+    #     "path": "/tree/",
+    #     "file": ROOT / "tree" / "index.html",
+    #     "title": "شجرة عائلة الذوادي",
+    #     "description": "شجرة نسب ذرية عبدالله وراشد أبناء عيسى بن خليفة بن هلال بن حسن الذوادي.",
+    #     "priority": "0.9",
+    #     "changefreq": "monthly",
+    #     "group": "main",
+    # },
     {
         "path": "/ancestors/",
         "file": ROOT / "ancestors" / "index.html",
@@ -181,10 +182,22 @@ def strengthen_page_head(page: dict) -> None:
             count=1,
             flags=re.I,
         )
-    # Ensure hreflang present
+    # Arabic-only hreflang (no EN mirrors)
     from site_chrome import hreflang_tags_for
 
-    if 'hreflang="en"' not in text:
+    if 'hreflang="x-default"' not in text or 'hreflang="en"' in text:
+        text = re.sub(
+            r'\s*<link\s+rel=["\']alternate["\']\s+hreflang=["\'][^"\']+["\']\s+href=["\'][^"\']+["\']\s*/?>',
+            "",
+            text,
+            flags=re.I,
+        )
+        text = re.sub(
+            r'\s*<meta\s+property=["\']og:locale:alternate["\']\s+content=["\'][^"\']*["\']\s*/?>',
+            "",
+            text,
+            flags=re.I,
+        )
         tags = hreflang_tags_for("ar", page["path"])
         text = re.sub(r"(</head>)", tags + "\n\\1", text, count=1, flags=re.I)
     path.write_text(text, encoding="utf-8")
@@ -250,11 +263,14 @@ def write_robots() -> None:
             [
                 "User-agent: *",
                 "Allow: /",
+                "# Arabic-only site — English mirrors disabled",
+                "Disallow: /en/",
+                "# Family tree page temporarily hidden",
+                "Disallow: /tree/",
                 "",
-                "# Prefer index (split AR + EN) - most reliable for Google on GitHub Pages",
+                "# Prefer AR sitemap index on GitHub Pages",
                 f"Sitemap: {SITE}/seo/sitemap-index.xml",
                 f"Sitemap: {SITE}/seo/sitemap-ar.xml",
-                f"Sitemap: {SITE}/seo/sitemap-en.xml",
                 f"Sitemap: {SITE}/seo/sitemap.xml",
                 f"Sitemap: {SITE}/sitemap-index.xml",
                 "",
@@ -299,17 +315,18 @@ def write_sitemap_xml(urls: list[dict]) -> None:
     """
     SEO_DIR.mkdir(parents=True, exist_ok=True)
 
+    # Arabic-only: ignore any leftover /en/ paths
     ar_urls = [u for u in urls if not str(u["path"]).startswith("/en")]
-    en_urls = [u for u in urls if str(u["path"]).startswith("/en")]
-
     ar_body = _write_urlset(SEO_DIR / "sitemap-ar.xml", ar_urls)
-    en_body = _write_urlset(SEO_DIR / "sitemap-en.xml", en_urls)
-    all_body = _write_urlset(SEO_SITEMAP, urls)
+    all_body = _write_urlset(SEO_SITEMAP, ar_urls)
     # Root mirror of the combined file (legacy submissions)
     SITEMAP_XML.write_bytes(all_body)
 
+    # Empty EN sitemap kept so old Search Console submissions do not 404
+    en_body = _write_urlset(SEO_DIR / "sitemap-en.xml", [])
+
     # Ultra-simple text sitemap (also supported by Google)
-    txt_lines = [SITE + u["path"] for u in urls]
+    txt_lines = [SITE + u["path"] for u in ar_urls]
     (SEO_DIR / "sitemap.txt").write_text("\n".join(txt_lines) + "\n", encoding="utf-8")
 
     index_body = "\n".join(
@@ -320,10 +337,6 @@ def write_sitemap_xml(urls: list[dict]) -> None:
             f"    <loc>{SITE}/seo/sitemap-ar.xml</loc>",
             f"    <lastmod>{TODAY}</lastmod>",
             "  </sitemap>",
-            "  <sitemap>",
-            f"    <loc>{SITE}/seo/sitemap-en.xml</loc>",
-            f"    <lastmod>{TODAY}</lastmod>",
-            "  </sitemap>",
             "</sitemapindex>",
             "",
         ]
@@ -332,20 +345,21 @@ def write_sitemap_xml(urls: list[dict]) -> None:
     (SEO_DIR / "sitemap-index.xml").write_bytes(index_body)
 
     print(f"  AR urls: {len(ar_urls)} ({len(ar_body)} bytes)")
-    print(f"  EN urls: {len(en_urls)} ({len(en_body)} bytes)")
-    print(f"  ALL urls: {len(urls)} ({len(all_body)} bytes)")
+    print(f"  EN urls: 0 (disabled; empty sitemap-en.xml {len(en_body)} bytes)")
+    print(f"  ALL urls: {len(ar_urls)} ({len(all_body)} bytes)")
 
 def write_sitemap_html(urls: list[dict]) -> None:
     from site_chrome import footer_html, header_html, hreflang_tags_for
 
     SITEMAP_HTML_DIR.mkdir(parents=True, exist_ok=True)
     groups = [
-        ("الصفحات الرئيسية (عربي)", "main"),
-        ("صفحات المراجع التفصيلية (عربي)", "references"),
-        ("أخبار أفراد العائلة (عربي)", "news"),
-        ("Main pages (English)", "main-en"),
-        ("Reference detail pages (English)", "references-en"),
-        ("Family news (English)", "news-en"),
+        ("الصفحات الرئيسية", "main"),
+        ("صفحات المراجع التفصيلية", "references"),
+        ("أخبار أفراد العائلة", "news"),
+        # English mirrors disabled (Arabic-only site):
+        # ("Main pages (English)", "main-en"),
+        # ("Reference detail pages (English)", "references-en"),
+        # ("Family news (English)", "news-en"),
     ]
     sections = []
     for heading, key in groups:
@@ -375,7 +389,7 @@ def write_sitemap_html(urls: list[dict]) -> None:
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="index, follow" />
   <title>خريطة الموقع — الذواودة AL Thawadi</title>
-  <meta name="description" content="خريطة كاملة لجميع صفحات موقع عائلة الذوادي القابلة للفهرسة (عربي وإنجليزي)." />
+  <meta name="description" content="خريطة كاملة لجميع صفحات موقع عائلة الذوادي القابلة للفهرسة." />
   <link rel="canonical" href="{SITE}/site-map/" />
   <meta property="og:title" content="خريطة الموقع — الذواودة" />
   <meta property="og:url" content="{SITE}/site-map/" />
@@ -391,7 +405,7 @@ def write_sitemap_html(urls: list[dict]) -> None:
       <p class="text-xs uppercase tracking-[0.3em] text-accent font-latin">Sitemap</p>
       <h1 class="font-display text-3xl md:text-4xl text-foreground mt-3">خريطة الموقع</h1>
       <p class="mt-4 text-muted-foreground leading-7">
-        جميع صفحات الموقع المفهرسة (عربي + English). ملف XML لـ Google Search Console:
+        جميع صفحات الموقع المفهرسة بالعربية. ملف XML لـ Google Search Console:
         <a class="text-accent hover:underline font-latin" href="/seo/sitemap.xml">{SITE}/seo/sitemap.xml</a>
         ·
         <a class="text-accent hover:underline font-latin" href="/sitemap.xml">{SITE}/sitemap.xml</a>
@@ -419,7 +433,7 @@ def en_mirror_urls(ar_urls: list[dict]) -> list[dict]:
         en_titles = {
             "/en/": "AL Thawadi — Family Majlis",
             "/en/about/": "About AL Thawadi",
-            "/en/tree/": "AL Thawadi Family Tree",
+            # "/en/tree/": "AL Thawadi Family Tree",  # hidden for now
             "/en/ancestors/": "AL Thawadi Ancestors",
             "/en/gallery/": "AL Thawadi Gallery",
             "/en/news/": "AL Thawadi Majlis News",
@@ -455,7 +469,8 @@ def main() -> None:
 
     urls.extend(reference_item_urls())
     urls.extend(news_item_urls())
-    urls.extend(en_mirror_urls(list(urls)))
+    # English mirrors disabled — Arabic-only site
+    # urls.extend(en_mirror_urls(list(urls)))
 
     write_robots()
     write_sitemap_xml(urls)

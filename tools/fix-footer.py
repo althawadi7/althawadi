@@ -8,7 +8,7 @@ BRAND = '<a href="/" data-home class="font-display text-2xl text-foreground hove
 LINKS = """<ul class="mt-4 space-y-2 text-sm" style="list-style:none;padding:0;">
             <li><a href="/" data-home class="hover:text-accent">الرئيسية</a></li>
             <li><a href="/about/" class="hover:text-accent">عن العائلة</a></li>
-            <li><a href="/tree/" class="hover:text-accent">شجرة العائلة</a></li>
+            <!-- Hidden for now: <li><a href="/tree/" class="hover:text-accent">شجرة العائلة</a></li> -->
             <li><a href="/ancestors/" class="hover:text-accent">الأجداد</a></li>
             <li><a href="/gallery/" class="hover:text-accent">الصور</a></li>
             <li><a href="/news/" class="hover:text-accent">أخبار المجلس</a></li>

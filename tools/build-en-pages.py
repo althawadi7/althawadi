@@ -33,7 +33,7 @@ EN_ROOT = ROOT / "en"
 MAIN_PAGES = [
     "/",
     "/about/",
-    "/tree/",
+    # "/tree/",  # Hidden for now (page kept; restore later)
     "/ancestors/",
     "/gallery/",
     "/news/",
@@ -337,17 +337,18 @@ def build_main_en_pages() -> None:
             "History and lineage of AL Thawawdah (singular: AL Thawadi) in Bahrain — Al-‘Ama’ir of Bani Khalid and settlement in Al-Hidd.",
             body_about(),
         ),
-        (
-            "/en/tree/",
-            "AL Thawadi Family Tree",
-            "Genealogical tree of the descendants of Abdullah and Rashid, sons of Isa bin Khalifa bin Hilal bin Hasan Al Thawadi.",
-            body_simple_hero(
-                "Family Tree",
-                "Lineage of the house",
-                "Personal names and nasab are shown in Arabic as recorded in the family archive.",
-            )
-            + extract_tree_only(),
-        ),
+        # Hidden for now (page kept; restore later):
+        # (
+        #     "/en/tree/",
+        #     "AL Thawadi Family Tree",
+        #     "Genealogical tree of the descendants of Abdullah and Rashid, sons of Isa bin Khalifa bin Hilal bin Hasan Al Thawadi.",
+        #     body_simple_hero(
+        #         "Family Tree",
+        #         "Lineage of the house",
+        #         "Personal names and nasab are shown in Arabic as recorded in the family archive.",
+        #     )
+        #     + extract_tree_only(),
+        # ),
         (
             "/en/ancestors/",
             "AL Thawadi Ancestors",
@@ -886,11 +887,15 @@ def update_detail_builders_note() -> None:
 
 
 def main() -> None:
-    EN_ROOT.mkdir(parents=True, exist_ok=True)
-    build_main_en_pages()
-    build_detail_en_shells()
-    patch_all_ar_pages()
-    print("Done.")
+    # English site disabled — Arabic-only. Keep this script for possible restore later.
+    print("Skipped: English mirrors are disabled (Arabic-only site).")
+    print("To rebuild EN later, restore this main() and re-enable EN in site_chrome / sitemaps.")
+    return
+    # EN_ROOT.mkdir(parents=True, exist_ok=True)
+    # build_main_en_pages()
+    # build_detail_en_shells()
+    # patch_all_ar_pages()
+    # print("Done.")
 
 
 if __name__ == "__main__":

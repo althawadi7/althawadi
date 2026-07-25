@@ -68,7 +68,8 @@ FOOTER = {
 NAV_PATHS = [
     ("home", "/"),
     ("about", "/about/"),
-    ("tree", "/tree/"),
+    # Hidden for now (page kept; restore later):
+    # ("tree", "/tree/"),
     ("ancestors", "/ancestors/"),
     ("gallery", "/gallery/"),
     ("news", "/news/"),
@@ -146,63 +147,27 @@ def alternate_path(lang: str, current_path: str) -> str:
 
 
 def hreflang_tags(ar_path: str) -> str:
-    """ar_path is the Arabic canonical path (e.g. /, /about/, /references/item/x/)."""
+    """Arabic-only site: self-referencing hreflang (no EN mirrors)."""
     ar_path = normalize_path(ar_path)
-    en_path = en_path_from_ar(ar_path)
     return "\n".join(
         [
             f'  <link rel="alternate" hreflang="ar" href="{SITE}{ar_path}" />',
-            f'  <link rel="alternate" hreflang="en" href="{SITE}{en_path}" />',
             f'  <link rel="alternate" hreflang="x-default" href="{SITE}{ar_path}" />',
-            f'  <meta property="og:locale" content="{"ar_BH" if True else "en_US"}" />',
+            '  <meta property="og:locale" content="ar_BH" />',
         ]
     )
 
 
 def hreflang_tags_for(lang: str, path: str) -> str:
-    """path is the path of the current page in its language."""
+    """Arabic-only site. EN paths (if any legacy files remain) point SEO to Arabic."""
     path = normalize_path(path)
-    if lang == "en":
-        ar = ar_path_from_en(path)
-        en = path
-        og_locale = "en_US"
-        og_alt = "ar_BH"
-    else:
-        ar = path
-        en = en_path_from_ar(path)
-        og_locale = "ar_BH"
-        og_alt = "en_US"
-    return "\n".join(
-        [
-            f'  <link rel="alternate" hreflang="ar" href="{SITE}{ar}" />',
-            f'  <link rel="alternate" hreflang="en" href="{SITE}{en}" />',
-            f'  <link rel="alternate" hreflang="x-default" href="{SITE}{ar}" />',
-            f'  <meta property="og:locale" content="{og_locale}" />',
-            f'  <meta property="og:locale:alternate" content="{og_alt}" />',
-        ]
-    )
+    ar = ar_path_from_en(path) if lang == "en" or path.startswith("/en/") else path
+    return hreflang_tags(ar)
 
 
 def lang_toggle(lang: str, current_path: str) -> str:
-    """Compact AR · EN control. current_path is path in current language."""
-    current_path = normalize_path(current_path)
-    if lang == "ar":
-        ar_href = current_path
-        en_href = en_path_from_ar(current_path)
-        ar_cls = "lang-toggle__link is-active"
-        en_cls = "lang-toggle__link"
-    else:
-        en_href = current_path
-        ar_href = ar_path_from_en(current_path)
-        ar_cls = "lang-toggle__link"
-        en_cls = "lang-toggle__link is-active"
-    return (
-        f'<nav class="lang-toggle" aria-label="Language">'
-        f'<a href="{ar_href}" class="{ar_cls}" lang="ar" hreflang="ar">AR</a>'
-        f'<span class="lang-toggle__sep" aria-hidden="true">·</span>'
-        f'<a href="{en_href}" class="{en_cls}" lang="en" hreflang="en">EN</a>'
-        f"</nav>"
-    )
+    """Disabled — site is Arabic-only. Kept for call-site compatibility."""
+    return ""
 
 
 def header_html(lang: str, current_path: str) -> str:
@@ -234,7 +199,6 @@ def header_html(lang: str, current_path: str) -> str:
           {" ".join(desktop_links)}
         </nav>
         <div class="flex items-center gap-3">
-          {lang_toggle(lang, current_path)}
           <a href="https://www.instagram.com/althawadi_majlis/?hl={ig_hl}" target="_blank" rel="noreferrer" class="hidden sm:inline-flex items-center gap-2 rounded-full border border-border px-3 py-1.5 text-xs text-foreground/80 hover:bg-card transition-colors">
             {IG_ICON}
             <span class="font-latin tracking-wide">@althawadi_majlis</span>
@@ -250,7 +214,6 @@ def header_html(lang: str, current_path: str) -> str:
       <div id="mobile-nav" class="lg:hidden border-t border-border bg-background">
         <nav class="flex flex-col px-6 py-4 gap-3 text-sm">
           {" ".join(mobile_links)}
-          <div class="pt-2">{lang_toggle(lang, current_path)}</div>
         </nav>
       </div>
     </header>"""
@@ -272,7 +235,7 @@ def footer_nav_cols(lang: str = "ar", base: str | None = None) -> str:
         <div class="footer-nav-col">
           <h4 class="footer-nav-heading">{f['family']}</h4>
           <ul class="footer-nav-list">
-            <li><a href="{base}/tree/" class="hover:text-accent">{n['tree']}</a></li>
+            <!-- Hidden for now: <li><a href="{base}/tree/" class="hover:text-accent">{n['tree']}</a></li> -->
             <li><a href="{base}/ancestors/" class="hover:text-accent">{n['ancestors']}</a></li>
           </ul>
         </div>

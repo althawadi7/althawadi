@@ -1,9 +1,12 @@
 User-agent: *
 Allow: /
+# Arabic-only site — English mirrors disabled
+Disallow: /en/
+# Family tree page temporarily hidden
+Disallow: /tree/
 
-# Prefer index (split AR + EN) - most reliable for Google on GitHub Pages
+# Prefer AR sitemap index on GitHub Pages
 Sitemap: https://althawadi.org/seo/sitemap-index.xml
 Sitemap: https://althawadi.org/seo/sitemap-ar.xml
-Sitemap: https://althawadi.org/seo/sitemap-en.xml
 Sitemap: https://althawadi.org/seo/sitemap.xml
 Sitemap: https://althawadi.org/sitemap-index.xml
