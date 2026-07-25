@@ -72,31 +72,59 @@ def media_block(post: dict, title: str) -> str:
         )
 
     if len(imgs) > 1:
-        parts = []
+        slides = []
+        dots = []
+        total = len(imgs)
         for idx, u in enumerate(imgs, 1):
-            parts.append(
-                f'<figure class="ref-detail-media ref-detail-media--slide">'
+            src = html.escape(u)
+            alt = html.escape(f"{title} — {idx}")
+            active = " is-active" if idx == 1 else ""
+            hidden = "" if idx == 1 else " hidden"
+            slides.append(
+                f'<figure class="ref-media-carousel__slide{active}" data-index="{idx - 1}"{hidden}>'
                 f'<div class="ref-detail-image-frame">'
-                f'<img src="{html.escape(u)}" alt="{html.escape(title)} — {idx}" loading="lazy" />'
-                f"</div>"
-                f'<figcaption class="ref-media-caption">'
-                f'<span class="ref-media-caption__index">{idx:02d}</span>'
-                f'<span class="ref-media-caption__label">صورة {idx}</span>'
-                f"</figcaption>"
-                f"</figure>"
+                f'<img src="{src}" alt="{alt}" loading="{"eager" if idx == 1 else "lazy"}" data-fullsrc="{src}" />'
+                f"</div></figure>"
+            )
+            dots.append(
+                f'<button type="button" class="ref-media-carousel__dot{" is-active" if idx == 1 else ""}" '
+                f'data-goto="{idx - 1}" aria-label="صورة {idx}" aria-current="{"true" if idx == 1 else "false"}"></button>'
             )
         return (
             f'<section class="ref-detail-media-section" aria-label="معرض صور">'
-            f'<div class="ref-detail-gallery ref-detail-gallery--images">'
-            f'{"".join(parts)}</div></section>'
+            f'<div class="ref-media-carousel" data-ref-carousel data-count="{total}">'
+            f'<div class="ref-media-carousel__stage">'
+            f'<button type="button" class="ref-media-carousel__nav ref-media-carousel__nav--prev" data-ref-prev aria-label="الصورة السابقة">'
+            f'<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75"><path d="m15 18-6-6 6-6"/></svg>'
+            f"</button>"
+            f'<div class="ref-media-carousel__viewport">'
+            f'<button type="button" class="ref-media-expand" aria-label="تكبير الصورة" data-ref-expand>'
+            f'<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>'
+            f"</button>"
+            f'<div class="ref-media-carousel__track">{"".join(slides)}</div>'
+            f"</div>"
+            f'<button type="button" class="ref-media-carousel__nav ref-media-carousel__nav--next" data-ref-next aria-label="الصورة التالية">'
+            f'<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75"><path d="m9 18 6-6-6-6"/></svg>'
+            f"</button>"
+            f"</div>"
+            f'<div class="ref-media-carousel__meta">'
+            f'<p class="ref-media-carousel__counter" aria-live="polite">'
+            f'<span data-ref-current>1</span><span class="ref-media-carousel__sep">/</span><span data-ref-total>{total}</span>'
+            f"</p>"
+            f'<div class="ref-media-carousel__dots" role="tablist" aria-label="اختيار صورة">{"".join(dots)}</div>'
+            f"</div></div></section>"
         )
 
     if imgs:
+        src = html.escape(imgs[0])
         return (
             f'<section class="ref-detail-media-section" aria-label="صورة">'
-            f'<figure class="ref-detail-media ref-detail-media--image">'
+            f'<figure class="ref-detail-media ref-detail-media--image" data-ref-zoom>'
+            f'<button type="button" class="ref-media-expand" aria-label="تكبير الصورة" data-ref-expand>'
+            f'<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>'
+            f"</button>"
             f'<div class="ref-detail-image-frame">'
-            f'<img src="{html.escape(imgs[0])}" alt="{html.escape(title)}" loading="lazy" />'
+            f'<img src="{src}" alt="{html.escape(title)}" loading="lazy" data-fullsrc="{src}" />'
             f"</div></figure></section>"
         )
 
