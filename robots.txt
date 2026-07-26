@@ -1,12 +1,9 @@
 User-agent: *
 Allow: /
-# Arabic-only site — English mirrors disabled
+# Arabic-only site (English mirrors disabled)
 Disallow: /en/
 # Family tree page temporarily hidden
 Disallow: /tree/
 
-# Prefer AR sitemap index on GitHub Pages
-Sitemap: https://althawadi.org/seo/sitemap-index.xml
-Sitemap: https://althawadi.org/seo/sitemap-ar.xml
-Sitemap: https://althawadi.org/seo/sitemap.xml
-Sitemap: https://althawadi.org/sitemap-index.xml
+# Canonical sitemap (flat urlset - submit THIS in Search Console)
+Sitemap: https://althawadi.org/sitemap.xml

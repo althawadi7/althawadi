@@ -255,24 +255,20 @@ def news_item_urls() -> list[dict]:
 
 
 def write_robots() -> None:
-    # Prefer the sitemap *index* under /seo/ (split AR/EN files). Avoid relying on a
-    # single large file — GitHub Pages + Googlebot often shows GSC "General HTTP error"
-    # even when browsers get HTTP 200.
+    # One Sitemap line only. Multiple competing Sitemap: URLs confuse GSC and
+    # nested sitemap indexes often show "General HTTP error" on GitHub Pages.
     ROBOTS.write_text(
         "\n".join(
             [
                 "User-agent: *",
                 "Allow: /",
-                "# Arabic-only site — English mirrors disabled",
+                "# Arabic-only site (English mirrors disabled)",
                 "Disallow: /en/",
                 "# Family tree page temporarily hidden",
                 "Disallow: /tree/",
                 "",
-                "# Prefer AR sitemap index on GitHub Pages",
-                f"Sitemap: {SITE}/seo/sitemap-index.xml",
-                f"Sitemap: {SITE}/seo/sitemap-ar.xml",
-                f"Sitemap: {SITE}/seo/sitemap.xml",
-                f"Sitemap: {SITE}/sitemap-index.xml",
+                "# Canonical sitemap (flat urlset - submit THIS in Search Console)",
+                f"Sitemap: {SITE}/sitemap.xml",
                 "",
             ]
         ),
@@ -308,33 +304,32 @@ def _write_urlset(path: Path, urls: list[dict]) -> bytes:
 
 
 def write_sitemap_xml(urls: list[dict]) -> None:
-    """Write plain (no xhtml) sitemaps — hreflang lives in HTML <link> tags.
+    """Write a single flat urlset at /sitemap.xml (primary for Google).
 
-    Split AR/EN under /seo/ so Googlebot fetches smaller files (mitigates common
-    GitHub Pages + GSC 'General HTTP error' / Couldn't fetch failures).
+    Nested sitemap indexes under /seo/ are kept as mirrors only — do not submit
+    them in GSC (GitHub Pages + nested fetches often yield 'General HTTP error').
     """
     SEO_DIR.mkdir(parents=True, exist_ok=True)
 
-    # Arabic-only: ignore any leftover /en/ paths
     ar_urls = [u for u in urls if not str(u["path"]).startswith("/en")]
-    ar_body = _write_urlset(SEO_DIR / "sitemap-ar.xml", ar_urls)
-    all_body = _write_urlset(SEO_SITEMAP, ar_urls)
-    # Root mirror of the combined file (legacy submissions)
-    SITEMAP_XML.write_bytes(all_body)
+    body = _write_urlset(SITEMAP_XML, ar_urls)
+    # Mirrors (legacy / bookmarks) — same bytes
+    _write_urlset(SEO_SITEMAP, ar_urls)
+    _write_urlset(SEO_DIR / "sitemap-ar.xml", ar_urls)
+    _write_urlset(SEO_DIR / "sitemap-en.xml", [])  # empty; EN disabled
 
-    # Empty EN sitemap kept so old Search Console submissions do not 404
-    en_body = _write_urlset(SEO_DIR / "sitemap-en.xml", [])
+    # Plain-text sitemap (also accepted by Google) at root + seo/
+    txt = "\n".join(SITE + u["path"] for u in ar_urls) + "\n"
+    (ROOT / "sitemap.txt").write_text(txt, encoding="utf-8")
+    (SEO_DIR / "sitemap.txt").write_text(txt, encoding="utf-8")
 
-    # Ultra-simple text sitemap (also supported by Google)
-    txt_lines = [SITE + u["path"] for u in ar_urls]
-    (SEO_DIR / "sitemap.txt").write_text("\n".join(txt_lines) + "\n", encoding="utf-8")
-
+    # Index points at the ROOT flat file (one hop) so old GSC submissions still work
     index_body = "\n".join(
         [
             '<?xml version="1.0" encoding="UTF-8"?>',
             '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
             "  <sitemap>",
-            f"    <loc>{SITE}/seo/sitemap-ar.xml</loc>",
+            f"    <loc>{SITE}/sitemap.xml</loc>",
             f"    <lastmod>{TODAY}</lastmod>",
             "  </sitemap>",
             "</sitemapindex>",
@@ -344,9 +339,8 @@ def write_sitemap_xml(urls: list[dict]) -> None:
     SITEMAP_INDEX.write_bytes(index_body)
     (SEO_DIR / "sitemap-index.xml").write_bytes(index_body)
 
-    print(f"  AR urls: {len(ar_urls)} ({len(ar_body)} bytes)")
-    print(f"  EN urls: 0 (disabled; empty sitemap-en.xml {len(en_body)} bytes)")
-    print(f"  ALL urls: {len(ar_urls)} ({len(all_body)} bytes)")
+    print(f"  Primary: {SITEMAP_XML} ({len(ar_urls)} urls, {len(body)} bytes)")
+    print(f"  Also: {ROOT / 'sitemap.txt'} + seo/ mirrors")
 
 def write_sitemap_html(urls: list[dict]) -> None:
     from site_chrome import footer_html, header_html, hreflang_tags_for
@@ -405,9 +399,8 @@ def write_sitemap_html(urls: list[dict]) -> None:
       <p class="text-xs uppercase tracking-[0.3em] text-accent font-latin">Sitemap</p>
       <h1 class="font-display text-3xl md:text-4xl text-foreground mt-3">خريطة الموقع</h1>
       <p class="mt-4 text-muted-foreground leading-7">
-        جميع صفحات الموقع المفهرسة بالعربية. ملف XML لـ Google Search Console:
-        <a class="text-accent hover:underline font-latin" href="/seo/sitemap.xml">{SITE}/seo/sitemap.xml</a>
-        ·
+        جميع صفحات الموقع المفهرسة بالعربية. ملف XML لـ Google Search Console
+        (أرسِل هذا الرابط فقط):
         <a class="text-accent hover:underline font-latin" href="/sitemap.xml">{SITE}/sitemap.xml</a>
       </p>
 {''.join(sections)}
