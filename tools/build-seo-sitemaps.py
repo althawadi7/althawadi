@@ -204,59 +204,97 @@ def strengthen_page_head(page: dict) -> None:
     set_robots_meta(path, "index, follow")
 
 
+def _page_title(html_path: Path, fallback: str) -> str:
+    try:
+        text = html_path.read_text(encoding="utf-8")
+    except OSError:
+        return fallback
+    m = re.search(r"<title>(.*?)</title>", text, flags=re.I | re.S)
+    if not m:
+        return fallback
+    title = re.sub(r"\s+", " ", m.group(1)).strip()
+    title = re.sub(r"\s*[—\-]\s*مراجع الذوادي\s*$", "", title).strip()
+    return title or fallback
+
+
+def _lastmod_for(path: Path) -> str:
+    try:
+        return date.fromtimestamp(path.stat().st_mtime).isoformat()
+    except OSError:
+        return TODAY
+
+
 def reference_item_urls() -> list[dict]:
-    if not CARDS.exists():
+    """Every /references/item/*/ page on disk — no skips."""
+    items_dir = ROOT / "references" / "item"
+    if not items_dir.exists():
         return []
+
+    titles: dict[str, str] = {}
+    if CARDS.exists():
+        for card in json.loads(CARDS.read_text(encoding="utf-8")):
+            slug = card.get("slug") or ""
+            if slug:
+                titles[slug] = card.get("title") or slug
+
     out = []
-    for card in json.loads(CARDS.read_text(encoding="utf-8")):
-        slug = card.get("slug") or ""
-        if not slug or re.fullmatch(r"ref-(2[0-9]|30)", slug):
+    for item_dir in sorted(items_dir.iterdir(), key=lambda p: p.name.lower()):
+        page = item_dir / "index.html"
+        if not item_dir.is_dir() or not page.exists():
             continue
-        item = ROOT / "references" / "item" / slug / "index.html"
-        if not item.exists():
-            continue
-        set_robots_meta(item, "index, follow")
+        slug = item_dir.name
+        set_robots_meta(page, "index, follow")
+        title = titles.get(slug) or _page_title(page, slug)
         out.append(
             {
                 "path": f"/references/item/{slug}/",
-                "title": card.get("title") or slug,
-                "priority": "0.7",
-                "changefreq": "monthly",
+                "title": title,
+                "priority": "0.9",
+                "changefreq": "weekly",
                 "group": "references",
+                "lastmod": _lastmod_for(page),
+                "file": page,
             }
         )
     return out
 
 
 def news_item_urls() -> list[dict]:
-    if not NEWS_DATA.exists():
+    items_dir = ROOT / "news" / "item"
+    if not items_dir.exists():
         return []
+
+    captions: dict[str, str] = {}
+    if NEWS_DATA.exists():
+        for post in json.loads(NEWS_DATA.read_text(encoding="utf-8")).get("posts", []):
+            code = post.get("shortcode") or ""
+            if not code:
+                continue
+            caption = (post.get("caption") or post.get("text") or code).strip()
+            captions[code] = caption.split("\n")[0][:100]
+
     out = []
-    for post in json.loads(NEWS_DATA.read_text(encoding="utf-8")).get("posts", []):
-        code = post.get("shortcode") or ""
-        if not code:
+    for item_dir in sorted(items_dir.iterdir(), key=lambda p: p.name.lower()):
+        page = item_dir / "index.html"
+        if not item_dir.is_dir() or not page.exists():
             continue
-        item = ROOT / "news" / "item" / code / "index.html"
-        if not item.exists():
-            continue
-        set_robots_meta(item, "index, follow")
-        caption = (post.get("caption") or post.get("text") or code).strip()
-        title = caption.split("\n")[0][:100]
+        code = item_dir.name
+        set_robots_meta(page, "index, follow")
         out.append(
             {
                 "path": f"/news/item/{code}/",
-                "title": title,
-                "priority": "0.6",
-                "changefreq": "monthly",
+                "title": captions.get(code) or _page_title(page, code),
+                "priority": "0.7",
+                "changefreq": "weekly",
                 "group": "news",
+                "lastmod": _lastmod_for(page),
+                "file": page,
             }
         )
     return out
 
 
 def write_robots() -> None:
-    # One Sitemap line only. Multiple competing Sitemap: URLs confuse GSC and
-    # nested sitemap indexes often show "General HTTP error" on GitHub Pages.
     ROBOTS.write_text(
         "\n".join(
             [
@@ -267,7 +305,7 @@ def write_robots() -> None:
                 "# Family tree page temporarily hidden",
                 "Disallow: /tree/",
                 "",
-                "# Canonical sitemap (flat urlset - submit THIS in Search Console)",
+                "# Single sitemap (all pages)",
                 f"Sitemap: {SITE}/sitemap.xml",
                 "",
             ]
@@ -278,10 +316,11 @@ def write_robots() -> None:
 
 def _url_entry(u: dict) -> list[str]:
     loc = html.escape(SITE + u["path"])
+    lastmod = u.get("lastmod") or TODAY
     return [
         "  <url>",
         f"    <loc>{loc}</loc>",
-        f"    <lastmod>{TODAY}</lastmod>",
+        f"    <lastmod>{lastmod}</lastmod>",
         f"    <changefreq>{u.get('changefreq', 'monthly')}</changefreq>",
         f"    <priority>{u.get('priority', '0.5')}</priority>",
         "  </url>",
@@ -304,26 +343,20 @@ def _write_urlset(path: Path, urls: list[dict]) -> bytes:
 
 
 def write_sitemap_xml(urls: list[dict]) -> None:
-    """Write a single flat urlset at /sitemap.xml (primary for Google).
-
-    Nested sitemap indexes under /seo/ are kept as mirrors only — do not submit
-    them in GSC (GitHub Pages + nested fetches often yield 'General HTTP error').
-    """
+    """One flat urlset only: /sitemap.xml (mirrored under /seo/sitemap.xml)."""
     SEO_DIR.mkdir(parents=True, exist_ok=True)
 
     ar_urls = [u for u in urls if not str(u["path"]).startswith("/en")]
     body = _write_urlset(SITEMAP_XML, ar_urls)
-    # Mirrors (legacy / bookmarks) — same bytes
+    # Same file under /seo/ for old GSC bookmarks
     _write_urlset(SEO_SITEMAP, ar_urls)
     _write_urlset(SEO_DIR / "sitemap-ar.xml", ar_urls)
-    _write_urlset(SEO_DIR / "sitemap-en.xml", [])  # empty; EN disabled
 
-    # Plain-text sitemap (also accepted by Google) at root + seo/
     txt = "\n".join(SITE + u["path"] for u in ar_urls) + "\n"
     (ROOT / "sitemap.txt").write_text(txt, encoding="utf-8")
     (SEO_DIR / "sitemap.txt").write_text(txt, encoding="utf-8")
 
-    # Index points at the ROOT flat file (one hop) so old GSC submissions still work
+    # Index also points only at the single flat sitemap
     index_body = "\n".join(
         [
             '<?xml version="1.0" encoding="UTF-8"?>',
@@ -339,8 +372,73 @@ def write_sitemap_xml(urls: list[dict]) -> None:
     SITEMAP_INDEX.write_bytes(index_body)
     (SEO_DIR / "sitemap-index.xml").write_bytes(index_body)
 
-    print(f"  Primary: {SITEMAP_XML} ({len(ar_urls)} urls, {len(body)} bytes)")
-    print(f"  Also: {ROOT / 'sitemap.txt'} + seo/ mirrors")
+    # Remove old split sitemaps so nothing competes
+    for name in (
+        "sitemap-references.xml",
+        "sitemap-references.txt",
+        "sitemap-news.xml",
+        "sitemap-main.xml",
+        "sitemap-en.xml",
+    ):
+        p = SEO_DIR / name
+        if p.exists():
+            p.unlink()
+
+    print(f"  ONE sitemap: {SITE}/sitemap.xml  ({len(ar_urls)} urls, {len(body)} bytes)")
+    print(f"  Mirror:      {SITE}/seo/sitemap.xml")
+
+
+def inject_references_itemlist(ref_urls: list[dict]) -> None:
+    """Embed ItemList JSON-LD on /references/ so Google sees every detail URL."""
+    path = ROOT / "references" / "index.html"
+    if not path.exists() or not ref_urls:
+        return
+    elements = []
+    for i, u in enumerate(ref_urls, start=1):
+        elements.append(
+            {
+                "@type": "ListItem",
+                "position": i,
+                "url": SITE + u["path"],
+                "name": u.get("title") or u["path"],
+            }
+        )
+    payload = {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "مراجع ومصادر عن عائلة الذوادي",
+        "description": (
+            "مراجع وكتب ووثائق ومنشورات توثّق نسب وعائلة الذوادي (الذواودة) في البحرين: "
+            "بني خالد والعماير، نواخذة الغوص، ودليل الخليج وسجلات المقيمية."
+        ),
+        "url": f"{SITE}/references/",
+        "inLanguage": "ar",
+        "isPartOf": {
+            "@type": "WebSite",
+            "name": "الذواودة — AL Thawadi",
+            "url": SITE,
+        },
+        "mainEntity": {
+            "@type": "ItemList",
+            "numberOfItems": len(elements),
+            "itemListElement": elements,
+        },
+    }
+    script = (
+        '  <script type="application/ld+json" id="althawadi-ref-itemlist">\n  '
+        + json.dumps(payload, ensure_ascii=False, separators=(",", ":"))
+        + "\n  </script>"
+    )
+    text = path.read_text(encoding="utf-8")
+    text = re.sub(
+        r'\s*<script type="application/ld\+json"[^>]*>[\s\S]*?</script>',
+        "",
+        text,
+        count=1,
+    )
+    text = re.sub(r"(</head>)", script + "\n\\1", text, count=1, flags=re.I)
+    path.write_text(text, encoding="utf-8")
+    print(f"  JSON-LD ItemList on /references/ ({len(elements)} items)")
 
 def write_sitemap_html(urls: list[dict]) -> None:
     from site_chrome import footer_html, header_html, hreflang_tags_for
@@ -450,28 +548,28 @@ def main() -> None:
     urls: list[dict] = []
     for page in CORE_PAGES:
         strengthen_page_head(page)
-        urls.append(
-            {
-                "path": page["path"],
-                "title": page["title"],
-                "priority": page["priority"],
-                "changefreq": page["changefreq"],
-                "group": page["group"],
-            }
-        )
+        entry = {
+            "path": page["path"],
+            "title": page["title"],
+            "priority": page["priority"],
+            "changefreq": page["changefreq"],
+            "group": page["group"],
+            "lastmod": _lastmod_for(page["file"]) if page["file"].exists() else TODAY,
+        }
+        urls.append(entry)
 
-    urls.extend(reference_item_urls())
-    urls.extend(news_item_urls())
-    # English mirrors disabled — Arabic-only site
-    # urls.extend(en_mirror_urls(list(urls)))
+    ref_urls = reference_item_urls()
+    news_urls = news_item_urls()
+    urls.extend(ref_urls)
+    urls.extend(news_urls)
 
     write_robots()
     write_sitemap_xml(urls)
+    inject_references_itemlist(ref_urls)
     write_sitemap_html(urls)
     set_robots_meta(SITEMAP_HTML, "index, follow")
     print(f"Full-site SEO sitemap: {len(urls)} URLs")
-    print(f"  XML: {SITEMAP_XML}")
-    print(f"  HTML: {SITEMAP_HTML}")
+    print(f"  Submit in GSC: {SITE}/sitemap.xml")
 
 
 if __name__ == "__main__":

@@ -5,5 +5,5 @@ Disallow: /en/
 # Family tree page temporarily hidden
 Disallow: /tree/
 
-# Canonical sitemap (flat urlset - submit THIS in Search Console)
+# Single sitemap (all pages)
 Sitemap: https://althawadi.org/sitemap.xml
